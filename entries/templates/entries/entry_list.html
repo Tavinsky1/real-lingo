@@ -1,0 +1,295 @@
+{% extends "entries/base.html" %}
+{% load lingo_tags %}
+{% load i18n %}
+
+{% block title %}
+    REAL LINGO - {% firstof selected_category_code|default_if_none:'' selected_language|upper 'All' %}
+{% endblock title %}
+
+{% block content %}
+<style>
+.search-box-container {
+    max-width: 400px;
+}
+</style>
+
+    <!-- Word of the Day Container -->
+    <div class="word-of-the-day-container mb-4"></div>
+
+    <div class="text-center mb-4">
+        <h1>{% translate 'explore_lingo_in' %} {{ selected_language|upper }}</h1>
+        <p class="lead">{% translate 'select_category' %}</p>
+        
+        <!-- Enhanced Search with Analytics -->
+        <div class="search-container position-relative mb-3 mx-auto search-box-container">
+            <form method="GET" action="{% url 'entry-list' %}" class="position-relative">
+                {% if selected_category_code %}
+                <input type="hidden" name="category" value="{{ selected_category_code }}">
+                {% endif %}
+                {% if selected_language %}
+                <input type="hidden" name="language" value="{{ selected_language }}">
+                {% endif %}
+                
+                <div class="input-group">
+                    <input type="text" name="search" class="form-control" placeholder="{% translate 'search_placeholder' %}" value="{{ request.GET.search|default_if_none:'' }}" title="{% translate 'search_aria' %}" aria-label="{% translate 'search_aria' %}" autocomplete="off">
+                    <button class="btn btn-outline-secondary" type="submit" title="{% translate 'search_button' %}" aria-label="{% translate 'search_button' %}">
+                        <i class="bi bi-search"></i>
+                    </button>
+                </div>
+            </form>
+        </div>
+        
+        <!-- Language Selector -->
+        <form method="GET" action="{% url 'entry-list' %}" class="d-inline-block">
+            {% if selected_category_code %}
+            <input type="hidden" name="category" value="{{ selected_category_code }}">
+            {% endif %}
+            {% if request.GET.search %}
+            <input type="hidden" name="search" value="{{ request.GET.search }}">
+            {% endif %}
+            
+            <label for="language_select" class="form-label visually-hidden">{% translate 'language_select' %}</label>
+            <select name="language" id="language_select" class="form-select form-select-sm d-inline-block w-auto" onchange="this.form.submit()" aria-label="{% translate 'language_select_aria' %}">
+                <option value="de" {% if selected_language == 'de' %}selected{% endif %}>German 🇩🇪</option>
+                <option value="es-AR" {% if selected_language == 'es-AR' %}selected{% endif %}>Argentinian Spanish 🇦🇷</option>
+                <option value="en-AU" {% if selected_language == 'en-AU' %}selected{% endif %}>Australian English 🇦🇺</option>
+            </select>
+        </form>
+    </div>
+
+    <!-- User Progress Dashboard (for authenticated users) -->
+    {% if user.is_authenticated %}
+    <div class="user-dashboard-container mb-4"></div>
+    {% endif %}
+
+    <!-- Category Selection with Enhanced UI -->
+    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-3 mb-4 justify-content-center">
+        {% for code, name in all_categories %}
+            {% if code %}
+            <div class="col">
+                <a href="?language={{ selected_language }}&category={{ code }}{% if request.GET.search %}&search={{ request.GET.search }}{% endif %}" 
+                   class="btn btn-lg {% if selected_category_code == code %}btn-primary{% else %}btn-outline-primary{% endif %} w-100 p-3 text-truncate category-btn"
+                   data-category="{{ code }}"
+                   data-bs-toggle="tooltip" 
+                   title="Explore {{ name }} terms">
+                    {{ name }}
+                </a>
+            </div>
+            {% endif %}
+        {% endfor %}
+    </div>
+
+    {% if selected_category_code %}
+        <hr class="my-4">
+        <div class="d-flex justify-content-between align-items-center mb-3">
+            <h2 class="mb-0 h3">{% translate 'exploring' %} {{ current_category_name }}</h2>
+            <div class="btn-group">
+                {% if user.is_authenticated %}
+                <button class="btn btn-outline-info btn-sm" data-quiz-start>
+                    <i class="bi bi-question-circle"></i> {% translate 'quick_quiz' %}
+                </button>
+                {% endif %}
+                <a href="?language={{ selected_language }}&category={{ selected_category_code }}{% if request.GET.search %}&search={{ request.GET.search }}{% endif %}" 
+                   class="btn btn-outline-success btn-sm">
+                    <i class="bi bi-arrow-clockwise"></i> {% translate 'show_more_refresh' %}
+                </a>
+            </div>
+        </div>
+
+        {% if entries_for_cards %}
+            <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+                {% for entry in entries_for_cards %}
+                <div class="col d-flex">
+                    <div class="card h-100 w-100 entry-card" data-entry-id="{{ entry.id }}">
+                        <div class="card-body d-flex flex-column">
+                            <div class="d-flex justify-content-between align-items-start mb-2">
+                                <h5 class="card-title mb-0">
+                                    <a href="{% url 'entry-detail' entry.id %}" class="text-decoration-none">
+                                        {{ entry.term }}
+                                    </a>
+                                </h5>
+                                {% if user.is_authenticated %}
+                                <button class="btn btn-sm btn-outline-danger favorite-btn" 
+                                        data-entry-id="{{ entry.id }}"
+                                        title="Add to favorites">
+                                    <i class="bi bi-heart"></i>
+                                </button>
+                                {% endif %}
+                            </div>
+                            
+                            {% if entry.region_code %}
+                            <h6 class="card-subtitle mb-2 text-muted">
+                                <i class="bi bi-geo-alt"></i> {{ entry.region_code }}
+                            </h6>
+                            {% endif %}
+                            
+                            {% if entry.notes %}
+                                <p class="card-text small flex-grow-1">{{ entry.notes|truncatewords:30 }}</p>
+                            {% endif %}
+                            
+                            <!-- Entry Metadata -->
+                            <div class="entry-metadata small text-muted mt-2">
+                                <span class="entry-views" data-entry-id="{{ entry.id }}">
+                                    <i class="bi bi-eye"></i> <span class="view-count">{{ entry.view_count|default:0 }}</span>
+                                </span>
+                                {% if entry.difficulty %}
+                                <span class="ms-2">
+                                    <i class="bi bi-speedometer2"></i> {{ entry.get_difficulty_display }}
+                                </span>
+                                {% endif %}
+                            </div>
+                        </div>
+                        {% if entry.tags.all %}
+                        <div class="card-footer bg-transparent border-top-0 pt-0">
+                            <small class="text-muted">
+                            {% for tag in entry.tags.all %}
+                                <span class="badge bg-light text-dark fw-normal me-1 tag-badge" 
+                                      data-tag="{{ tag.name }}">{{ tag.name }}</span>
+                            {% endfor %}
+                            </small>
+                        </div>
+                        {% endif %}
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+            
+            <!-- Pagination for Search Results -->
+            {% if request.GET.search and is_paginated %}
+            <nav aria-label="Search results pagination" class="mt-4">
+                <ul class="pagination justify-content-center">{% if page_obj.has_previous %}<li class="page-item"><a class="page-link" href="?language={{ selected_language }}&category={{ selected_category_code }}&search={{ request.GET.search }}&page={{ page_obj.previous_page_number }}" title="Previous page" aria-label="Previous page">Previous</a></li>{% endif %}{% for num in page_obj.paginator.page_range %}{% if page_obj.number == num %}<li class="page-item active"><span class="page-link">{{ num }}</span></li>{% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %}<li class="page-item"><a class="page-link" href="?language={{ selected_language }}&category={{ selected_category_code }}&search={{ request.GET.search }}&page={{ num }}" title="Page {{ num }}" aria-label="Page {{ num }}">{{ num }}</a></li>{% endif %}{% endfor %}{% if page_obj.has_next %}<li class="page-item"><a class="page-link" href="?language={{ selected_language }}&category={{ selected_category_code }}&search={{ request.GET.search }}&page={{ page_obj.next_page_number }}" title="Next page" aria-label="Next page">Next</a></li>{% endif %}</ul>
+            </nav>
+            {% endif %}
+            
+        {% else %}
+            <div class="alert alert-info mt-3" role="alert">
+                <h4 class="alert-heading">No entries found</h4>
+                {% if request.GET.search %}
+                    <p>No results found for "{{ request.GET.search }}" in {{ current_category_name }} ({{ selected_language|upper }}).</p>
+                    <hr>
+                    <p class="mb-0">
+                        <a href="?language={{ selected_language }}&category={{ selected_category_code }}" class="btn btn-outline-info btn-sm">
+                            Clear search and browse {{ current_category_name }}
+                        </a>
+                    </p>
+                {% else %}
+                    <p>No entries found for "{{ current_category_name }}" in {{ selected_language|upper }}.</p>
+                    <p class="mb-0">Try importing more data or choose another category!</p>
+                {% endif %}
+            </div>
+        {% endif %}
+        
+    {% else %}
+        <!-- Landing State with Quick Actions -->
+        <div class="alert alert-secondary text-center mt-3">
+            <h4 class="alert-heading">Welcome to REAL LINGO!</h4>
+            <p>Please select a category above to view lingo entries.</p>
+            {% if user.is_authenticated %}
+            <hr>
+            <div class="d-flex gap-2 justify-content-center flex-wrap">
+                <a href="{% url 'user-profile' %}" class="btn btn-outline-primary btn-sm">
+                    <i class="bi bi-person"></i> My Profile
+                </a>
+                <a href="{% url 'advanced-search' %}" class="btn btn-outline-secondary btn-sm">
+                    <i class="bi bi-search"></i> Advanced Search
+                </a>
+            </div>
+            {% else %}
+            <hr>
+            <p class="mb-0">
+                <a href="{% url 'admin:login' %}" class="btn btn-outline-primary btn-sm">
+                    Sign in to track your progress
+                </a>
+            </p>
+            {% endif %}
+        </div>
+    {% endif %}
+
+    {% if selected_category_code and entries_for_cards %}
+    <div class="text-center mt-4">
+        <em class="text-muted small">
+            {% if request.GET.search %}
+                Showing search results for "{{ request.GET.search }}" in {{ current_category_name }}.
+            {% else %}
+                (Showing a random selection. Click "Show More / Refresh" for new cards.)
+            {% endif %}
+        </em>
+    </div>
+    {% endif %}
+
+{% endblock content %}
+
+{% block extra_js %}
+<script>
+// Initialize LingoWorld enhancer when page loads
+document.addEventListener('DOMContentLoaded', function() {
+    // Load user dashboard data
+    {% if user.is_authenticated %}
+    loadUserDashboard();
+    {% endif %}
+    
+    // Track page view
+    if (window.LingoWorldEnhancer) {
+        const enhancer = new window.LingoWorldEnhancer();
+        enhancer.trackUserActivity('entry_list_view', {
+            language: '{{ selected_language }}',
+            category: '{{ selected_category_code }}',
+            search_query: '{{ request.GET.search|default_if_none:"" }}',
+            entries_count: {{ entries_for_cards|length }}
+        });
+    }
+});
+
+{% if user.is_authenticated %}
+async function loadUserDashboard() {
+    try {
+        const response = await fetch('/api/v1/analytics/dashboard_stats/');
+        if (response.ok) {
+            const data = await response.json();
+            displayUserDashboard(data);
+        }
+    } catch (error) {
+        console.error('Error loading user dashboard:', error);
+    }
+}
+
+function displayUserDashboard(data) {
+    const container = document.querySelector('.user-dashboard-container');
+    if (!container) return;
+    
+    container.innerHTML = `
+        <div class="card border-0 bg-light">
+            <div class="card-body">
+                <div class="row text-center">
+                    <div class="col-md-3 col-6">
+                        <div class="stat-item">
+                            <h4 class="text-primary mb-0">${data.favorites_count || 0}</h4>
+                            <small class="text-muted">Favorites</small>
+                        </div>
+                    </div>
+                    <div class="col-md-3 col-6">
+                        <div class="stat-item">
+                            <h4 class="text-success mb-0">${data.learned_count || 0}</h4>
+                            <small class="text-muted">Learned</small>
+                        </div>
+                    </div>
+                    <div class="col-md-3 col-6">
+                        <div class="stat-item">
+                            <h4 class="text-info mb-0">${data.streak_days || 0}</h4>
+                            <small class="text-muted">Day Streak</small>
+                        </div>
+                    </div>
+                    <div class="col-md-3 col-6">
+                        <div class="stat-item">
+                            <h4 class="text-warning mb-0">${data.achievements_count || 0}</h4>
+                            <small class="text-muted">Achievements</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    `;
+}
+{% endif %}
+</script>
+{% endblock extra_js %}

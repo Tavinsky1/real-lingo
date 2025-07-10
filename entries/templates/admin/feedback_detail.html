@@ -1,0 +1,195 @@
+{% extends "admin/base_site.html" %}
+{% load static %}
+
+{% block title %}Feedback: {{ feedback.title }}{% endblock %}
+
+{% block extrahead %}
+<style>
+    .feedback-detail {
+        background: white;
+        border-radius: 8px;
+        padding: 30px;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+    .status-badge {
+        padding: 6px 12px;
+        border-radius: 6px;
+        font-size: 0.9rem;
+        font-weight: bold;
+    }
+    .status-open { background: #fff3cd; color: #856404; }
+    .status-in-progress { background: #cce5ff; color: #0056b3; }
+    .status-resolved { background: #d4edda; color: #155724; }
+    .status-closed { background: #e2e3e5; color: #495057; }
+    
+    .type-badge {
+        padding: 4px 8px;
+        border-radius: 4px;
+        font-size: 0.8rem;
+        font-weight: bold;
+    }
+    .type-bug { background: #f8d7da; color: #721c24; }
+    .type-feature { background: #d4edda; color: #155724; }
+    .type-improvement { background: #cce5ff; color: #0056b3; }
+    .type-content { background: #fff3cd; color: #856404; }
+    .type-other { background: #e2e3e5; color: #495057; }
+    
+    .info-section {
+        background: #f8f9fa;
+        border-radius: 8px;
+        padding: 20px;
+        margin-bottom: 20px;
+    }
+    
+    .admin-form {
+        background: #f8f9fa;
+        border-radius: 8px;
+        padding: 20px;
+        border: 2px solid #007bff;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h1>📝 Feedback Details</h1>
+    <a href="{% url 'admin_feedback_list' %}" class="btn btn-secondary">← Back to List</a>
+</div>
+
+<div class="feedback-detail">
+    <!-- Header Info -->
+    <div class="d-flex justify-content-between align-items-start mb-4">
+        <div>
+            <h2>{{ feedback.title }}</h2>
+            <div class="d-flex gap-2 mb-3">
+                <span class="type-badge type-{{ feedback.feedback_type }}">
+                    {{ feedback.get_feedback_type_display }}
+                </span>
+                <span class="status-badge status-{{ feedback.status }}">
+                    {{ feedback.get_status_display }}
+                </span>
+                <span class="badge bg-secondary">{{ feedback.get_priority_display }} Priority</span>
+            </div>
+        </div>
+        <div class="text-end">
+            <div><strong>Submitted:</strong> {{ feedback.created_at }}</div>
+            <div><strong>Updated:</strong> {{ feedback.updated_at }}</div>
+            <div><strong>By:</strong> {{ feedback.user.username }} ({{ feedback.user.email }})</div>
+        </div>
+    </div>
+    
+    <!-- Description -->
+    <div class="info-section">
+        <h4>Description</h4>
+        <p class="mb-0">{{ feedback.description|linebreaks }}</p>
+    </div>
+    
+    <!-- Additional Info -->
+    <div class="row">
+        {% if feedback.country_context %}
+        <div class="col-md-6">
+            <div class="info-section">
+                <h5>Related Country</h5>
+                <p class="mb-0">{{ feedback.country_context }}</p>
+            </div>
+        </div>
+        {% endif %}
+        
+        {% if feedback.page_url %}
+        <div class="col-md-6">
+            <div class="info-section">
+                <h5>Page URL</h5>
+                <p class="mb-0">
+                    <a href="{{ feedback.page_url }}" target="_blank" class="text-break">
+                        {{ feedback.page_url }}
+                        <i class="fas fa-external-link-alt ms-1"></i>
+                    </a>
+                </p>
+            </div>
+        </div>
+        {% endif %}
+    </div>
+    
+    <!-- Admin Management Form -->
+    <div class="admin-form">
+        <h4>🛠️ Admin Management</h4>
+        <form method="post">
+            {% csrf_token %}
+            <div class="row g-3">
+                <div class="col-md-4">
+                    <label for="status" class="form-label">Status</label>
+                    <select name="status" id="status" class="form-select">
+                        {% for value, label in status_choices %}
+                        <option value="{{ value }}" {% if value == feedback.status %}selected{% endif %}>{{ label }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="col-md-4">
+                    <label for="priority" class="form-label">Priority</label>
+                    <select name="priority" id="priority" class="form-select">
+                        {% for value, label in priority_levels %}
+                        <option value="{{ value }}" {% if value == feedback.priority %}selected{% endif %}>{{ label }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="col-md-4 d-flex align-items-end">
+                    <button type="submit" class="btn btn-primary">Update Status</button>
+                </div>
+            </div>
+            
+            <div class="mt-3">
+                <label for="admin_notes" class="form-label">Admin Notes</label>
+                <textarea name="admin_notes" id="admin_notes" class="form-control" rows="4" 
+                          placeholder="Internal notes about this feedback...">{{ feedback.admin_notes }}</textarea>
+                <div class="form-text">These notes are only visible to admin users.</div>
+            </div>
+        </form>
+    </div>
+    
+    <!-- Current Admin Notes Display -->
+    {% if feedback.admin_notes %}
+    <div class="info-section mt-3">
+        <h5>Current Admin Notes</h5>
+        <p class="mb-0">{{ feedback.admin_notes|linebreaks }}</p>
+    </div>
+    {% endif %}
+</div>
+
+<!-- User Information -->
+<div class="feedback-detail mt-4">
+    <h3>👤 User Information</h3>
+    <div class="row">
+        <div class="col-md-6">
+            <div class="info-section">
+                <h5>Account Details</h5>
+                <ul class="list-unstyled mb-0">
+                    <li><strong>Username:</strong> {{ feedback.user.username }}</li>
+                    <li><strong>Email:</strong> {{ feedback.user.email }}</li>
+                    <li><strong>Full Name:</strong> {{ feedback.user.first_name }} {{ feedback.user.last_name }}</li>
+                    <li><strong>Joined:</strong> {{ feedback.user.date_joined }}</li>
+                    <li><strong>Last Login:</strong> {{ feedback.user.last_login|default:"Never" }}</li>
+                </ul>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="info-section">
+                <h5>Quick Actions</h5>
+                <div class="d-flex flex-column gap-2">
+                    <a href="/admin/auth/user/{{ feedback.user.id }}/change/" class="btn btn-outline-primary btn-sm">
+                        Edit User Account
+                    </a>
+                    <a href="{% url 'admin_feedback_list' %}?user={{ feedback.user.id }}" class="btn btn-outline-secondary btn-sm">
+                        View User's Other Feedback
+                    </a>
+                    {% if feedback.page_url %}
+                    <a href="{{ feedback.page_url }}" target="_blank" class="btn btn-outline-info btn-sm">
+                        Visit Referenced Page
+                    </a>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

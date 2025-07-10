@@ -1,0 +1,826 @@
+Category,Term (Spanish),Literal Meaning,Slang Meaning (English),Usage Example (Spanish),Usage Example (English),Regional/Contextual Notes,Severity (for insults),Gender/Age Notes
+Slang,Bacán,-,A cool dude,"Ese tipo es un bacán.","That guy is a cool dude.",From adjective "bacano",N/A,Masculine
+Slang,Berraquera,-,"Determination; something or someone very good","Esa canción es una berraquera. El equipo jugó con berraquera.","That song is really good. The team played with determination.",Versatile, can be positive or negative depending on context.,N/A,N/A
+Slang,Boleta,Ticket,An embarrassing situation or person,"Ese tipo es una boleta.","That guy is an embarrassment.","Also used as exclamation ""¡Qué boleta!"" (How embarrassing!) [13]",N/A,N/A
+Slang,Caco,-,A thief,"Los cacos robaron el banco.","The thieves robbed the bank.",N/A,N/A,N/A
+Slang,Achantado/a,-,"Sad, ashamed","Jaime está achantado porque la novia lo dejó.","Jaime is sad because his girlfriend broke up with him.","Also means ""to feel embarrassed"" (achantarse) [13]",N/A,Gendered
+Slang,Amañado/a,-,"Happy in a particular place or with someone; adapted to a new situation","Estoy amañado en este barrio. Ella está muy amañada en su nuevo trabajo.","I feel at home in this neighborhood. She's really loving her new job.",N/A,N/A,Gendered
+Slang,Bacano/a,-,"Cool, awesome, very good","¡Qué bacano está el clima! Es una película bacana.","How nice the weather is! It's an excellent film.","Widely used. Can also refer to a cool person. [3, 6, 21]",N/A,Gendered
+Slang,Berraco/a,-,"Talented, angry, tough, a go-getter","Messi es un jugador muy berraco. El jefe está berraco con su equipo.","Messi is a very talented player. The boss is angry at his team.",Versatile, can be used as a noun meaning a tough person. [6],N/A,Gendered
+Slang,Cachaco/a,-,Someone from Bogota,N/A,N/A,Used for people from the capital.,N/A,Gendered
+Slang,Chato/a,Flat-nosed,Dear (term of endearment),"Mi chata, estás hermosa.","My dear, you look gorgeous.",Mostly used in Bogota.,N/A,Gendered
+Slang,Chévere,-,"Cool, nice, fantastic","Vive en Medellín. Sí. -Ah, tan chévere...","She lives in Medellin. Yes. -Oh, so cool...",Widely used throughout the country.,N/A,N/A
+Slang,Chimbo/a,-,"Cheap or bad; incredible or fantastic","¡Qué libro tan chimbo! ¡Qué chimba ese carro!","What a bad book! That car is awesome!","Highly versatile, meaning depends on context/intonation. Can be vulgar. [3, 6, 29]",N/A,Gendered
+Slang,Chiviado,-,Fake,"Ese bolso Gucci no es original, es chiviado.","That Gucci purse isn't original, it is fake.",N/A,N/A,N/A
+Slang,Inmamable,-,"Annoying, unbearable","Mi jefe me llama cada cinco minutos. ¡Es un tipo inmamable!","My boss calls me every five minutes. He is an unbearable guy!",N/A,N/A,N/A
+Slang,Jarto/a,-,"Boring, annoying; fed up","Antonio solo habla de él mismo. ¡Qué tipo tan jarto! Hoy trabajé mucho. ¡Estoy jarta!","Antonio only talks about himself. What an annoying guy! Today, I worked a lot. I'm fed up!","Also used as exclamation ""¡Qué jartera!"" (What a pain/boring!) [13]",N/A,Gendered
+Slang,Mamado/a,Sucked,"Tired, exhausted, fed up","Hoy trabajé mucho. ¡Estoy mamada! Estoy mamado de mi jefe.","Today, I worked a lot. I'm exhausted! I'm fed up with my boss.",Usually used with ""estar"".,N/A,Gendered
+Slang,Paisa,-,Someone from Medellin and the surrounding regions (coffee region),"Mi profe es paisa.","My teacher is from Medellin.","Originates from ""paisano"" (countryman) [1, 6, 8]",N/A,N/A
+Slang,Prendido/a,Lit,"Tipsy, buzzed; stoned","¡Me tomé dos tragos y ya estoy prendido!","I’ve drunk two cocktails and I’m already buzzed!",Used with ""estar"". Not fully drunk. [6, 13, 15],N/A,Gendered
+Slang,Rolo/a,-,Someone from Bogota,N/A,N/A,Used for people from the capital.,N/A,Gendered
+Slang,Tenaz,Tough,"Tough, difficult","Aprender chino es tenaz.","Learning Chinese is tough.",N/A,N/A,N/A
+Slang,Rumbear,-,"To party, to have a good time","Nos vamos a rumbear. Vamos a rumbear en tu casa.","We’re gonna party. We’re going to party at your house.",Verb form of ""rumba"" (party) [3, 13],N/A,N/A
+Slang,Caer,To fall,"To flirt, to hit on someone","Mira, ese es el chico que me está cayendo.","Look, that’s the guy who hit on me.",Used as ""me está cayendo"" or ""le estoy cayendo"". [13],N/A,N/A
+Slang,Gallinacear,To hen,"To flirt, to seek romantic conquests","Él se va a gallinacear cada fin de semana.","He goes out to find women every weekend.",Used for men trying to hit on women. [13],N/A,N/A
+Slang,Camellar,To camel,To work hard,"Mi papá necesita camellar toda la semana. No puedo salir, estoy camellando.","My dad needs to work hard all week. I can't go out, I'm working.","""Un camello"" means a job. [3, 13, 16]",N/A,N/A
+Slang,Embarrar,To smear,"To mess up, to ruin, to screw up","¡La embarré!","I messed it up!","Also ""¡Qué embarrada!"" (What a pity!) [13]",N/A,N/A
+Slang,Cuadrar,To square up,"To arrange a meeting, to organize, to schedule a date, to plan, to coordinate","Cuadremos algo para mañana.","Let’s plan something for tomorrow.",Versatile for planning. [13],N/A,N/A
+Slang,Poner los cachos,To put horns on,To cheat on someone,"Pedro descubrió que Paula le está poniendo los cachos.","Pedro found out that Paula is cheating on him.",Refers to infidelity. [13, 25],N/A,N/A
+Slang,Achantarse,To back down,"To be ashamed, to feel embarrassed","No me digas que se achantó porque se me declaró.","Don’t tell me he felt embarrassed because he told me that he loved me.",N/A,N/A,N/A
+Slang,Estar enguayabado,To be stuck in the guava tree,To be hung over,"Estoy super enguayabado.","I’m so hung over!",N/A,N/A,N/A
+Slang,Estar jincho/a,To be ignorant,To be drunk,"Ya estás todo jincho.","You are already drunk.",N/A,N/A,Gendered
+Slang,Foquiado/a,-,"Passed out, knocked out","Ella está foquiada y sigue durmiendo.","She is passed out and she’s still sleeping.",N/A,N/A,Gendered
+Slang,Estar mamando gallo,To be sucking rooster,"To be joking, to be kidding around, pulling your leg","¡Deje de mamarme gallo!","Stop pulling my leg!","Colombians love to joke around. [13, 15]",N/A,N/A
+Slang,Estar tragado/a,To be swallowed (by someone),To be head over heels in love,"Ella se tragó.","She’s got me love struck.",N/A,N/A,Gendered
+Slang,¡Qué rumba!,What a party!,"What a party! What fun!","El desfile de Carnaval fue increíble. ¡Qué rumba!","The Carnival parade was amazing. What a party!",Used to express excitement for a party. [13],N/A,N/A
+Slang,¡Qué chimba!,How cool!,"How cool! How awesome! How incredible!","¡Me gané dos entradas para el concierto! ¡Qué chimba!","I won two tickets to the concert! How cool!","Versatile, can also be negative depending on context. [3, 13]",N/A,N/A
+Slang,¡Qué berraquera!,Fantastic! Unbelievable!,"Fantastic! Unbelievable!","Te vas para Nueva York? ¡Qué berraquera! Este es el quinto paro. ¡Qué berraquera!","Are you going to New York? Fantastic! This is the fifth strike. Unbelievable!",Can be positive or negative. [13],N/A,N/A
+Slang,¡Es una nota!,It’s a note!,"It’s awesome! It’s really good!","Ella es una nota bailando.","She’s awesome at dancing.",N/A,N/A,N/A
+Slang,¡Qué oso!,How bear!,How embarrassing!,"Él llegó borracho a la reunión. ¡Qué oso!","He arrived drunk to the meeting. How embarrassing!",N/A,N/A,N/A
+Slang,¡Qué embarrada!,-,What a pity!,"Mario perdió su trabajo. ¡Qué embarrada!","Mario lost his job. What a pity!",Used to express disappointment or regret. [13],N/A,N/A
+Slang,¡Qué vaina!,What a pod!,"What a pity! That sucks!","Ayer me robaron la cartera. / ¡Qué vaina!","My wallet got stolen yesterday. / That sucks!","""Vaina"" on its own means ""thing."" [13]",N/A,N/A
+Slang,¡Qué jartera!,-,"What a pain in the butt! How boring!","¡Qué jartera esta fiesta! ¡Qué jartera hacer fila!","This party is so boring! What a hassle to wait in line!",Used when something is tiresome or annoying. [13, 16],N/A,N/A
+Slang,¡Qué gonorrea!,What gonorrhea!,"Damn, Motherfucker; can be positive or negative","Mira a este gonorrea. ¡Qué gonorrea de película!","Look at this dude. That movie sucks!","Used often, best with close friends/family. [13, 29]",Moderate to Strong,N/A
+Slang,¡Paila!,A frying pan,"Too bad! Screwed; bad luck, tough situation","Quería boletos, pero ya agotados, así que paila. Se me perdió el celular, paila.","I wanted tickets, but they were sold out, so I’m screwed. I lost my phone, I'm out of luck.",N/A,N/A,N/A
+Slang,Tener pecueca,To have hoof,To have stinky feet,"Juan tiene pecueca.","Juan has stinky feet.",N/A,N/A,N/A
+Slang,Hacer chichí,-,To pee,"Necesito hacer chichí.","I need to wee.",Common for ""pee pee"". [13],N/A,N/A
+Slang,¡Fúchile!,Eww, Yuck,Eww, Yuck,"¡Fuchile! Huele a orina de gato.","Eww, it smells like cat urine.",Used for bad smells, not physically gross things. [13],N/A,N/A
+Slang,Chino,A Chinese person,Child, kid,"Mis chinos siempre se comportan mal.","My kids are always misbehaving.","Also used for ""friend"" or ""buddy"" [13, 18, 19]",N/A,N/A
+Slang,Los tombos,-,"The police, the cops","Ya vienen los tombos.","The cops are coming.",Typical Colombian term. [1, 13],N/A,N/A
+Slang,El parche,The patch,"Posse, friend group, peeps","El sábado estaremos en el parque con el parche.","On Saturday we’ll be at the park with our peeps.",Close group of friends. [13, 18, 20],N/A,N/A
+Slang,Dar papaya,To give papaya,"To make yourself an easy target; to give opportunity for something negative","No des papaya dejando la puerta abierta.","Don't make yourself an easy target by leaving the door open.",Advises caution. [3, 17, 18, 25, 27, 28],N/A,N/A
+Slang,Sacar la piedra,To get the stone out,To make someone angry,"El tráfico me saca la piedra todos los días.","Traffic makes me angry every day.",Humorous and expressive. [25],N/A,N/A
+Slang,Meter la pata,To put the paw in,To make a mistake,N/A,N/A,"Funny and casual. [25]",N/A,N/A
+Slang,A otro perro con ese hueso,To another dog with that bone,"Don't believe their lie; don't try to fool me","A otro perro con ese hueso, sé que no fuiste al gimnasio.","Don't try to fool me, I know you didn't go to the gym.",Humorous way to express disbelief. [25],N/A,N/A
+Slang,Comerse el cuento,To eat the story,"To fall for a lie; believe something untrue","Se comió el cuento de que los exámenes eran fáciles.","He fell for the lie that the exams were easy.",N/A,N/A,N/A
+Slang,Pintar pajaritos en el aire,To paint little birds in the air,"To create unrealistic expectations; give false hopes","No me pintes pajaritos en el aire, sé honesto.","Don't give me false hopes, be honest.",Humorous. [25],N/A,N/A
+Slang,Tener pereza,To have laziness,To humorously express laziness or reluctance,"Tengo pereza de levantarme temprano mañana.","I'm too lazy to get up early tomorrow.",N/A,N/A,N/A
+Slang,Tomar el pelo,To take the hair,"To tease or joke with someone; pull your leg","Miguel no se ganó la lotería, él estaba tomándote el pelo.","Miguel didn't win the lottery, he was pulling your leg.",Classic Colombian idiom. [25, 30],N/A,N/A
+Slang,Echarse un polvo,To throw oneself a powder,To have sex,N/A,N/A,"Casual, humorous. [25]",N/A,N/A
+Slang,Costar un ojo de la cara,To cost an eye of the face,To be very expensive,N/A,N/A,N/A,N/A,N/A
+Slang,Llevar del bulto,To carry from the bundle,"To unfairly take the blame; to get the worst of a situation","Siempre llevo del bulto cuando mis hermanos hacen travesuras.","I always get the blame when my siblings cause trouble.",Humorous. [15, 25],N/A,N/A
+Slang,Hacer una vaca,To make a cow,To pool money from a group,N/A,N/A,"Usually for casual events. [15, 18, 25]",N/A,N/A
+Slang,Ser la oveja negra,To be the black sheep,To be the ""black sheep"" of the family,"Siempre me han visto como la oveja negra.","They've always seen me as the black sheep.",Often used humorously. [25],N/A,N/A
+Slang,Caer gordo/a,To fall fat,To not like someone,"Ese tipo me cae gordo, nunca para de hablar.","I don't like that guy, he never stops talking.",Often used in social humor. [25],N/A,Gendered
+Slang,Tirar la casa por la ventana,To throw the house out the window,To go all out, usually for a celebration,N/A,N/A,N/A,N/A,N/A
+Slang,Tener los pies en la tierra,To have feet on the ground,To be realistic and level-headed,"Es bueno tener los pies en la tierra cuando haces planes.","It's good to stay grounded when making plans.",N/A,N/A,N/A
+Slang,No tener pelos en la lengua,To not have hairs on the tongue,To speak frankly or bluntly,"No tiene pelos en la lengua cuando habla de política.","He speaks frankly when talking about politics.",Often used humorously. [25],N/A,N/A
+Slang,Dar en el clavo,To hit the nail,"To hit the nail on the head; say something exactly right",N/A,N/A,N/A,N/A,N/A
+Slang,¿Quiubo?,What was there? (Contraction of ¿Qué hubo?),What's up? What's happening?,"¿Quiubo mamá, todo bien? ¿Quihubo parce?","What’s up, mom, everything good? What's up, buddy?","Originated in Paisa dialect, now widespread. [3, 7, 28]",N/A,N/A
+Slang,Mi llave,My key,A very close friend,"Voy a salir a comer con mi llave.","I’m going out to eat with my friend.","Colombians call close friends ""llavero."" [3, 6]",N/A,N/A
+Slang,Parar bola,To stop ball,To pay attention,"Parame bola que te estoy hablando.","Pay attention, I’m talking to you.",N/A,N/A,N/A
+Slang,Parchando,-,Hanging out with friends; chilling,"Estamos parchando en el centro comercial.","We’re hanging out at the mall.",From ""parcharse"". [3, 18],N/A,N/A
+Slang,Polas,-,Beers,"Vamos a tomarnos unas polas.","Let’s have some beers.",References a famous beer distributor. [3, 8, 18, 19],N/A,N/A
+Slang,Juepucha,-,"Wow! Expression of surprise or astonishment","¡Ay juepucha! Me gané el premio de la lotería.","Oh, wow! I won the lottery prize!",Can also express anger. [3, 14],N/A,N/A
+Slang,¡Nanay cucas!,-,No way!,N/A,N/A,N/A,N/A,N/A
+Slang,Qué más pues,What else then,"Hello, how are you? What's up?","¡Hola! ¿Qué más?","Hi! What's up!","Very common greeting, especially in Medellin. [3, 16, 17, 28]",N/A,N/A
+Slang,Culicagao,-,Spoiled child; toddler,"Ese culicagao ya sabe usar un smartphone.","That toddler already knows how to use a smartphone.",Playful term for very young children. [3, 19],N/A,N/A
+Slang,Líchigo,-,"Stingy, tight-fisted, cheap, shabby",N/A,N/A,N/A,N/A,N/A
+Slang,Las hace bomba,Makes them bomb,To do things quickly,N/A,N/A,N/A,N/A,N/A
+Slang,Engalleta,-,To charm,N/A,N/A,N/A,N/A,N/A
+Slang,Rabón,-,"Unpleasant, unfriendly",N/A,N/A,N/A,N/A,N/A
+Slang,Bizcocho,Biscuit/Cake,Pretty, beautiful,N/A,N/A,N/A,N/A,N/A
+Slang,Mono/a,Monkey,"Blonde; light-skinned person; foreigner","Bueno, y ¿quién era ese mono, todo así papacito? Hola, mono. ¿Bien o no?","Well, and who was that blonde guy, all hot like that? Hey, ""foreigner"". What's up?","Can refer to hair/skin color, or a foreigner. [3, 6, 8, 15, 19]",N/A,Gendered
+Slang,Emberraca,-,To get angry,"Los huéspedes se emberracaron cuando vieron la habitación.","The guests got angry when they saw the room.",N/A,N/A,N/A
+Slang,Hágale,Do it,"It's okay, it's fine; go for it","¿Vamos al mercado? – ¡De una! ¡Hágale!","Shall we go to the market? – For sure! Go for it!",Used to agree or encourage. [3, 28],N/A,N/A
+Slang,Maqueta,Model/Maquette,Bad student,N/A,N/A,N/A,N/A,N/A
+Slang,Escamoso,Scaly,Conceited, arrogant,N/A,N/A,N/A,N/A,N/A
+Slang,Descache,-,A mistake, blunder, or faux pas,"El chiste de Ricardo fue un descache.","Ricardo's joke was a faux pas.","Verb form ""descacharse"" often used in soccer for missing a chance. [6]",N/A,N/A
+Slang,Gallinazo,Vulture,A man who likes to flirt,N/A,N/A,[6],N/A,Masculine
+Slang,Gomelo/a,-,A snob,"Esa universidad está llena de gomelos.","That university is full of snobs.","Young, rich, loud, arrogant. [6]",N/A,Gendered
+Slang,Guachafita,-,"Chaos, disorder","""¡Qué guachafita!"", dijo el profesor.",""What chaos!"" said the teacher.",N/A,N/A,N/A
+Slang,Guache,-,A very rude or poor-mannered person,"El esposo de Claudia grita todo el tiempo. ¡Es un guache!","Claudia's husband screams all the time. He is a very rude person!",N/A,N/A,N/A
+Slang,Man,Man (English),"Guy, dude","Ese man es muy inteligente. Ese man siempre está en la tienda de la esquina.","That guy is really smart. That guy is always at the corner store.","Adaptation of English ""man"". [6, 19, 20]",N/A,Masculine
+Slang,Mecato,-,Snacks,N/A,N/A,Group of different snacks like cookies or chips. [6],N/A,N/A
+Slang,Miércoles,Wednesday,Shoot, oops,N/A,N/A,Euphemism to avoid ""mierda"". [6],N/A,N/A
+Slang,Motoso,-,A nap,"Tengo ganas de echarme un motoso.","I feel like taking a nap.",N/A,N/A,N/A
+Slang,¡De Una!,Of one,"Right away! For sure! Definitely!","¿Vamos al mercado? – ¡De una!","Shall we go to the market? – For sure!",Used to approve an idea or request. [15, 16, 17, 18, 20, 28],N/A,N/A
+Slang,A la orden!,At the order,"At your service; How can I help you?","A la orden!","At your service!",Common phrase for vendors/waiters. [17, 28],N/A,N/A
+Slang,¿Qué más?,What else?,"What's up? How are you?","¡Hola! ¿Qué más?","Hi! What's up!",Common informal greeting. [16, 18, 20, 28],N/A,N/A
+Slang,Pues,Well,Well (filler word, intensifier),"¡Pues hágale pues!","Well, do it already!",Widely used, especially in Medellin. [2, 28],N/A,N/A
+Slang,A lo bien,To the good,Seriously, truly,"Nunca he ido al playa, a lo bien, nunca iré.","I've never been to the beach, seriously, I never will.",N/A,N/A,N/A
+Slang,¡Qué pena con usted!,What a shame with you!,Sorry!,N/A,N/A,[2, 28],N/A,N/A
+Slang,Su merced,Your mercy,"You (formal, respectful)","Y su merced, ¿qué dice?","And you, what do you say?","Used in Cundinamarca and Boyacá, replaces ""usted"". [7, 28]",N/A,N/A
+Slang,¡Qué nota!,What a note!,"How amazing! It's awesome!","Ella es una nota bailando.","She's awesome at dancing.",N/A,N/A,N/A
+Slang,¡Oigan a este!,Listen to this one!,"Listen to this guy! (implies mockery/incredulity)",N/A,N/A,[28],N/A,N/A
+Slang,Por si las moscas,For if the flies,Just in case,"Voy a ahorrar mi dinero este verano por si las moscas.","I'm going to save my money this summer just in case.",N/A,N/A,N/A
+Slang,¡Qué pereza!,What laziness!,"What a bummer! I don't feel like it!","¿No tienes ganas de ir a la fiesta esta noche? ¡Qué pereza!","Don't you feel like going to the party tonight? What a bummer!",Expresses reluctance or annoyance. [28],N/A,N/A
+Slang,¿Sí pilla?,Do you catch?,"See that? Do you get it?","Ese tipo parece sospechoso, ¿sí pilla?","That guy looks suspicious, do you get it?",[25, 28],N/A,N/A
+Slang,No seas bobo,Don't be silly,Don't be silly/foolish,N/A,N/A,[28],N/A,N/A
+Slang,Todo bien,All good,All good,N/A,N/A,[28],N/A,N/A
+Slang,Ni fu ni fa,Neither fu nor fa,"So so; neither here nor there",N/A,N/A,[28],N/A,N/A
+Slang,Estar en la jugada,To be in the play,To be in the loop,N/A,N/A,[28],N/A,N/A
+Slang,Gas,Gas,Yuck,N/A,N/A,Expresses disgust. [28],N/A,N/A
+Slang,Echar cantaleta,To throw a lecture,To nag,N/A,N/A,[28],N/A,N/A
+Slang,Juicioso,Judicious,Well behaved,N/A,N/A,[28],N/A,N/A
+Slang,Trancón,-,Traffic jam,"Sal temprano, seguro hay trancón. Duré una hora en el trancón.","Leave early, there's probably traffic. I was stuck in traffic for an hour.",Common in Bogotá. [16],N/A,N/A
+Slang,Mañé,-,"Distasteful, tacky",N/A,N/A,Common in Antioquia/Coffee Triangle. [23],N/A,N/A
+Slang,Mera vuelta,Pure turn,Something difficult to do or accomplish,N/A,N/A,Common in Antioquia/Coffee Triangle. [23],N/A,N/A
+Slang,Barras,Bars,Colombian pesos,N/A,N/A,Common on the Caribbean Coast. [23],N/A,N/A
+Slang,Cipote,-,"Very, huge (used to intensify)","¡Cipote almuerzo!","What an incredible lunch!",Common on the Caribbean Coast. [23],N/A,N/A
+Slang,Cucho/a,-,"Affectionate term for an older person, older friend, or mother","Cucho, cuéntame una historia.","Old man, tell me a story.",N/A,N/A,"Gendered, age-specific"
+Slang,Pelados,Peeled,"Young people, kids, teenagers","Ese pelado es muy inteligente para su edad.","That kid is really smart for his age.",N/A,N/A,Age-specific
+Slang,Culicagao,-,Toddler (playful),"Ese culicagao ya sabe usar un smartphone.","That toddler already knows how to use a smartphone.",N/A,N/A,Age-specific
+Slang,Vieja,Old woman,Woman (casual term),"Esa vieja está muy linda.","This woman is pretty.","Used for women aged approx. 15-50. [19, 20]",N/A,"Feminine, age-specific"
+Slang,Pipí Loco,Crazy pee,"Womanizer; guy who flirts with every girl","No le prestes atencíon. El es pipí loco.","Don't pay attention to him. He is a womanizer.",N/A,N/A,Masculine
+Slang,Reina,Queen,Queen (term of endearment for a woman),"Hola, reina, ¿quieres salir a cenar?","Hello, queen, do you want to go out for dinner?",N/A,N/A,Feminine
+Slang,Princesa,Princess,Princess (term of endearment for a cherished woman/daughter),"Buenos días, princesa.","Good morning, princess.",N/A,N/A,Feminine
+Slang,Bacanería,-,"Something very cool; a very kind and fun person","La comida en ese lugar fue una bacanería.","The food at that place was a bacanería.",N/A,N/A,N/A
+Slang,Chatear,-,To chat (from English),N/A,N/A,English word with Spanish verb ending. [13],N/A,N/A
+Slang,Chicanear,-,To brag,N/A,N/A,"A person who brags is 'chicanera/o'. [23]",N/A,N/A
+Slang,Churro,Churro (pastry),Someone who is very good looking,N/A,N/A,[23],N/A,N/A
+Slang,Onces,Elevens,Snack taken mid-morning or afternoon,"Comer onces.","To have a snack.",A common Colombian tradition. [21, 23],N/A,N/A
+Slang,Recocha,-,"Loud and disorderly fun setting; ruckus",N/A,N/A,[21],N/A,N/A
+Slang,Salar,To salt,To have or inflict terrible luck; to curse,N/A,N/A,[21],N/A,N/A
+Slang,Vaca (make one),To make a cow,"To collect money for a specific purpose; have a whip round",N/A,N/A,[21],N/A,N/A
+Slang,¡Eh, Ave María, pues!,Eh, Hail Mary, then!,"Interjection to express intensity (admiration, joy, anger)",N/A,N/A,Common in Antioquia/Coffee Triangle. [23],N/A,N/A
+Slang,Comelluvias,Raindrop eater,A person with a significant overbite,N/A,N/A,[14],N/A,N/A
+Slang,Mondaaa,-,I just remembered or realized something bad.,N/A,N/A,[14],Moderate,N/A
+Slang,¡Verga!,Penis,Fuck!,N/A,N/A,[14],Strong,N/A
+Slang,¡Puta!,Whore,Fuck!,N/A,N/A,"Can also mean ""fucking"" as an intensifier. [14]",Strong,N/A
+Slang,Joda,-,"Ugh, oh shit; thing",N/A,N/A,"Meaning depends on intonation. [14]",Mild to Moderate,N/A
+Slang,Seas marica,Be faggot,You're shitting me right?,N/A,N/A,"Can be offensive or friendly depending on context. [14]",Context-Dependent,N/A
+Slang,X de mierda,X of shit,"Fucking X, damned X","Perros de mierda.","Fucking dogs.","Stronger than just ""mierda"". [14]",Strong,N/A
+Slang,Hijueputa x,Son of a bitch X,"Fucking X, damned X (very strong)",N/A,N/A,"Very strong. [14]",Very Strong,N/A
+Slang,Mogolico,Mongoloid,Dumb, retard,N/A,N/A,[14],Offensive,N/A
+Slang,Puñeta,Fist/Masturbation,Fucking fuck (Puerto Rican),N/A,N/A,Not specific to Colombia. [14],Strong,N/A
+Slang,Carajo,Male genitalia,Fuck!,N/A,N/A,"Can be used by itself to mean ""fuck"". [14, 31]",Moderate,N/A
+Slang,Coño,Cunt,Fuck! Damn!,"¡Coño! ¡Qué dolor! ¡Coño, qué bien te queda ese vestido!","Fuck! That hurt! Damn, that dress looks great on you!","Used as interjection of surprise, displeasure, admiration, pain. [14, 31, 32]",Moderate,N/A
+Slang,Me cago en la madre,I shit on the mother,Fuck your mother! Damn it!,N/A,N/A,"Very strong expression of disregard. [14, 31]",Very Strong,N/A
+Slang,Cabron,Cuckold,Fucker (Puerto Rican),N/A,N/A,Not specific to Colombia. [14],Strong,N/A
+Slang,Vete a coger por culo,Go to take by ass,Go fuck yourself (Puerto Rican),N/A,N/A,Not specific to Colombia. [14],Very Strong,N/A
+Slang,Mamabicho,Dick sucker (Puerto Rican),Cocksucker,N/A,N/A,Not specific to Colombia. [14],Very Strong,N/A
+Slang,Jodete,Fuck yourself,Fuck yourself,N/A,N/A,[14],Strong,N/A
+Slang,La concha de tu madre,Your mother's shell/cunt,"Fuck you! Fuck! (Rioplatense)",N/A,N/A,Not specific to Colombia. [14],Very Strong,N/A
+Slang,La puta que te parió,The whore that birthed you,"Fuck you! Motherfucker!",N/A,N/A,"Used when something bad happens. [14]",Very Strong,N/A
+Slang,No me rompas las bolas/pelotas,Don't break my balls,"You're fucking with me/joking/no way",N/A,N/A,[14],Moderate,N/A
+Slang,Boludo,Big-balled,"Dumbass; dude (among friends)",N/A,N/A,"Not specific to Colombia, but mentioned. [14]",Context-Dependent,N/A
+Slang,Pelotudo,Big-balled,Dumber than boludo,N/A,N/A,"Not specific to Colombia, but mentioned. [14]",Strong,N/A
+Slang,Gil,Foolish,"Fool, simpleton",N/A,N/A,"Not specific to Colombia, but mentioned. [14]",Mild,N/A
+Slang,Estar al horno,To be in the oven,To be fucked (figurative),N/A,N/A,[25],N/A,N/A
+Slang,Estar al horno con papas,To be in the oven with potatoes,To be really fucked,N/A,N/A,[25],N/A,N/A
+Colloquial Phrase,No saber ni papa de algo,Not knowing a potato about something,Having zero knowledge about something,N/A,N/A,[30],N/A,N/A
+Colloquial Phrase,Tirar / Botar la casa por la ventana,To throw the house out of the window,To go all out (for a celebration),N/A,N/A,[30],N/A,N/A
+Colloquial Phrase,Ponerse las pilas,To put on the batteries,To get to work, to get serious, to become alert,N/A,N/A,[30],N/A,N/A
+Colloquial Phrase,Ser pan comido,To be eaten bread,To be a piece of cake (easy),N/A,N/A,[30],N/A,N/A
+Colloquial Phrase,Hacer su agosto,To make one's August,To make hay while the sun shines; to take advantage of a good situation,N/A,N/A,[30],N/A,N/A
+Colloquial Phrase,Estar vivito y coleando,To be alive and wagging,To be alive and kicking,N/A,N/A,[30],N/A,N/A
+Colloquial Phrase,Creerse la última Coca-Cola del desierto,To think of oneself as the last Coca-Cola in the desert,"To be arrogant, cocky, think highly of oneself","Ella es tan mandona y arrogante, se cree la ultima Coca-Cola del desierto.","She is so bossy and cocky, she thinks she's the shit.",N/A,N/A,N/A
+Colloquial Phrase,Feliz como una lombriz,Happy as a worm,Happy as a clam,"Mi hermana estaba feliz como una lombriz cuando compró su nuevo apartamento.","My sister was happy as a clam when she bought her new flat.",N/A,N/A,N/A
+Colloquial Phrase,Aunque la mona se vista de seda, mona se queda,Though the monkey dresses in silk, it remains a monkey,"Superficial changes don't alter true nature; all show and no go",N/A,N/A,[30],N/A,N/A
+Colloquial Phrase,El burro hablando de orejas,The donkey talking about ears,The pot calling the kettle black,"¡No me digas que hacer! Qué gracioso, el burro hablando de orejas.","Don't tell me what to do! How funny, the pot calling the kettle black.",N/A,N/A,N/A
+Colloquial Phrase,Tener mala leche,To have bad milk,To have bad luck,"Después del divorcio, Andrés perdió su trabajo. ¡Que mala leche tiene!","After the divorce, Andrés lost his job. What bad luck the poor guy has!",N/A,N/A,N/A
+Colloquial Phrase,Estar loco como una cabra,To be crazy as a goat,To be nuts, crazy, out of one's mind,"Él está pensando en subir El Monte Everest... está loco como una cabra.","He's thinking about climbing Mount Everest... he's nuts!",N/A,N/A,N/A
+Colloquial Phrase,Dar lata,To give can,To bother, to annoy,"La hermana de Jessica siempre le da lata.","Jessica's sister always drones on.",N/A,N/A,N/A
+Colloquial Phrase,No le cabe ni un tinto,Not even a tinto fits,"A place is so crowded that not even a cup of coffee can make it in",N/A,N/A,N/A,N/A,N/A
+Colloquial Phrase,Como Pedro por su casa,Like Peter in his own house,"Someone acts as if they own the place",N/A,N/A,N/A,N/A,N/A
+Colloquial Phrase,Lo que no mata, engorda,What doesn't kill, fattens,"Even if your food falls to the ground, the worst that can happen after eating it is getting fat",N/A,N/A,N/A,N/A,N/A
+Colloquial Phrase,¿Durmió conmigo anoche o qué?,"Did you sleep with me last night or what?",Used when someone enters a place without greeting,N/A,N/A,N/A,N/A,N/A
+Colloquial Phrase,Tengo un filo, que si me agacho me corto,"I have a blade, if I bend over I cut myself",You are very hungry,N/A,N/A,N/A,N/A,N/A
+Colloquial Phrase,Uyy, ¿quién pidió pollo?,Uyy, who ordered chicken?,Used to joke around or flirt with friends when someone handsome/pretty approaches or passes by,N/A,N/A,N/A,N/A,N/A
+Colloquial Phrase,No me abra los ojos que no le voy a echar gotas,"Don't open your eyes like that I am not going to put eyedrops on them",Used when someone doesn't like you -or doesn't like something you said-,N/A,N/A,N/A,N/A,N/A
+Colloquial Phrase,¿Qué come que adivina?,What do you eat that you guess?,Used when someone guesses what you are thinking or about to say,N/A,N/A,N/A,N/A,N/A
+Colloquial Phrase,El que tiene tienda que la atienda,He who has a shop should attend to it,"If you have something, take care of it",N/A,N/A,N/A,N/A,N/A
+Colloquial Phrase,Le cuento el milagro pero no el santo,"I tell you the miracle but not the saint",They would tell you the 'secret' or 'gossip' but not who told them,N/A,N/A,N/A,N/A,N/A
+Colloquial Phrase,Colgó los guayos,(He or she) hung the soccer shoes,Someone died,N/A,N/A,N/A,N/A,N/A
+Colloquial Phrase,¡Que entre el diablo y escoja!,"Let the devil come and choose!",You have two options but you don't like any, basically, you are screwed either way,N/A,N/A,N/A,N/A,N/A
+Colloquial Phrase,Es pan comido,It's an eaten bread,It's a piece of cake,N/A,N/A,N/A,N/A,N/A
+Colloquial Phrase,Virgen del agarradero (agárrame a mi primero),"Virgin of the handgrip (grab me first)",A funny way of saying ""oh my God"" or ""God, save me!"" when afraid,N/A,N/A,N/A,N/A,N/A
+Colloquial Phrase,Lo que le diga es mentira,Whatever I tell you is a lie,Used to indicate uncertainty or inability to provide a definitive answer,N/A,N/A,N/A,N/A,N/A
+Joke,Más aburrido que mico en un bonsái,-,"More bored than a monkey in a bonsai tree",N/A,N/A,"Other variations: ""más aburrido que un caballo en un balcón"", ""más aburrido que burro en canoa"". [26]",N/A,N/A
+Joke,Más rápido que peluquear un calvo,-,"Faster than giving a haircut to a bald guy",N/A,N/A,[26],N/A,N/A
+Joke,Más cansón que una tostada en un brasier,-,"More annoying than a slice of toast in your bra",N/A,N/A,"Alternatives: ""más cansón que piña entre los calzoncillos"". [26]",N/A,N/A
+Joke,Más largo que una semana sin carne,-,"Longer than a week without meat",N/A,N/A,"Reflects meat-centric diet. [26, 40]",N/A,N/A
+Joke,Más mamado que chupo de guardería,-,"More 'sucked' than a pacifier in a nursery, meaning completely exhausted or fed up",N/A,N/A,N/A,N/A,N/A
+Joke,Más raro que un perro a cuadros,-,"Stranger than a checkered dog",N/A,N/A,"Other variations: ""más raro que un japonés con rastas"", ""más raro que una sandía con huesos"". [26]",N/A,N/A
+Joke,Más feo que un carro por debajo,-,"Uglier than the underside of a car",N/A,N/A,"Similar: ""Más feo que pisar mierda descalzo"". [26, 27]",N/A,N/A
+Joke,Más tragado que calzoncillo de torero,-,"More 'swallowed' than a bullfighter's underwear, referring to being head-over-heels in love",N/A,N/A,"Plays on double meaning of ""tragado"". [26]",N/A,N/A
+Joke,Más cerrado que culo de muñeca,-,"More 'closed' than a doll's ass, describing someone who is not interactive",N/A,N/A,N/A,N/A,N/A
+Joke,Más bravo que un tigre sin desayunar,-,"Angrier than a tiger that's not had breakfast",N/A,N/A,N/A,N/A,N/A
+Joke,Más prendido que arbolito de navidad,-,"More lit up than a Christmas tree, meaning very tipsy",N/A,N/A,N/A,N/A,N/A
+Unique Concept,Tinto,Black coffee,"Small cup of black coffee (not red wine)",N/A,N/A,"Ubiquitous beverage, reflects coffee culture. [3, 15, 17, 18, 22, 23, 41]",N/A,N/A
+Unique Concept,Arepa,Circular corn cake,A staple food in Colombia with regional variations,N/A,N/A,"Eaten any time of day; e.g., plain white, cheese-filled, ""Arepa de Huevo"". [22]",N/A,N/A
+Unique Concept,Ñapa,-,"A little ""extra"" given for free by a vendor, as a kind gesture",N/A,N/A,"Common practice, reflects generosity and informal bargaining. [18, 22]",N/A,N/A
+Unique Concept,Rumba,Cuban music and dance style,"Party or fiesta",N/A,N/A,"Lively celebrations with dancing, music, aguardiente. Verb ""rumbear"" means to party. [3, 15, 20, 22]",N/A,N/A
+Unique Concept,Tejo,-,"Colombia's national sport: throwing a metal puck at a gunpowder target for an explosion",N/A,N/A,"Often accompanied by drinking beer; losing team pays. [41, 42]",N/A,N/A
+Unique Concept,Día de las Velitas,-,Day of the Little Candles (Christmas tradition),N/A,N/A,"December 7th. [22, 41]",N/A,N/A
+Unique Concept,La Novena de Aguinaldos,-,Nine days of carols and prayers before Christmas,N/A,N/A,"December 16th to Christmas Eve. Families gather. [22, 41]",N/A,N/A
+Unique Concept,Buñuelos,-,Fried dough balls (Christmas food),N/A,N/A,"Traditional Christmas food. [22, 41]",N/A,N/A
+Unique Concept,Natilla,-,Type of custard (Christmas food),N/A,N/A,"Traditional Christmas food. [22, 41]",N/A,N/A
+Unique Concept,New Year's Traditions,-,"Eating 12 grapes, yellow underwear, lentils in pockets, suitcase around the block",N/A,N/A,"For wishes, luck, abundance, travel. [41, 43]",N/A,N/A
+Unique Concept,Quemar el Año Viejo,-,"Burning a scarecrow-like doll at midnight on New Year's Eve",N/A,N/A,"To ward off negativity. [41, 43]",N/A,N/A
+Unique Concept,Cheese Consumption,-,"Combination of cheese with sweet dishes (e.g., in hot chocolate or fruit salads)",N/A,N/A,"Peculiar but widespread practice. [22, 41]",N/A,N/A
+Unique Concept,Menú del Día,-,"Common, budget-friendly lunch menu (soup, main course, juice, dessert)",N/A,N/A,"Found throughout the country. [41]",N/A,N/A
+Unique Concept,Voseo,-,"Use of ""vos"" instead of ""tú"" for ""you""",N/A,N/A,"Characteristic of Paisa Region and Valle del Cauca. [7]",N/A,N/A
+Unique Concept,Su merced,Your mercy,"Formal second-person singular pronoun, often pronounced ""su mercé""","Y su merced, ¿qué dice?","And you, what do you say?","Used in Cundinamarca and Boyacá, replaces ""usted"". [7, 28]",N/A,N/A
+Unique Concept,Accent Features (Rolo/Cachaco),-,Clarity and prestige; preserves syllable-final /s/, 'll'/'y' distinction,N/A,N/A,"Bogotá dialect. [1, 2, 7]",N/A,N/A
+Unique Concept,Accent Features (Costeño),-,Faster speech; aspiration/deletion of syllable-final /s/; velar word-final /n/,N/A,N/A,"Caribbean/Coastal dialects. [5, 7]",N/A,N/A
+Unique Concept,Accent Features (Chocó),-,African influences in rhythm and intonation,N/A,N/A,"Pacific dialect. [1, 7]",N/A,N/A
+Unique Concept,Diminutives and Augmentatives,-,"Suffixes altering size, tone (affection, anger, politeness); usage varies by region",N/A,N/A,N/A,N/A,N/A
+Unique Concept,Indirect Communication,-,"More information conveyed through body language and context; protects relationships/face",N/A,N/A,"""I will have to see"" might implicitly mean ""no"". [11, 12]",N/A,N/A
+Unique Concept,The ""Pues"" Particle,Well,"Filler word, casual conversational tag, or intensifier",N/A,N/A,"Frequently added to end of sentences, especially in Medellín. [2, 28]",N/A,N/A
+Tongue Twister,Erre con erre cigarro, erre con erre barril. Rápido corren los carros, cargados de azúcar del ferrocarril.,N/A,R with R cigar, R with R barrel. Quickly run the cars, loaded with sugar from the railway.,N/A,N/A,"Staple for practicing 'r' sounds. [35, 36, 37]",N/A,N/A
+Tongue Twister,Pepe pecas pica papas con un pico.,N/A,Pepe Freckles picks potatoes with a pick.,N/A,N/A,"Challenges rapid repetition of 'p' and 'k' sounds. [35, 37]",N/A,N/A
+Tongue Twister,Cuando cuentes cuentos, cuenta cuantos cuentos cuentas, cuando cuentes cuentos.,N/A,When you tell stories, count how many stories you tell, when you tell stories.,N/A,N/A,"Focuses on 'c' and 'q' sounds and rhythm. [35, 36]",N/A,N/A
+Tongue Twister,El que poco coco come, poco coco compra. Como poco coco como, poco coco compro.,N/A,Whoever eats few coconuts, buys few coconuts. As I eat few coconuts, I buy few coconuts.,N/A,N/A,"Excellent for practicing 'co' and 'po' sounds. [35, 38]",N/A,N/A
+Tongue Twister,Tres tristes tigres tragaban trigo en un trigal.,N/A,Three sad tigers swallowed wheat in a wheat field.,N/A,N/A,"Classic for 'tr' and 'r' sounds. [35, 36, 37]",N/A,N/A
+Tongue Twister,Pablito clavó un clavito en la calva de un calvito, en la calva de un calvito, clavó un clavito Pablito.,N/A,Pablito hammered a little nail into a bald man's bald spot, into a bald man's bald spot, Pablito hammered a little nail.,N/A,N/A,"Plays on 'cl' and 'v' sounds. [37, 39]",N/A,N/A
+Tongue Twister,Un burro comía berros y el perro se los robó.,N/A,A donkey was eating watercress and the dog stole them.,N/A,N/A,"Helps with 'b' and 'r' sounds. [35, 36]",N/A,N/A
+Tongue Twister,Mariana Magaña desenmarañará mañana la maraña que enmarañara Mariana Magaña.,N/A,Mariana Magaña will untangle tomorrow the tangle that Mariana Magaña had tangled.,N/A,N/A,"Challenging due to repetition of 'ñ' and 'm' sounds. [35]",N/A,N/A
+Tongue Twister,Lado, ledo, lido, lodo, ludo, decirlo al revés lo dudo. Ludo, lodo, lido, ledo, lado, ¡Qué trabajo me ha costado!,N/A,"Lado, ledo, lido, lodo, ludo, I doubt I can say it in reverse. Ludo, lodo, lido, ledo, lado, that's hard work!",N/A,N/A,"Focuses on vowel sounds and 'l' sound. [36]",N/A,N/A
+Tongue Twister,Ñoño Yáñez come ñame en las mañanas con el niño.,N/A,Ñoño Yáñez eats yams in the mornings with the boy.,N/A,N/A,"Ideal for practicing unique 'ñ' sound. [36]",N/A,N/A
+Tongue Twister,No me mires, que miran que nos miramos. Miremos la manera de no mirarnos. Mira, no nos miremos. Y cuando no nos miren, nos miraremos.,N/A,Don't look at me, for they see that we look at each other. Let's find a way not to look at each other. Look, let's not look at each other. And when they don't look at us, we'll look at each other.,N/A,N/A,"Works on 'm' and 'r' sounds. [35]",N/A,N/A
+Insult,Hijueputa / Jueputa,Son of a whore,"Son of a bitch; expression of anger, fear, dissatisfaction, surprise, intense emotion",Ese hijueputa me mintió. ¡Jueputa!,"That son of a bitch lied to me. Fuck! (very angry)",Very common in Colombia, strong insult. [14, 29, 32],"Strong to Very Strong",N/A
+Insult,Gonorrea,Gonorrhea (disease),"Unpleasant/disagreeable person; damn (for a bad situation)",Es que ese man es muy gonorrea parce. ¡Qué gonorrea de película!,"That guy's a real dickhead, mate. That movie sucks!",Strong and offensive, but can be used with close friends. [14, 29, 32],Strong,N/A
+Insult,Huevón,Big-balled,Fool; dull; silly; easily taken advantage of,"Martín es un huevón.","Martin is a fool.","Different meanings in other LatAm countries (e.g., lazy in Mexico). [29, 32]",Moderate,N/A
+Insult,Lámpara,Lamp,Cocky, show-off, conceited, big-headed,"Ush, no seas lámpara.","Ush, don't be arrogant.","Someone who tries to be something they're not. [29, 32]","Mild to Moderate",N/A
+Insult,Care chimba,Face of vagina (vulgar),"Insult for someone with a horrible attitude",N/A,N/A,"""Chimba"" can also be positive. [29]",Strong,N/A
+Insult,Care monda,Face of penis,Insult for someone,N/A,N/A,"""Monda"" is another word for penis. [29]",Strong,N/A
+Insult,Gurrupleta,-,Despicable or useless person,N/A,N/A,Synonym of ""gonorrea"". [29],Strong,N/A
+Insult,Pirobo,-,"Faggot; bad person",N/A,N/A,[29],Strong,N/A
+Insult,Malparido/a,Badly birthed,"Bastard; a really bad person",N/A,N/A,"""Mal"" (bad) + ""parir"" (to give birth). [14, 29]",Strong,"Gendered (Malparido for male, Malparida for female)"
+Insult,Lambón,-,"Bootlicker; flatterer; snitch",N/A,N/A,"Reveals secrets to gain praise. [29]","Mild to Moderate",N/A
+Insult,Zunga,-,Whore,N/A,N/A,N/A,Strong,Feminine
+Insult,Guiso/a,Stew (food),"Uneducated, lacking manners; bad taste in fashion; low resources trying to pretend otherwise",N/A,N/A,"Gendered forms exist. [29]","Mild to Moderate","Gendered (Guiso for male, Guisa for female)"
+Insult,Sapo,Toad,"Snitch; very gossipy",Don’t be such a sapo.","Don’t be such a snitch.","[13, 16, 29]","Mild to Moderate",N/A
+Insult,Pichurria,-,"Something with no worth (for things); a really bad person with no values (for people)",N/A,N/A,[29],Strong,N/A
+Insult,Ñero,-,"Badly dressed, speaks badly, stinks (derogatory for homeless); buddy (friendly)",N/A,N/A,"Meaning depends on context. Can be shortened from ""compañero"". [15, 29]","Context-Dependent",N/A
+Insult,Joder,To fuck,"To fuck (interjection); to bother/annoy; to ruin","Joder, se me olvidó dónde aparqué mi coche. ¡Has ganado la lotería! ¡Joder!","Fuck, I forgot where I parked my car. You have won the lottery! Damn!","Versatile, less strong than English ""fuck"" in some contexts. [14, 31, 32]","Mild to Strong",N/A
+Insult,Gilipollas,-,"Idiot, dickhead, douchebag",No seas gilipollas.","Don't be an idiot.","Used frequently to describe idiots. [32]",Moderate,N/A
+Insult,¡Hostia!,Host (communion wafer),"Holy shit! Wow!","¡Hostia qué susto! ¡Hostias, qué bien!","Holy shit, what a scare! Wow, that's great!",Interjection of surprise, displeasure, admiration, or pain. [32],"Mild to Moderate",N/A
+Insult,Cojones,Testicles,"Balls (guts, courage); fuck (interjection)","Hay que tener cojones para hacer eso. Me importa un cojón.","It takes cojones to do that. I don't give a fuck.","Can be used as expletive or to denote courage. [31, 32]",Moderate,N/A
+Insult,Coño,Cunt,Fuck! Damn!,"¡Coño! ¡Qué dolor! ¡Coño, qué bien te queda ese vestido!","Fuck! That hurt! Damn, that dress looks great on you!","Used as an exclamation of surprise, anger, or frustration; less associated with body part in colloquial use. [14, 31, 32]",Moderate,N/A
+Insult,Me cago en…,"I shit on…","I shit on… (expresses disregard)",Me cago en tu puta madre.,"Fuck your whore of a mother!","Highly offensive, especially when followed by terms like ""tu puta madre"". [31, 32]","Strong to Very Strong",N/A
+Insult,La madre que te parió,The mother that birthed you,"Fuck you! Motherfucker!","¡La madre que te parió!","Motherfucker!","Expresses anger, surprise, or even contentment. [32]",Strong,N/A
+Insult,Marica/Maricón,Faggot,"Slang for gay (derogatory); dude/brother/friend (among close friends)","¡Marica, mira eso!","Dude, look at that!","Highly context-dependent, can be offensive or endearing; re-appropriated by LGBTQ+ community. [14, 33]","Context-Dependent",Masculine
+Insult,Bollera,Bun eater,"Lesbian (slang, can be friendly within community)",N/A,N/A,"Re-appropriated term used by and among lesbians. [33]","Context-Dependent",Feminine
+Insult,Vete a freír espárragos,Go fry asparagus,"Piss off, leave me alone","Vi como besabas a Ana, así que vete a freír espárragos.","I saw how you kissed Ana, so piss off.","Innocent way to tell someone to stop bothering you. [32]",Mild,N/A
+Insult,Que te den (por culo),May they give you (by ass),Fuck off,"Que le den por culo a ese gilipollas.","That asshole can fuck off.","Very rude. [32]",Strong,N/A
+Insult,A tomar por culo,To take by ass,To hell with it,N/A,N/A,[32],Strong,N/A
+Insult,Una polla en vinagre,A dick in vinegar,-,N/A,N/A,[32],Strong,N/A
+Insult,Que te folle un pez,May a fish fuck you,I hope you get fucked by a fish,N/A,N/A,[32],Strong,N/A
+Insult,Tu puta madre,Your bitch of a mother,Your bitch of a mother (strong),N/A,N/A,[32],"Very Strong",N/A
+Insult,Hijo de perra,Son of a bitch,Son of a bitch (strong),N/A,N/A,[32],Strong,N/A
+Insult,Puta,Whore,Whore, slut,N/A,N/A,[32],Strong,Feminine
+Insult,Zorra,Fox,Slut, whore,N/A,N/A,[29, 32],Strong,Feminine
+Insult,Vete al diablo/demonio,Go to the devil/demon,Go to hell,N/A,N/A,[32],Moderate,N/A
+Insult,Que te jodan,May they fuck you,Fuck you,N/A,N/A,[32],Strong,N/A
+Insult,Lame culo,Ass-licker,"Ass-licker, brown-noser",N/A,N/A,[32],Moderate,N/A
+Colloquial Phrase,No saber ni papa de algo,Not knowing a potato about something,Having zero knowledge about something,N/A,N/A,[30],N/A,N/A
+Colloquial Phrase,Tirar / Botar la casa por la ventana,To throw the house out of the window,To go all out (for a celebration),N/A,N/A,[30],N/A,N/A
+Colloquial Phrase,Ponerse las pilas,To put on the batteries,To get to work, to get serious, to become alert,N/A,N/A,[30],N/A,N/A
+Colloquial Phrase,Ser pan comido,To be eaten bread,To be a piece of cake (easy),N/A,N/A,[30],N/A,N/A
+Colloquial Phrase,Hacer su agosto,To make one's August,To make hay while the sun shines; to take advantage of a good situation,N/A,N/A,[30],N/A,N/A
+Colloquial Phrase,Estar vivito y coleando,To be alive and wagging,To be alive and kicking,N/A,N/A,[30],N/A,N/A
+Colloquial Phrase,Creerse la última Coca-Cola del desierto,To think of oneself as the last Coca-Cola in the desert,"To be arrogant, cocky, think highly of oneself","Ella es tan mandona y arrogante, se cree la ultima Coca-Cola del desierto.","She is so bossy and cocky, she thinks she's the shit.",N/A,N/A,N/A
+Colloquial Phrase,Feliz como una lombriz,Happy as a worm,Happy as a clam,"Mi hermana estaba feliz como una lombriz cuando compró su nuevo apartamento.","My sister was happy as a clam when she bought her new flat.",N/A,N/A,N/A
+Colloquial Phrase,Aunque la mona se vista de seda, mona se queda,Though the monkey dresses in silk, it remains a monkey,"Superficial changes don't alter true nature; all show and no go",N/A,N/A,[30],N/A,N/A
+Colloquial Phrase,El burro hablando de orejas,The donkey talking about ears,The pot calling the kettle black,"¡No me digas que hacer! Qué gracioso, el burro hablando de orejas.","Don't tell me what to do! How funny, the pot calling the kettle black.",N/A,N/A,N/A
+Colloquial Phrase,Tener mala leche,To have bad milk,To have bad luck,"Después del divorcio, Andrés perdió su trabajo. ¡Que mala leche tiene!","After the divorce, Andrés lost his job. What bad luck the poor guy has!",N/A,N/A,N/A
+Colloquial Phrase,Estar loco como una cabra,To be crazy as a goat,To be nuts, crazy, out of one's mind,"Él está pensando en subir El Monte Everest... está loco como una cabra.","He's thinking about climbing Mount Everest... he's nuts!",N/A,N/A,N/A
+Colloquial Phrase,Dar lata,To give can,To bother, to annoy,"La hermana de Jessica siempre le da lata.","Jessica's sister always drones on.",N/A,N/A,N/A
+Colloquial Phrase,No le cabe ni un tinto,Not even a tinto fits,"A place is so crowded that not even a cup of coffee can make it in",N/A,N/A,N/A,N/A,N/A
+Colloquial Phrase,Como Pedro por su casa,Like Peter in his own house,"Someone acts as if they own the place",N/A,N/A,N/A,N/A,N/A
+Colloquial Phrase,Lo que no mata, engorda,What doesn't kill, fattens,"Even if your food falls to the ground, the worst that can happen after eating it is getting fat",N/A,N/A,N/A,N/A,N/A
+Colloquial Phrase,¿Durmió conmigo anoche o qué?,"Did you sleep with me last night or what?",Used when someone enters a place without greeting,N/A,N/A,N/A,N/A,N/A
+Colloquial Phrase,Tengo un filo, que si me agacho me corto,"I have a blade, if I bend over I cut myself",You are very hungry,N/A,N/A,N/A,N/A,N/A
+Colloquial Phrase,Uyy, ¿quién pidió pollo?,Uyy, who ordered chicken?,Used to joke around or flirt with friends when someone handsome/pretty approaches or passes by,N/A,N/A,N/A,N/A,N/A
+Colloquial Phrase,No me abra los ojos que no le voy a echar gotas,"Don't open your eyes like that I am not going to put eyedrops on them",Used when someone doesn't like you -or doesn't like something you said-,N/A,N/A,N/A,N/A,N/A
+Colloquial Phrase,¿Qué come que adivina?,What do you eat that you guess?,Used when someone guesses what you are thinking or about to say,N/A,N/A,N/A,N/A,N/A
+Colloquial Phrase,El que tiene tienda que la atienda,He who has a shop should attend to it,"If you have something, take care of it",N/A,N/A,N/A,N/A,N/A
+Colloquial Phrase,Le cuento el milagro pero no el santo,"I tell you the miracle but not the saint",They would tell you the 'secret' or 'gossip' but not who told them,N/A,N/A,N/A,N/A,N/A
+Colloquial Phrase,Colgó los guayos,(He or she) hung the soccer shoes,Someone died,N/A,N/A,N/A,N/A,N/A
+Colloquial Phrase,¡Que entre el diablo y escoja!,"Let the devil come and choose!",You have two options but you don't like any, basically, you are screwed either way,N/A,N/A,N/A,N/A,N/A
+Colloquial Phrase,Es pan comido,It's an eaten bread,It's a piece of cake,N/A,N/A,N/A,N/A,N/A
+Colloquial Phrase,Virgen del agarradero (agárrame a mi primero),"Virgin of the handgrip (grab me first)",A funny way of saying ""oh my God"" or ""God, save me!"" when afraid,N/A,N/A,N/A,N/A,N/A
+Colloquial Phrase,Lo que le diga es mentira,Whatever I tell you is a lie,Used to indicate uncertainty or inability to provide a definitive answer,N/A,N/A,N/A,N/A,N/A
+Joke,Más aburrido que mico en un bonsái,-,"More bored than a monkey in a bonsai tree",N/A,N/A,"Other variations: ""más aburrido que un caballo en un balcón"", ""más aburrido que burro en canoa"". [26]",N/A,N/A
+Joke,Más rápido que peluquear un calvo,-,"Faster than giving a haircut to a bald guy",N/A,N/A,[26],N/A,N/A
+Joke,Más cansón que una tostada en un brasier,-,"More annoying than a slice of toast in your bra",N/A,N/A,"Alternatives: ""más cansón que piña entre los calzoncillos"". [26]",N/A,N/A
+Joke,Más largo que una semana sin carne,-,"Longer than a week without meat",N/A,N/A,"Reflects meat-centric diet. [26, 40]",N/A,N/A
+Joke,Más mamado que chupo de guardería,-,"More 'sucked' than a pacifier in a nursery, meaning completely exhausted or fed up",N/A,N/A,N/A,N/A,N/A
+Joke,Más raro que un perro a cuadros,-,"Stranger than a checkered dog",N/A,N/A,"Other variations: ""más raro que un japonés con rastas"", ""más raro que una sandía con huesos"". [26]",N/A,N/A
+Joke,Más feo que un carro por debajo,-,"Uglier than the underside of a car",N/A,N/A,"Similar: ""Más feo que pisar mierda descalzo"". [26, 27]",N/A,N/A
+Joke,Más tragado que calzoncillo de torero,-,"More 'swallowed' than a bullfighter's underwear, referring to being head-over-heels in love",N/A,N/A,"Plays on double meaning of ""tragado"". [26]",N/A,N/A
+Joke,Más cerrado que culo de muñeca,-,"More 'closed' than a doll's ass, describing someone who is not interactive",N/A,N/A,N/A,N/A,N/A
+Joke,Más bravo que un tigre sin desayunar,-,"Angrier than a tiger that's not had breakfast",N/A,N/A,N/A,N/A,N/A
+Joke,Más prendido que arbolito de navidad,-,"More lit up than a Christmas tree, meaning very tipsy",N/A,N/A,N/A,N/A,N/A
+Unique Concept,Tinto,Black coffee,"Small cup of black coffee (not red wine)",N/A,N/A,"Ubiquitous beverage, reflects coffee culture. [3, 15, 17, 18, 22, 23, 41]",N/A,N/A
+Unique Concept,Arepa,Circular corn cake,A staple food in Colombia with regional variations,N/A,N/A,"Eaten any time of day; e.g., plain white, cheese-filled, ""Arepa de Huevo"". [22]",N/A,N/A
+Unique Concept,Ñapa,-,"A little ""extra"" given for free by a vendor, as a kind gesture",N/A,N/A,"Common practice, reflects generosity and informal bargaining. [18, 22]",N/A,N/A
+Unique Concept,Rumba,Cuban music and dance style,"Party or fiesta",N/A,N/A,"Lively celebrations with dancing, music, aguardiente. Verb ""rumbear"" means to party. [3, 15, 20, 22]",N/A,N/A
+Unique Concept,Tejo,-,"Colombia's national sport: throwing a metal puck at a gunpowder target for an explosion",N/A,N/A,"Often accompanied by drinking beer; losing team pays. [41, 42]",N/A,N/A
+Unique Concept,Día de las Velitas,-,Day of the Little Candles (Christmas tradition),N/A,N/A,"December 7th. [22, 41]",N/A,N/A
+Unique Concept,La Novena de Aguinaldos,-,Nine days of carols and prayers before Christmas,N/A,N/A,"December 16th to Christmas Eve. Families gather. [22, 41]",N/A,N/A
+Unique Concept,Buñuelos,-,Fried dough balls (Christmas food),N/A,N/A,"Traditional Christmas food. [22, 41]",N/A,N/A
+Unique Concept,Natilla,-,Type of custard (Christmas food),N/A,N/A,"Traditional Christmas food. [22, 41]",N/A,N/A
+Unique Concept,New Year's Traditions,-,"Eating 12 grapes, yellow underwear, lentils in pockets, suitcase around the block",N/A,N/A,"For wishes, luck, abundance, travel. [41, 43]",N/A,N/A
+Unique Concept,Quemar el Año Viejo,-,"Burning a scarecrow-like doll at midnight on New Year's Eve",N/A,N/A,"To ward off negativity. [41, 43]",N/A,N/A
+Unique Concept,Cheese Consumption,-,"Combination of cheese with sweet dishes (e.g., in hot chocolate or fruit salads)",N/A,N/A,"Peculiar but widespread practice. [22, 41]",N/A,N/A
+Unique Concept,Menú del Día,-,"Common, budget-friendly lunch menu (soup, main course, juice, dessert)",N/A,N/A,"Found throughout the country. [41]",N/A,N/A
+Unique Concept,Voseo,-,"Use of ""vos"" instead of ""tú"" for ""you""",N/A,N/A,"Characteristic of Paisa Region and Valle del Cauca. [7]",N/A,N/A
+Unique Concept,Su merced,Your mercy,"Formal second-person singular pronoun, often pronounced ""su mercé""","Y su merced, ¿qué dice?","And you, what do you say?","Used in Cundinamarca and Boyacá, replaces ""usted"". [7, 28]",N/A,N/A
+Unique Concept,Accent Features (Rolo/Cachaco),-,Clarity and prestige; preserves syllable-final /s/, 'll'/'y' distinction,N/A,N/A,"Bogotá dialect. [1, 2, 7]",N/A,N/A
+Unique Concept,Accent Features (Costeño),-,Faster speech; aspiration/deletion of syllable-final /s/; velar word-final /n/,N/A,N/A,"Caribbean/Coastal dialects. [5, 7]",N/A,N/A
+Unique Concept,Accent Features (Chocó),-,African influences in rhythm and intonation,N/A,N/A,"Pacific dialect. [1, 7]",N/A,N/A
+Unique Concept,Diminutives and Augmentatives,-,"Suffixes altering size, tone (affection, anger, politeness); usage varies by region",N/A,N/A,N/A,N/A,N/A
+Unique Concept,Indirect Communication,-,"More information conveyed through body language and context; protects relationships/face",N/A,N/A,"""I will have to see"" might implicitly mean ""no"". [11, 12]",N/A,N/A
+Unique Concept,The ""Pues"" Particle,Well,"Filler word, casual conversational tag, or intensifier",N/A,N/A,"Frequently added to end of sentences, especially in Medellín. [2, 28]",N/A,N/A
+Tongue Twister,Erre con erre cigarro, erre con erre barril. Rápido corren los carros, cargados de azúcar del ferrocarril.,N/A,R with R cigar, R with R barrel. Quickly run the cars, loaded with sugar from the railway.,N/A,N/A,"Staple for practicing 'r' sounds. [35, 36, 37]",N/A,N/A
+Tongue Twister,Pepe pecas pica papas con un pico.,N/A,Pepe Freckles picks potatoes with a pick.,N/A,N/A,"Challenges rapid repetition of 'p' and 'k' sounds. [35, 37]",N/A,N/A
+Tongue Twister,Cuando cuentes cuentos, cuenta cuantos cuentos cuentas, cuando cuentes cuentos.,N/A,When you tell stories, count how many stories you tell, when you tell stories.,N/A,N/A,"Focuses on 'c' and 'q' sounds and rhythm. [35, 36]",N/A,N/A
+Tongue Twister,El que poco coco come, poco coco compra. Como poco coco como, poco coco compro.,N/A,Whoever eats few coconuts, buys few coconuts. As I eat few coconuts, I buy few coconuts.,N/A,N/A,"Excellent for practicing 'co' and 'po' sounds. [35, 38]",N/A,N/A
+Tongue Twister,Tres tristes tigres tragaban trigo en un trigal.,N/A,Three sad tigers swallowed wheat in a wheat field.,N/A,N/A,"Classic for 'tr' and 'r' sounds. [35, 36, 37]",N/A,N/A
+Tongue Twister,Pablito clavó un clavito en la calva de un calvito, en la calva de un calvito, clavó un clavito Pablito.,N/A,Pablito hammered a little nail into a bald man's bald spot, into a bald man's bald spot, Pablito hammered a little nail.,N/A,N/A,"Plays on 'cl' and 'v' sounds. [37, 39]",N/A,N/A
+Tongue Twister,Un burro comía berros y el perro se los robó.,N/A,A donkey was eating watercress and the dog stole them.,N/A,N/A,"Helps with 'b' and 'r' sounds. [35, 36]",N/A,N/A
+Tongue Twister,Mariana Magaña desenmarañará mañana la maraña que enmarañara Mariana Magaña.,N/A,Mariana Magaña will untangle tomorrow the tangle that Mariana Magaña had tangled.,N/A,N/A,"Challenging due to repetition of 'ñ' and 'm' sounds. [35]",N/A,N/A
+Tongue Twister,Lado, ledo, lido, lodo, ludo, decirlo al revés lo dudo. Ludo, lodo, lido, ledo, lado, ¡Qué trabajo me ha costado!,N/A,"Lado, ledo, lido, lodo, ludo, I doubt I can say it in reverse. Ludo, lodo, lido, ledo, lado, that's hard work!",N/A,N/A,"Focuses on vowel sounds and 'l' sound. [36]",N/A,N/A
+Tongue Twister,Ñoño Yáñez come ñame en las mañanas con el niño.,N/A,Ñoño Yáñez eats yams in the mornings with the boy.,N/A,N/A,"Ideal for practicing unique 'ñ' sound. [36]",N/A,N/A
+Tongue Twister,No me mires, que miran que nos miramos. Miremos la manera de no mirarnos. Mira, no nos miremos. Y cuando no nos miren, nos miraremos.,N/A,Don't look at me, for they see that we look at each other. Let's find a way not to look at each other. Look, let's not look at each other. And when they don't look at us, we'll look at each other.,N/A,N/A,"Works on 'm' and 'r' sounds. [35]",N/A,N/A
+Insult,Hijueputa / Jueputa,Son of a whore,"Son of a bitch; expression of anger, fear, dissatisfaction, surprise, intense emotion",Ese hijueputa me mintió. ¡Jueputa!,"That son of a bitch lied to me. Fuck! (very angry)",Very common in Colombia, strong insult. [14, 29, 32],"Strong to Very Strong",N/A
+Insult,Gonorrea,Gonorrhea (disease),"Unpleasant/disagreeable person; damn (for a bad situation)",Es que ese man es muy gonorrea parce. ¡Qué gonorrea de película!,"That guy's a real dickhead, mate. That movie sucks!",Strong and offensive, but can be used with close friends. [14, 29, 32],Strong,N/A
+Insult,Huevón,Big-balled,Fool; dull; silly; easily taken advantage of,"Martín es un huevón.","Martin is a fool.","Different meanings in other LatAm countries (e.g., lazy in Mexico). [29, 32]",Moderate,N/A
+Insult,Lámpara,Lamp,Cocky, show-off, conceited, big-headed,"Ush, no seas lámpara.","Ush, don't be arrogant.","Someone who tries to be something they're not. [29, 32]","Mild to Moderate",N/A
+Insult,Care chimba,Face of vagina (vulgar),"Insult for someone with a horrible attitude",N/A,N/A,"""Chimba"" can also be positive. [29]",Strong,N/A
+Insult,Care monda,Face of penis,Insult for someone,N/A,N/A,"""Monda"" is another word for penis. [29]",Strong,N/A
+Insult,Gurrupleta,-,Despicable or useless person,N/A,N/A,Synonym of ""gonorrea"". [29],Strong,N/A
+Insult,Pirobo,-,"Faggot; bad person",N/A,N/A,[29],Strong,N/A
+Insult,Malparido/a,Badly birthed,"Bastard; a really bad person",N/A,N/A,"""Mal"" (bad) + ""parir"" (to give birth). [14, 29]",Strong,"Gendered (Malparido for male, Malparida for female)"
+Insult,Lambón,-,"Bootlicker; flatterer; snitch",N/A,N/A,"Reveals secrets to gain praise. [29]","Mild to Moderate",N/A
+Insult,Zunga,-,Whore,N/A,N/A,N/A,Strong,Feminine
+Insult,Guiso/a,Stew (food),"Uneducated, lacking manners; bad taste in fashion; low resources trying to pretend otherwise",N/A,N/A,"Gendered forms exist. [29]","Mild to Moderate","Gendered (Guiso for male, Guisa for female)"
+Insult,Sapo,Toad,"Snitch; very gossipy",Don’t be such a sapo.","Don’t be such a snitch.","[13, 16, 29]","Mild to Moderate",N/A
+Insult,Pichurria,-,"Something with no worth (for things); a really bad person with no values (for people)",N/A,N/A,[29],Strong,N/A
+Insult,Ñero,-,"Badly dressed, speaks badly, stinks (derogatory for homeless); buddy (friendly)",N/A,N/A,"Meaning depends on context. Can be shortened from ""compañero"". [15, 29]","Context-Dependent",N/A
+Insult,Joder,To fuck,"To fuck (interjection); to bother/annoy; to ruin","Joder, se me olvidó dónde aparqué mi coche. ¡Has ganado la lotería! ¡Joder!","Fuck, I forgot where I parked my car. You have won the lottery! Damn!","Versatile, less strong than English ""fuck"" in some contexts. [14, 31, 32]","Mild to Strong",N/A
+Insult,Gilipollas,-,"Idiot, dickhead, douchebag",No seas gilipollas.","Don't be an idiot.","Used frequently to describe idiots. [32]",Moderate,N/A
+Insult,¡Hostia!,Host (communion wafer),"Holy shit! Wow!","¡Hostia qué susto! ¡Hostias, qué bien!","Holy shit, what a scare! Wow, that's great!",Interjection of surprise, displeasure, admiration, or pain. [32],"Mild to Moderate",N/A
+Insult,Cojones,Testicles,"Balls (guts, courage); fuck (interjection)","Hay que tener cojones para hacer eso. Me importa un cojón.","It takes cojones to do that. I don't give a fuck.","Can be used as expletive or to denote courage. [31, 32]",Moderate,N/A
+Insult,Coño,Cunt,Fuck! Damn!,"¡Coño! ¡Qué dolor! ¡Coño, qué bien te queda ese vestido!","Fuck! That hurt! Damn, that dress looks great on you!","Used as an exclamation of surprise, anger, or frustration; less associated with body part in colloquial use. [14, 31, 32]",Moderate,N/A
+Insult,Me cago en…,"I shit on…","I shit on… (expresses disregard)",Me cago en tu puta madre.,"Fuck your whore of a mother!","Highly offensive, especially when followed by terms like ""tu puta madre"". [31, 32]","Strong to Very Strong",N/A
+Insult,La madre que te parió,The mother that birthed you,"Fuck you! Motherfucker!","¡La madre que te parió!","Motherfucker!","Expresses anger, surprise, or even contentment. [32]",Strong,N/A
+Insult,Marica/Maricón,Faggot,"Slang for gay (derogatory); dude/brother/friend (among close friends)","¡Marica, mira eso!","Dude, look at that!","Highly context-dependent, can be offensive or endearing; re-appropriated by LGBTQ+ community. [14, 33]","Context-Dependent",Masculine
+Insult,Bollera,Bun eater,"Lesbian (slang, can be friendly within community)",N/A,N/A,"Re-appropriated term used by and among lesbians. [33]","Context-Dependent",Feminine
+Insult,Vete a freír espárragos,Go fry asparagus,"Piss off, leave me alone","Vi como besabas a Ana, así que vete a freír espárragos.","I saw how you kissed Ana, so piss off.","Innocent way to tell someone to stop bothering you. [32]",Mild,N/A
+Insult,Que te den (por culo),May they give you (by ass),Fuck off,"Que le den por culo a ese gilipollas.","That asshole can fuck off.","Very rude. [32]",Strong,N/A
+Insult,A tomar por culo,To take by ass,To hell with it,N/A,N/A,[32],Strong,N/A
+Insult,Una polla en vinagre,A dick in vinegar,-,N/A,N/A,[32],Strong,N/A
+Insult,Que te folle un pez,May a fish fuck you,I hope you get fucked by a fish,N/A,N/A,[32],Strong,N/A
+Insult,Tu puta madre,Your bitch of a mother,Your bitch of a mother (strong),N/A,N/A,[32],"Very Strong",N/A
+Insult,Hijo de perra,Son of a bitch,Son of a bitch (strong),N/A,N/A,[32],Strong,N/A
+Insult,Puta,Whore,Whore, slut,N/A,N/A,[32],Strong,Feminine
+Insult,Zorra,Fox,Slut, whore,N/A,N/A,[29, 32],Strong,Feminine
+Insult,Vete al diablo/demonio,Go to the devil/demon,Go to hell,N/A,N/A,[32],Moderate,N/A
+Insult,Que te jodan,May they fuck you,Fuck you,N/A,N/A,[32],Strong,N/A
+Insult,Lame culo,Ass-licker,"Ass-licker, brown-noser",N/A,N/A,[32],Moderate,N/A
+Colloquial Phrase,No saber ni papa de algo,Not knowing a potato about something,Having zero knowledge about something,N/A,N/A,[30],N/A,N/A
+Colloquial Phrase,Tirar / Botar la casa por la ventana,To throw the house out of the window,To go all out (for a celebration),N/A,N/A,[30],N/A,N/A
+Colloquial Phrase,Ponerse las pilas,To put on the batteries,To get to work, to get serious, to become alert,N/A,N/A,[30],N/A,N/A
+Colloquial Phrase,Ser pan comido,To be eaten bread,To be a piece of cake (easy),N/A,N/A,[30],N/A,N/A
+Colloquial Phrase,Hacer su agosto,To make one's August,To make hay while the sun shines; to take advantage of a good situation,N/A,N/A,[30],N/A,N/A
+Colloquial Phrase,Estar vivito y coleando,To be alive and wagging,To be alive and kicking,N/A,N/A,[30],N/A,N/A
+Colloquial Phrase,Creerse la última Coca-Cola del desierto,To think of oneself as the last Coca-Cola in the desert,"To be arrogant, cocky, think highly of oneself","Ella es tan mandona y arrogante, se cree la ultima Coca-Cola del desierto.","She is so bossy and cocky, she thinks she's the shit.",N/A,N/A,N/A
+Colloquial Phrase,Feliz como una lombriz,Happy as a worm,Happy as a clam,"Mi hermana estaba feliz como una lombriz cuando compró su nuevo apartamento.","My sister was happy as a clam when she bought her new flat.",N/A,N/A,N/A
+Colloquial Phrase,Aunque la mona se vista de seda, mona se queda,Though the monkey dresses in silk, it remains a monkey,"Superficial changes don't alter true nature; all show and no go",N/A,N/A,[30],N/A,N/A
+Colloquial Phrase,El burro hablando de orejas,The donkey talking about ears,The pot calling the kettle black,"¡No me digas que hacer! Qué gracioso, el burro hablando de orejas.","Don't tell me what to do! How funny, the pot calling the kettle black.",N/A,N/A,N/A
+Colloquial Phrase,Tener mala leche,To have bad milk,To have bad luck,"Después del divorcio, Andrés perdió su trabajo. ¡Que mala leche tiene!","After the divorce, Andrés lost his job. What bad luck the poor guy has!",N/A,N/A,N/A
+Colloquial Phrase,Estar loco como una cabra,To be crazy as a goat,To be nuts, crazy, out of one's mind,"Él está pensando en subir El Monte Everest... está loco como una cabra.","He's thinking about climbing Mount Everest... he's nuts!",N/A,N/A,N/A
+Colloquial Phrase,Dar lata,To give can,To bother, to annoy,"La hermana de Jessica siempre le da lata.","Jessica's sister always drones on.",N/A,N/A,N/A
+Colloquial Phrase,No le cabe ni un tinto,Not even a tinto fits,"A place is so crowded that not even a cup of coffee can make it in",N/A,N/A,N/A,N/A,N/A
+Colloquial Phrase,Como Pedro por su casa,Like Peter in his own house,"Someone acts as if they own the place",N/A,N/A,N/A,N/A,N/A
+Colloquial Phrase,Lo que no mata, engorda,What doesn't kill, fattens,"Even if your food falls to the ground, the worst that can happen after eating it is getting fat",N/A,N/A,N/A,N/A,N/A
+Colloquial Phrase,¿Durmió conmigo anoche o qué?,"Did you sleep with me last night or what?",Used when someone enters a place without greeting,N/A,N/A,N/A,N/A,N/A
+Colloquial Phrase,Tengo un filo, que si me agacho me corto,"I have a blade, if I bend over I cut myself",You are very hungry,N/A,N/A,N/A,N/A,N/A
+Colloquial Phrase,Uyy, ¿quién pidió pollo?,Uyy, who ordered chicken?,Used to joke around or flirt with friends when someone handsome/pretty approaches or passes by,N/A,N/A,N/A,N/A,N/A
+Colloquial Phrase,No me abra los ojos que no le voy a echar gotas,"Don't open your eyes like that I am not going to put eyedrops on them",Used when someone doesn't like you -or doesn't like something you said-,N/A,N/A,N/A,N/A,N/A
+Colloquial Phrase,¿Qué come que adivina?,What do you eat that you guess?,Used when someone guesses what you are thinking or about to say,N/A,N/A,N/A,N/A,N/A
+Colloquial Phrase,El que tiene tienda que la atienda,He who has a shop should attend to it,"If you have something, take care of it",N/A,N/A,N/A,N/A,N/A
+Colloquial Phrase,Le cuento el milagro pero no el santo,"I tell you the miracle but not the saint",They would tell you the 'secret' or 'gossip' but not who told them,N/A,N/A,N/A,N/A,N/A
+Colloquial Phrase,Colgó los guayos,(He or she) hung the soccer shoes,Someone died,N/A,N/A,N/A,N/A,N/A
+Colloquial Phrase,¡Que entre el diablo y escoja!,"Let the devil come and choose!",You have two options but you don't like any, basically, you are screwed either way,N/A,N/A,N/A,N/A,N/A
+Colloquial Phrase,Es pan comido,It's an eaten bread,It's a piece of cake,N/A,N/A,N/A,N/A,N/A
+Colloquial Phrase,Virgen del agarradero (agárrame a mi primero),"Virgin of the handgrip (grab me first)",A funny way of saying ""oh my God"" or ""God, save me!"" when afraid,N/A,N/A,N/A,N/A,N/A
+Colloquial Phrase,Lo que le diga es mentira,Whatever I tell you is a lie,Used to indicate uncertainty or inability to provide a definitive answer,N/A,N/A,N/A,N/A,N/A
+Joke,Más aburrido que mico en un bonsái,-,"More bored than a monkey in a bonsai tree",N/A,N/A,"Other variations: ""más aburrido que un caballo en un balcón"", ""más aburrido que burro en canoa"". [26]",N/A,N/A
+Joke,Más rápido que peluquear un calvo,-,"Faster than giving a haircut to a bald guy",N/A,N/A,[26],N/A,N/A
+Joke,Más cansón que una tostada en un brasier,-,"More annoying than a slice of toast in your bra",N/A,N/A,"Alternatives: ""más cansón que piña entre los calzoncillos"". [26]",N/A,N/A
+Joke,Más largo que una semana sin carne,-,"Longer than a week without meat",N/A,N/A,"Reflects meat-centric diet. [26, 40]",N/A,N/A
+Joke,Más mamado que chupo de guardería,-,"More 'sucked' than a pacifier in a nursery, meaning completely exhausted or fed up",N/A,N/A,N/A,N/A,N/A
+Joke,Más raro que un perro a cuadros,-,"Stranger than a checkered dog",N/A,N/A,"Other variations: ""más raro que un japonés con rastas"", ""más raro que una sandía con huesos"". [26]",N/A,N/A
+Joke,Más feo que un carro por debajo,-,"Uglier than the underside of a car",N/A,N/A,"Similar: ""Más feo que pisar mierda descalzo"". [26, 27]",N/A,N/A
+Joke,Más tragado que calzoncillo de torero,-,"More 'swallowed' than a bullfighter's underwear, referring to being head-over-heels in love",N/A,N/A,"Plays on double meaning of ""tragado"". [26]",N/A,N/A
+Joke,Más cerrado que culo de muñeca,-,"More 'closed' than a doll's ass, describing someone who is not interactive",N/A,N/A,N/A,N/A,N/A
+Joke,Más bravo que un tigre sin desayunar,-,"Angrier than a tiger that's not had breakfast",N/A,N/A,N/A,N/A,N/A
+Joke,Más prendido que arbolito de navidad,-,"More lit up than a Christmas tree, meaning very tipsy",N/A,N/A,N/A,N/A,N/A
+Unique Concept,Tinto,Black coffee,"Small cup of black coffee (not red wine)",N/A,N/A,"Ubiquitous beverage, reflects coffee culture. [3, 15, 17, 18, 22, 23, 41]",N/A,N/A
+Unique Concept,Arepa,Circular corn cake,A staple food in Colombia with regional variations,N/A,N/A,"Eaten any time of day; e.g., plain white, cheese-filled, ""Arepa de Huevo"". [22]",N/A,N/A
+Unique Concept,Ñapa,-,"A little ""extra"" given for free by a vendor, as a kind gesture",N/A,N/A,"Common practice, reflects generosity and informal bargaining. [18, 22]",N/A,N/A
+Unique Concept,Rumba,Cuban music and dance style,"Party or fiesta",N/A,N/A,"Lively celebrations with dancing, music, aguardiente. Verb ""rumbear"" means to party. [3, 15, 20, 22]",N/A,N/A
+Unique Concept,Tejo,-,"Colombia's national sport: throwing a metal puck at a gunpowder target for an explosion",N/A,N/A,"Often accompanied by drinking beer; losing team pays. [41, 42]",N/A,N/A
+Unique Concept,Día de las Velitas,-,Day of the Little Candles (Christmas tradition),N/A,N/A,"December 7th. [22, 41]",N/A,N/A
+Unique Concept,La Novena de Aguinaldos,-,Nine days of carols and prayers before Christmas,N/A,N/A,"December 16th to Christmas Eve. Families gather. [22, 41]",N/A,N/A
+Unique Concept,Buñuelos,-,Fried dough balls (Christmas food),N/A,N/A,"Traditional Christmas food. [22, 41]",N/A,N/A
+Unique Concept,Natilla,-,Type of custard (Christmas food),N/A,N/A,"Traditional Christmas food. [22, 41]",N/A,N/A
+Unique Concept,New Year's Traditions,-,"Eating 12 grapes, yellow underwear, lentils in pockets, suitcase around the block",N/A,N/A,"For wishes, luck, abundance, travel. [41, 43]",N/A,N/A
+Unique Concept,Quemar el Año Viejo,-,"Burning a scarecrow-like doll at midnight on New Year's Eve",N/A,N/A,"To ward off negativity. [41, 43]",N/A,N/A
+Unique Concept,Cheese Consumption,-,"Combination of cheese with sweet dishes (e.g., in hot chocolate or fruit salads)",N/A,N/A,"Peculiar but widespread practice. [22, 41]",N/A,N/A
+Unique Concept,Menú del Día,-,"Common, budget-friendly lunch menu (soup, main course, juice, dessert)",N/A,N/A,"Found throughout the country. [41]",N/A,N/A
+Unique Concept,Voseo,-,"Use of ""vos"" instead of ""tú"" for ""you""",N/A,N/A,"Characteristic of Paisa Region and Valle del Cauca. [7]",N/A,N/A
+Unique Concept,Su merced,Your mercy,"Formal second-person singular pronoun, often pronounced ""su mercé""","Y su merced, ¿qué dice?","And you, what do you say?","Used in Cundinamarca and Boyacá, replaces ""usted"". [7, 28]",N/A,N/A
+Unique Concept,Accent Features (Rolo/Cachaco),-,Clarity and prestige; preserves syllable-final /s/, 'll'/'y' distinction,N/A,N/A,"Bogotá dialect. [1, 2, 7]",N/A,N/A
+Unique Concept,Accent Features (Costeño),-,Faster speech; aspiration/deletion of syllable-final /s/; velar word-final /n/,N/A,N/A,"Caribbean/Coastal dialects. [5, 7]",N/A,N/A
+Unique Concept,Accent Features (Chocó),-,African influences in rhythm and intonation,N/A,N/A,"Pacific dialect. [1, 7]",N/A,N/A
+Unique Concept,Diminutives and Augmentatives,-,"Suffixes altering size, tone (affection, anger, politeness); usage varies by region",N/A,N/A,N/A,N/A,N/A
+Unique Concept,Indirect Communication,-,"More information conveyed through body language and context; protects relationships/face",N/A,N/A,"""I will have to see"" might implicitly mean ""no"". [11, 12]",N/A,N/A
+Unique Concept,The ""Pues"" Particle,Well,"Filler word, casual conversational tag, or intensifier",N/A,N/A,"Frequently added to end of sentences, especially in Medellín. [2, 28]",N/A,N/A
+Slang,Lucero,-,"Colombian Pesos (money)",N/A,N/A,"Another informal term for money, particularly currency.","N/A","N/A"
+Slang,Lucas,-,"Colombian Pesos (money)","Pásame unas 50 lucas.","Hand me about 50,000 pesos.",Common in many regions. [3, 6, 15, 16],"N/A","N/A"
+Slang,Plata,Silver,Money,"No tengo plata para eso.","I don't have money for that.","General term for money, but widely used informally.","N/A","N/A"
+Slang,Billetes,Bills,Money (specifically paper money),N/A,N/A,"More specific than 'plata'.","N/A","N/A"
+Slang,Ficha,-,A person (often in a good sense),N/A,N/A,"Can be 'buena ficha' (good person).","N/A","N/A"
+Slang,Chapa,-,A person's surname/last name,N/A,N/A,"More informal way to ask for someone's last name.","N/A","N/A"
+Slang,Fresa,Strawberry,Stuck-up, snobby (similar to Gomelo),N/A,N/A,"Used for someone who acts superior.","N/A","N/A"
+Slang,Farra,-,Party, revelry,N/A,N/A,"Similar to rumba.","N/A","N/A"
+Slang,Farrear,-,To party hard,N/A,N/A,"Verb form of farra.","N/A","N/A"
+Slang,Jartera,-,Boredom, annoyance, hassle,"Qué jartera este trabajo.","What a drag this job is.","Noun form of jarto/a.","N/A","N/A"
+Slang,Engalle,-,A charmer, a smooth talker,N/A,N/A,"Noun form of engalleta.","N/A","N/A"
+Slang,Bacancito/a,-,A bit cool, somewhat nice,N/A,N/A,"Diminutive of bacano/a, slightly less emphatic.","N/A","N/A"
+Slang,Parcerito/a,-,Little friend, buddy (affectionate),N/A,N/A,"Affectionate diminutive of parcero/a.","N/A","N/A"
+Slang,Gamin,-,Street kid, urchin,N/A,N/A,"Often used derogatorily for homeless youth, but can be playful among friends.","Context-Dependent","N/A"
+Slang,Pola,Beer,Beer (short for Poker, a brand),N/A,N/A,"Very common for beer, especially in Bogotá.","N/A","N/A"
+Slang,Birra,-,Beer,N/A,N/A,"Another common informal term for beer.","N/A","N/A"
+Slang,Chela,-,Beer,N/A,N/A,"Another common informal term for beer, sometimes more common in other LatAm countries but understood.","N/A","N/A"
+Slang,Cerveza,-,Beer,N/A,N/A,"Standard word, but often used in informal contexts.","N/A","N/A"
+Slang,Trago,-,A drink (alcoholic),N/A,N/A,"Often refers to a shot or an alcoholic beverage.","N/A","N/A"
+Slang,Guaro,-,Aguardiente (anise-flavored liquor),N/A,N/A,"Colombia's national alcoholic drink. [6, 15, 18, 20]","N/A","N/A"
+Slang,Chupar,-,To drink alcohol,N/A,N/A,"Informal verb for drinking.","N/A","N/A"
+Slang,Prendelera,-,"The state of being tipsy or buzzed",N/A,N/A,"Noun form of prendido/a.","N/A","N/A"
+Slang,Enguayabe,-,Hangover (noun),N/A,N/A,"Noun form of enguayabado.","N/A","N/A"
+Slang,Jinchera,-,State of being drunk,N/A,N/A,"Noun form of jincho/a.","N/A","N/A"
+Slang,Foque,-,A nap, snooze,N/A,N/A,"Noun form of foquiado/a.","N/A","N/A"
+Slang,Pecueca,-,Foot odor,N/A,N/A,"Noun form of tener pecueca.","N/A","N/A"
+Slang,Chichí,-,Pee (noun),N/A,N/A,"Common term for urine, especially used with children.","N/A","N/A"
+Slang,Popó,-,Poop (noun),N/A,N/A,"Common term for feces, especially used with children.","N/A","N/A"
+Slang,Cachivaches,-,Junk, trinkets, old stuff,N/A,N/A,"Refers to old, useless items.","N/A","N/A"
+Slang,Trasto,-,Junk, old piece of furniture,N/A,N/A,"Similar to cachivaches but can be singular.","N/A","N/A"
+Slang,Vaina,-,Thing, matter, situation,"¿Qué vaina es esa?","What thing is that?","Very versatile, refers to almost anything. [3, 13, 16, 18, 20]","N/A","N/A"
+Slang,Cheque,-,"Good, okay, fine",N/A,N/A,"Often used in a relaxed agreement.","N/A","N/A"
+Slang,Listo,-,Ready,Okay, understood,"Listo, nos vemos mañana.","Okay, see you tomorrow.","Common for agreement/acknowledgement.","N/A","N/A"
+Slang,De Ley,-,"Legally, by law","For sure, definitely","Es de ley que vamos a ganar.","It's for sure that we're going to win.","Strong affirmation.","N/A","N/A"
+Slang,De Taquito,-,By heel tap,"Easily, effortlessly","Esa tarea la hice de taquito.","I did that homework easily.","From soccer, referring to a skillful heel tap.","N/A","N/A"
+Slang,Echar ojo,-,To throw an eye,To keep an eye on, to watch out for,"Échale ojo al niño.","Keep an eye on the child.","N/A","N/A","N/A"
+Slang,Ponerle la ficha,-,To put the chip on it,To give it your best, to put effort into something,"Póngale la ficha a ese proyecto.","Give your best to that project.","N/A","N/A","N/A"
+Slang,Darle la patada,-,To give it the kick,To fire someone,N/A,N/A,"Informal for dismissal.","N/A","N/A"
+Slang,Estar en la olla,-,To be in the pot,To be in a bad situation, in trouble,N/A,N/A,"Figurative, implies being 'cooked' or 'done for'.","N/A","N/A"
+Slang,Hacer un mandado,-,To do an errand,To run an errand,N/A,N/A,"Common for small tasks.","N/A","N/A"
+Slang,Pura vida,-,Pure life,Great, awesome (Costa Rican, but understood),N/A,N/A,"Often used in a relaxed, positive way.","N/A","N/A"
+Slang,Ni de vaina,-,Not even of thing,No way, absolutely not,N/A,N/A,"Strong negation.","N/A","N/A"
+Slang,Chao,-,Bye,Bye,N/A,N/A,"Common informal farewell, from Italian 'ciao'.","N/A","N/A"
+Slang,Con gusto,-,With pleasure,You're welcome,N/A,N/A,"Standard polite response to thanks.","N/A","N/A"
+Slang,A la lata,-,To the can,A lot, in abundance,N/A,N/A,"Used to describe something in large quantity.","N/A","N/A"
+Slang,De buenas,-,Of good ones,Lucky, in good spirits,N/A,N/A,"Used to describe someone who is lucky.","N/A","N/A"
+Slang,De malas,-,Of bad ones,Unlucky, in bad spirits,N/A,N/A,"Used to describe someone who is unlucky.","N/A","N/A"
+Slang,Estar en la juega,-,To be in the play,To be attentive, alert,N/A,N/A,"Similar to estar en la jugada.","N/A","N/A"
+Slang,Pilas,-,Batteries,"Be careful! Be alert! Pay attention!","¡Pilas con ese carro!","Be careful with that car!","Used as an imperative warning. [13, 18, 27, 28]","N/A","N/A"
+Slang,Teso/a,-,"Expert, skilled (also tough, strong)",N/A,N/A,"Can refer to a person or a situation.","N/A","Gendered"
+Slang,Parche,-,Patch,"Hangout spot, group of friends",N/A,N/A,"Can also refer to the act of hanging out (parchar). [13, 18, 20]","N/A","N/A"
+Slang,Verraco/a,-,"Strong, brave, daring",N/A,N/A,"Similar to berraco/a.","N/A","Gendered"
+Slang,Calidoso/a,-,"Good quality, skilled (person or thing)",N/A,N/A,"Implies good character or craftsmanship.","N/A","Gendered"
+Slang,Cansón/a,-,"Annoying, tiresome",N/A,N/A,"Describes a persistent annoyance.","N/A","Gendered"
+Slang,Malgenioso/a,-,"Bad-tempered, irritable",N/A,N/A,"Describes someone prone to anger.","N/A","Gendered"
+Slang,Desparchado/a,-,Without a patch,"Bored, with nothing to do",N/A,N/A,"Opposite of parchado/a.","N/A","Gendered"
+Slang,Parcero/a,-,Mate, friend,"¡Qué más, parcero!","What's up, mate!","Very common friendly address. [3, 7, 8, 15, 16, 17, 18, 19, 20]","N/A","Gendered"
+Slang,Veci,-,Neighbor (short for vecino/a),N/A,N/A,"Common informal address for neighbors.","N/A","N/A"
+Slang,Don/Doña,-,Mr./Mrs.,"Respectful, informal address for older people or those in authority",N/A,N/A,"Used with first name.","N/A","N/A"
+Slang,Causa,-,Cause,Buddy, pal (Peruvian origin, but understood in some areas),N/A,N/A,"Used among close friends.","N/A","N/A"
+Slang,Mija/Mijo,-,My daughter/son (short for mi hija/mi hijo),"Honey, dear (affectionate address, not necessarily related to age)",N/A,N/A,"Used by older people to younger people, or by adults to each other affectionately.","N/A","Gendered"
+Slang,Papi/Mami,-,Daddy/Mommy,"Dude, hot guy/girl (casual, informal address, not parental)",N/A,N/A,"Can be flirty or simply informal.","N/A","N/A"
+Slang,Gordo/a,-,"Fatty (affectionate term for a loved one, not literal)",N/A,N/A,"Common term of endearment regardless of weight.","N/A","Gendered"
+Slang,Flaco/a,-,"Skinny (affectionate term, not literal)",N/A,N/A,"Common term of endearment regardless of weight.","N/A","Gendered"
+Slang,Mi amor,-,My love,"My love, sweetheart (common term of endearment)",N/A,N/A,"Used widely in relationships.","N/A","N/A"
+Slang,Mi vida,-,My life,"My life, darling (strong term of endearment)",N/A,N/A,"Used widely in relationships.","N/A","N/A"
+Slang,Mi rey,-,My king,"My king (term of endearment for a man)",N/A,N/A,"Used for boyfriends, husbands, or even male children.","N/A","Masculine"
+Slang,Mi cielito,-,My little sky,"My sweetie, my darling",N/A,N/A,"Affectionate.","N/A","N/A"
+Slang,Bebé,-,Baby,"Baby (term of endearment for anyone, not just literal babies)",N/A,N/A,"Common in romantic relationships or for young children.","N/A","N/A"
+Slang,Cosita,-,Little thing,"Cutie, sweetheart (affectionate)",N/A,N/A,"Used for children or loved ones.","N/A","N/A"
+Slang,Pollito,-,Little chicken,"Cutie, darling (affectionate for a young person)",N/A,N/A,"More often for young boys.","N/A","Masculine"
+Slang,Muñeca,-,Doll,"Doll (term of endearment for a girl or woman)",N/A,N/A,"Common for pretty girls/women.","N/A","Feminine"
+Slang,Negro/a,-,"Black (affectionate term for a loved one, regardless of race)",N/A,N/A,"Common term of endearment, especially in certain regions.","N/A","Gendered"
+Slang,Mono/a,-,"Blonde; light-skinned person; attractive person","¡Qué mono tan guapo!","What a handsome blonde guy!",Can also refer to a foreigner. [3, 6, 8, 15, 19],"N/A","Gendered"
+Slang,Picho/a,-,"Ugly, bad-looking",N/A,N/A,"Informal, can be mild.","N/A","Gendered"
+Slang,Fucho/a,-,"Dirty, gross",N/A,N/A,"Used for things that are unhygienic.","N/A","Gendered"
+Slang,Asqueroso/a,-,"Disgusting, vile",N/A,N/A,"Stronger than fucho/a.","N/A","Gendered"
+Slang,Fastidioso/a,-,"Annoying, bothersome",N/A,N/A,"Similar to jarto/a.","N/A","Gendered"
+Slang,Cansón/a,-,"Annoying, tiresome",N/A,N/A,"Can refer to a person or a situation.","N/A","Gendered"
+Slang,Aburridor/a,-,"Boring, dull",N/A,N/A,"Describes something or someone uninteresting.","N/A","Gendered"
+Slang,Patético/a,-,"Pathetic, ridiculous",N/A,N/A,"Describes something or someone deserving of pity or scorn.","N/A","Gendered"
+Slang,Desocupado/a,-,Unoccupied,"Unemployed; with nothing to do",N/A,N/A,"Can be literal or imply boredom.","N/A","Gendered"
+Slang,Mamador de gallo,-,Rooster sucker,"Jokester, prankster",N/A,N/A,"Someone who likes to pull your leg.","N/A","N/A"
+Slang,Culebra,-,Snake,A problem, a debt,N/A,N/A,"Figurative, implies something difficult to deal with.","N/A","N/A"
+Slang,Chicharrón,-,Pork rind,"A difficult problem, a messy situation",N/A,N/A,"Figurative, implies a tough or complicated issue.","N/A","N/A"
+Slang,Bollo,-,Bun,"Turd (vulgar); attractive woman (vulgar)",N/A,N/A,"Highly context dependent, can be offensive. [13]","Strong","N/A"
+Slang,Papiar,-,To feed baby food,To eat, to devour,N/A,N/A,"Informal verb for eating.","N/A","N/A"
+Slang,Enga,-,Come on (short for venga),N/A,N/A,"Informal imperative, often used to urge someone.","N/A","N/A"
+Slang,Vea,-,See (short for vea usted/ustedes),Look, check it out,"Vea, lo que le digo.","Look, what I'm telling you.","Common conversational filler.","N/A","N/A"
+Slang,Dizque,-,They say,Supposedly, allegedly,"Dizque va a llover.","Supposedly it's going to rain.","Used to express doubt or hearsay.","N/A","N/A"
+Slang,Deje así,-,Leave it like that,Never mind, forget it,N/A,N/A,"Used to dismiss a topic or issue.","N/A","N/A"
+Slang,Ahí le encargo,-,There I leave it to you,"I'll leave it to you; take care of it for me",N/A,N/A,"Polite way to ask someone to handle something.","N/A","N/A"
+Slang,La buena,-,The good one,Good luck; good vibes,"¡La buena para tu examen!","Good luck with your exam!","Expression of good wishes.","N/A","N/A"
+Slang,Pura buena vibra,-,Pure good vibe,Good vibes only,N/A,N/A,"Modern, positive expression.","N/A","N/A"
+Slang,No hay lío,-,There's no problem,No problem, it's fine,N/A,N/A,"Common for reassurance.","N/A","N/A"
+Slang,Mano,-,Hand,Brother, friend (short for hermano),N/A,N/A,"Common informal address for male friends.","N/A","Masculine"
+Slang,Hermano/a,-,Brother/Sister,Brother/Sister (informal address for a friend),N/A,N/A,"Used for close friends.","N/A","N/A"
+Slang,Causa,-,Cause,Buddy, pal (Peruvian origin, but understood),N/A,N/A,"Informal address.","N/A","N/A"
+Slang,Pana,-,Bread,Friend, buddy (Venezuelan origin, popular in some parts of Colombia),N/A,N/A,"Common informal address.","N/A","N/A"
+Slang,Bacilar,-,To tease, to joke,N/A,N/A,"Can also mean to flirt. [15]","N/A","N/A"
+Slang,Dar un chance,-,To give a chance,To give an opportunity,N/A,N/A,"Common for a second chance or opportunity.","N/A","N/A"
+Slang,Parar la oreja,-,To stop the ear,To pay close attention, to listen carefully,N/A,N/A,"Figurative.","N/A","N/A"
+Slang,Estar volado/a,-,To be flown,To be crazy, high (on drugs),N/A,N/A,"Context-dependent for meaning.","N/A","Gendered"
+Slang,Meter la ficha,-,To put the chip,To give it your all, to put maximum effort,N/A,N/A,"Similar to ponerle la ficha.","N/A","N/A"
+Slang,Aguantar,-,To endure,To put up with, to tolerate,N/A,N/A,"Commonly used to mean 'wait' or 'hold on'.","N/A","N/A"
+Slang,Desparche,-,Lack of patch,"Boredom, idleness",N/A,N/A,"Noun form of desparchado/a.","N/A","N/A"
+Slang,Cagarla,-,To shit it,To mess up badly, to screw up,N/A,N/A,"Stronger version of embarrar.","Strong","N/A"
+Slang,No dar pie con bola,-,Not to give foot with ball,To not get anything right, to be clumsy,N/A,N/A,"Figurative, from sports.","N/A","N/A"
+Slang,Estar de bote en bote,-,To be from boat to boat,To be packed, overflowing (a place),N/A,N/A,"Describes a crowded place.","N/A","N/A"
+Slang,Tener la lengua larga,-,To have a long tongue,To be a gossip, to talk too much,N/A,N/A,"Similar to ser sapo.","N/A","N/A"
+Slang,Bajarse de la mula,-,To get off the mule,To pay up, to fork over money,N/A,N/A,"Implies reluctance to pay.","N/A","N/A"
+Slang,Poner los puntos sobre las íes,-,To put the dots on the i's,To clarify things, to be precise,N/A,N/A,"Figurative.","N/A","N/A"
+Slang,Con las manos en la masa,-,With hands in the dough,Red-handed,N/A,N/A,"Figurative for being caught in the act.","N/A","N/A"
+Slang,Echar leña al fuego,-,To throw firewood into the fire,To make a situation worse,N/A,N/A,"Figurative.","N/A","N/A"
+Slang,Irse de bruces,-,To go on one's face,To fall flat, to fail miserably,N/A,N/A,"Figurative.","N/A","N/A"
+Slang,Cortar el pastel,-,To cut the cake,To share the profits,N/A,N/A,"Figurative.","N/A","N/A"
+Slang,Estar con la soga al cuello,-,To be with the rope around the neck,To be in a tight spot, under pressure,N/A,N/A,"Figurative.","N/A","N/A"
+Slang,No tener ni un cinco,-,Not to have even a five-cent coin,To be broke, to have no money,N/A,N/A,"Figurative for being penniless.","N/A","N/A"
+Slang,Romper el hielo,-,To break the ice,To break the ice (in a social situation),N/A,N/A,"Figurative.","N/A","N/A"
+Slang,Estar en la luna,-,To be on the moon,To be daydreaming, distracted,N/A,N/A,"Similar to estar en las nubes. [25]","N/A","N/A"
+Slang,De rompe y raja,-,Of breaking and tearing,With full force, fiercely,N/A,N/A,"Describes something done with great intensity.","N/A","N/A"
+Slang,Ser un cero a la izquierda,-,To be a zero to the left,To be useless, insignificant,N/A,N/A,"Figurative.","N/A","N/A"
+Slang,Tener la cola quemada,-,To have a burnt tail,To have a bad reputation, to be a bad person,N/A,N/A,"Figurative.","N/A","N/A"
+Slang,Ser un hueso duro de roer,-,To be a hard bone to chew,To be a tough nut to crack, a difficult person,N/A,N/A,"Figurative.","N/A","N/A"
+Slang,Andar con el agua al cuello,-,To walk with water to the neck,To be in a difficult financial situation,N/A,N/A,"Figurative.","N/A","N/A"
+Slang,Caérsele la baba,-,To drool,To be infatuated, to be smitten,N/A,N/A,"Figurative, implies admiration.","N/A","N/A"
+Slang,Echar una cana al aire,-,To throw a gray hair in the air,To have a fling, to let loose,N/A,N/A,"Figurative.","N/A","N/A"
+Slang,Estar hecho/a un ají,-,To be made a chili,To be very angry,N/A,N/A,"Figurative, implies spiciness.","N/A","Gendered"
+Slang,Cansarse de robar,-,To get tired of stealing,To be very good at something, to do it effortlessly,N/A,N/A,"Humorous, implies such skill it's like stealing.","N/A","N/A"
+Slang,Tener más cuento que una novela,-,To have more story than a novel,To be full of excuses, to be a storyteller,N/A,N/A,"Figurative, implies exaggeration.","N/A","N/A"
+Slang,Echar carreta,-,To throw cart,To talk nonsense, to sweet-talk,N/A,N/A,"Used for deceptive talk.","N/A","N/A"
+Slang,Ser un bacán,-,To be a cool guy,To be a good person, to be kind,N/A,N/A,"Expands on "bacán" as a personal quality.","N/A","Masculine"
+Slang,Estar en el quinto cielo,-,To be in the fifth heaven,To be extremely happy,N/A,N/A,"Figurative.","N/A","N/A"
+Slang,No tener ni dónde caerse muerto,-,Not to have anywhere to fall dead,To be extremely poor, penniless,N/A,N/A,"Figurative.","N/A","N/A"
+Slang,Más bueno que el pan,-,Better than bread,Very good (for a person or thing),N/A,N/A,"Common compliment.","N/A","N/A"
+Slang,Más ordinario que un burro descalzo,-,More ordinary than a barefoot donkey,Very common, tasteless, crude,N/A,N/A,"Humorous, describes lack of refinement.","N/A","N/A"
+Slang,Estar más perdido que Adán en el Día de la Madre,-,To be more lost than Adam on Mother's Day,To be completely lost, disoriented,N/A,N/A,"Humorous, highlights extreme confusion.","N/A","N/A"
+Slang,Se armó la gorda,-,The fat one was armed,A big problem or fight started,N/A,N/A,"Figurative for chaos.","N/A","N/A"
+Slang,Ponerse el overol,-,To put on the overalls,To get to work, to get down to business,N/A,N/A,"Figurative for hard work.","N/A","N/A"
+Slang,Estar en la jugada,-,To be in the play,To be in the know, up-to-date,N/A,N/A,"Similar to "in the loop". [28]","N/A","N/A"
+Slang,Pasarse de la raya,-,To cross the line,To overstep, to go too far,N/A,N/A,"Figurative for boundary violation.","N/A","N/A"
+Slang,Echar vainas,-,To throw things,To say nonsense, to mess around,N/A,N/A,"Similar to mamar gallo in some contexts.","N/A","N/A"
+Slang,Ser un teso/a,-,To be a tough one,To be very good at something, an expert,N/A,N/A,"Compliment for skill.","N/A","Gendered"
+Slang,Parchar,-,To patch,To hang out, to chill,N/A,N/A,"Verb form of parche. [3, 18, 19]","N/A","N/A"
+Slang,Tener un camello,-,To have a camel,To have a lot of work, a difficult job,N/A,N/A,"Refers to heavy workload. [3, 13, 16]","N/A","N/A"
+Slang,Desparcharse,-,To un-patch oneself,To get bored, to have nothing to do,N/A,N/A,"Opposite of parcharse.","N/A","N/A"
+Slang,A todo taco,-,To all taco,At full speed, with great intensity,N/A,N/A,"Used for actions done quickly or loudly.","N/A","N/A"
+Slang,Echar la mano,-,To throw the hand,To help, to lend a hand,N/A,N/A,"Common for offering help.","N/A","N/A"
+Slang,Estar en el aire,-,To be in the air,To be undecided, uncertain,N/A,N/A,"Figurative.","N/A","N/A"
+Slang,Poner los pelos de punta,-,To put the hairs on end,To scare, to make one's hair stand on end,N/A,N/A,"Figurative for fear.","N/A","N/A"
+Slang,Ser la leche,-,To be the milk,To be awesome, incredible (Spanish origin, but understood),N/A,N/A,"Positive compliment.","N/A","N/A"
+Slang,No te lo pierdas,-,Don't lose it,Don't miss it,N/A,N/A,"Common phrase for recommending something.","N/A","N/A"
+Slang,De cabo a rabo,-,From tail to end,Completely, from beginning to end,N/A,N/A,"Figurative.","N/A","N/A"
+Slang,Más claro no canta un gallo,-,Clearer than a rooster doesn't crow,It couldn't be clearer, it's obvious,N/A,N/A,"Figurative for clarity.","N/A","N/A"
+Slang,Poner en remojo,-,To put in soak,To make someone wait, to postpone,N/A,N/A,"Figurative.","N/A","N/A"
+Slang,Estar como una cabra,-,To be like a goat,To be crazy, eccentric,N/A,N/A,"Similar to estar loco como una cabra. [30]","N/A","N/A"
+Slang,Coser y cantar,-,To sew and sing,To be very easy, effortless,N/A,N/A,"Figurative.","N/A","N/A"
+Slang,La cereza del pastel,-,The cherry on the cake,The icing on the cake, the best part,N/A,N/A,"Figurative.","N/A","N/A"
+Slang,No tener donde caerse muerto,-,Not to have where to fall dead,To be dirt poor,N/A,N/A,"Extreme poverty.","N/A","N/A"
+Slang,Mandar la parada,-,To command the stop,To be in charge, to dictate terms,N/A,N/A,"Figurative for authority.","N/A","N/A"
+Slang,Ponerse la camiseta,-,To put on the jersey,To be committed, to support a cause wholeheartedly,N/A,N/A,"Figurative, from sports.","N/A","N/A"
+Slang,Echar flores,-,To throw flowers,To compliment, to flatter,N/A,N/A,"Figurative.","N/A","N/A"
+Slang,Estar con la moral en el piso,-,To have morale on the floor,To be very sad, discouraged,N/A,N/A,"Figurative.","N/A","N/A"
+Slang,Dárselas de algo,-,To give oneself of something,To pretend to be something, to show off,N/A,N/A,"Implies arrogance or false pretenses.","N/A","N/A"
+Slang,Ser un(a) pila,-,To be a battery,To be a smart, diligent person,N/A,N/A,"Positive compliment for intelligence/hard work.","N/A","N/A"
+Slang,Estar en las verdes y en las maduras,-,To be in the green and in the ripe,To be in good times and bad times,N/A,N/A,"Figurative for loyalty/support.","N/A","N/A"
+Slang,Romper la dieta,-,To break the diet,To cheat on one's diet,N/A,N/A,"Common phrase.","N/A","N/A"
+Slang,Comer cuento,-,To eat story,To believe a lie easily,N/A,N/A,"Similar to comerse el cuento. [25]","N/A","N/A"
+Slang,Estar mamado hasta la coronilla,-,To be tired up to the crown,To be completely fed up, exhausted,N/A,N/A,"Intensified version of mamado.","N/A","N/A"
+Slang,Tener mala espina,-,To have a bad thorn,To have a bad feeling, to distrust,N/A,N/A,"Figurative.","N/A","N/A"
+Slang,Echar la culpa,-,To throw the blame,To blame someone,N/A,N/A,"Common phrase.","N/A","N/A"
+Slang,Pisar el acelerador,-,To step on the accelerator,To speed up, to hurry,N/A,N/A,"Figurative.","N/A","N/A"
+Slang,Andar con pies de plomo,-,To walk with lead feet,To proceed cautiously,N/A,N/A,"Figurative.","N/A","N/A"
+Slang,Darle la espalda a alguien,-,To give someone one's back,To turn one's back on someone, to abandon them,N/A,N/A,"Figurative.","N/A","N/A"
+Slang,Estar en sus cabales,-,To be in one's senses,To be in one's right mind, sane,N/A,N/A,"Figurative.","N/A","N/A"
+Slang,No tener vuelta de hoja,-,To have no leaf turn,To be irreversible, unchangeable,N/A,N/A,"Figurative.","N/A","N/A"
+Slang,Meter un gol,-,To score a goal,To succeed, to achieve something (figurative),N/A,N/A,"From soccer.","N/A","N/A"
+Slang,Cantar la tabla,-,To sing the multiplication table,To tell someone off, to give a piece of one's mind,N/A,N/A,"Figurative.","N/A","N/A"
+Slang,Poner el dedo en la llaga,-,To put the finger on the wound,To hit a raw nerve, to touch on a sensitive issue,N/A,N/A,"Figurative.","N/A","N/A"
+Slang,Echar por tierra,-,To throw to the ground,To ruin, to destroy,N/A,N/A,"Figurative.","N/A","N/A"
+Slang,Agarrar el toro por los cuernos,-,To grab the bull by the horns,To take the bull by the horns, to face a problem directly,N/A,N/A,"Figurative.","N/A","N/A"
+Slang,Pasar la noche en blanco,-,To spend the night in white,To have a sleepless night,N/A,N/A,"Figurative.","N/A","N/A"
+Slang,Echar un cable,-,To throw a cable,To lend a hand, to help out,N/A,N/A,"Figurative.","N/A","N/A"
+Slang,Estar de bote en bote,-,To be from boat to boat,To be packed, overflowing (a place),N/A,N/A,"Figurative.","N/A","N/A"
+Slang,Darle palo a algo/alguien,-,To give a stick to something/someone,To criticize harshly, to beat up (figurative),N/A,N/A,"Figurative.","N/A","N/A"
+Slang,Echar la casa por la ventana,-,To throw the house out the window,To spare no expense, to go all out (for a celebration),N/A,N/A,"Similar to tirar la casa por la ventana. [25]","N/A","N/A"
+Slang,No tener dos dedos de frente,-,Not to have two fingers of forehead,To be stupid, to lack common sense,N/A,N/A,"Figurative.","N/A","N/A"
+Slang,Ser uña y mugre,-,To be fingernail and dirt,To be inseparable, very close friends,N/A,N/A,"Figurative for close bond.","N/A","N/A"
+Slang,Estar como sardina en lata,-,To be like sardine in a can,To be packed like sardines (in a crowded place),N/A,N/A,"Figurative for overcrowding.","N/A","N/A"
+Slang,Caer como anillo al dedo,-,To fit like a ring on the finger,To fit perfectly, to be just right,N/A,N/A,"Figurative.","N/A","N/A"
+Slang,Andar con la pata coja,-,To walk with a lame leg,To be in a disadvantaged position, to have a weakness,N/A,N/A,"Figurative.","N/A","N/A"
+Slang,Meter baza,-,To put in a trick,To interrupt, to butt in (a conversation),N/A,N/A,"Figurative.","N/A","N/A"
+Slang,No ver tres en un burro,-,Not to see three on a donkey,To be very short-sighted, to not see clearly,N/A,N/A,"Figurative.","N/A","N/A"
+Slang,Tener pájaros en la cabeza,-,To have birds in the head,To be naive, to have unrealistic ideas,N/A,N/A,"Figurative.","N/A","N/A"
+Slang,Estar más tieso que una mojá,-,To be stiffer than a wet one,To be broke, penniless (lit. "stiffer than a wet rag"),N/A,N/A,"Humorous for being broke.","N/A","N/A"
+Slang,Ser un bombazo,-,To be a bomb,To be a bombshell (very attractive person),N/A,N/A,"For attractive people or big news.","N/A","N/A"
+Slang,Estar en la cuerda floja,-,To be on the tightrope,To be in a precarious situation,N/A,N/A,"Figurative.","N/A","N/A"
+Slang,Darle la razón a alguien,-,To give reason to someone,To agree with someone, to concede a point,N/A,N/A,"Common phrase.","N/A","N/A"
+Slang,Echar un vistazo,-,To throw a glance,To take a quick look,N/A,N/A,"Common phrase.","N/A","N/A"
+Slang,Estar con el agua hasta el cuello,-,To be with water up to the neck,To be overwhelmed, in deep trouble,N/A,N/A,"Figurative.","N/A","N/A"
+Slang,Hacer de tripas corazón,-,To make heart from guts,To be brave, to gather courage,N/A,N/A,"Figurative.","N/A","N/A"
+Slang,Sacarle jugo a algo,-,To extract juice from something,To get the most out of something, to exploit,N/A,N/A,"Figurative.","N/A","N/A"
+Slang,Estar en la cresta de la ola,-,To be on the crest of the wave,To be at the peak of success,N/A,N/A,"Figurative.","N/A","N/A"
+Slang,Poner el grito en el cielo,-,To put the scream in the sky,To complain loudly, to protest vehemently,N/A,N/A,"Figurative.","N/A","N/A"
+Slang,Ser de carne y hueso,-,To be of flesh and bone,To be human, flawed,N/A,N/A,"Figurative.","N/A","N/A"
+Slang,No hay tu tía,-,There's no your aunt,There's no remedy, no solution,N/A,N/A,"Figurative.","N/A","N/A"
+Slang,Tomar cartas en el asunto,-,To take cards in the matter,To take action, to intervene,N/A,N/A,"Figurative.","N/A","N/A"
+Slang,A duras penas,-,With hard pains,Barely, with great difficulty,N/A,N/A,"Common phrase.","N/A","N/A"
+Slang,Estar como una tabla,-,To be like a board,To be very thin,N/A,N/A,"Figurative for thinness.","N/A","N/A"
+Slang,Hacer la vista gorda,-,To make the fat eye,To turn a blind eye, to ignore intentionally,N/A,N/A,"Figurative.","N/A","N/A"
+Slang,Quedarse con los crespos hechos,-,To be left with the curled hair done,To be left empty-handed, disappointed,N/A,N/A,"Figurative.","N/A","N/A"
+Slang,Ser un(a) pila,-,To be a battery,To be a smart, diligent person,N/A,N/A,"Positive compliment for intelligence/hard work.","N/A","N/A"
+Slang,Estar mamado hasta la coronilla,-,To be tired up to the crown,To be completely fed up, exhausted,N/A,N/A,"Intensified version of mamado.","N/A","N/A"
+Slang,Tener mala espina,-,To have a bad thorn,To have a bad feeling, to distrust,N/A,N/A,"Figurative.","N/A","N/A"
+Slang,Echar la culpa,-,To throw the blame,To blame someone,N/A,N/A,"Common phrase.","N/A","N/A"
+Slang,Pisar el acelerador,-,To step on the accelerator,To speed up, to hurry,N/A,N/A,"Figurative.","N/A","N/A"
+Slang,Andar con pies de plomo,-,To walk with lead feet,To proceed cautiously,N/A,N/A,"Figurative.","N/A","N/A"
+Slang,Darle la espalda a alguien,-,To give someone one's back,To turn one's back on someone, to abandon them,N/A,N/A,"Figurative.","N/A","N/A"
+Slang,Estar en sus cabales,-,To be in one's senses,To be in one's right mind, sane,N/A,N/A,"Figurative.","N/A","N/A"
+Slang,No tener vuelta de hoja,-,To have no leaf turn,To be irreversible, unchangeable,N/A,N/A,"Figurative.","N/A","N/A"
+Slang,Meter un gol,-,To score a goal,To succeed, to achieve something (figurative),N/A,N/A,"From soccer.","N/A","N/A"
+Slang,Cantar la tabla,-,To sing the multiplication table,To tell someone off, to give a piece of one's mind,N/A,N/A,"Figurative.","N/A","N/A"
+Slang,Poner el dedo en la llaga,-,To put the finger on the wound,To hit a raw nerve, to touch on a sensitive issue,N/A,N/A,"Figurative.","N/A","N/A"
+Slang,Echar por tierra,-,To throw to the ground,To ruin, to destroy,N/A,N/A,"Figurative.","N/A","N/A"
+Slang,Agarrar el toro por los cuernos,-,To grab the bull by the horns,To take the bull by the horns, to face a problem directly,N/A,N/A,"Figurative.","N/A","N/A"
+Slang,Pasar la noche en blanco,-,To spend the night in white,To have a sleepless night,N/A,N/A,"Figurative.","N/A","N/A"
+Slang,Echar un cable,-,To throw a cable,To lend a hand, to help out,N/A,N/A,"Figurative.","N/A","N/A"
+Slang,Estar de bote en bote,-,To be from boat to boat,To be packed, overflowing (a place),N/A,N/A,"Figurative.","N/A","N/A"
+Slang,Darle palo a algo/alguien,-,To give a stick to something/someone,To criticize harshly, to beat up (figurative),N/A,N/A,"Figurative.","N/A","N/A"
+Slang,Echar la casa por la ventana,-,To throw the house out the window,To spare no expense, to go all out (for a celebration),N/A,N/A,"Similar to tirar la casa por la ventana. [25]","N/A","N/A"
+Slang,No tener dos dedos de frente,-,Not to have two fingers of forehead,To be stupid, to lack common sense,N/A,N/A,"Figurative.","N/A","N/A"
+Slang,Ser uña y mugre,-,To be fingernail and dirt,To be inseparable, very close friends,N/A,N/A,"Figurative for close bond.","N/A","N/A"
+Slang,Estar como sardina en lata,-,To be like sardine in a can,To be packed like sardines (in a crowded place),N/A,N/A,"Figurative for overcrowding.","N/A","N/A"
+Slang,Caer como anillo al dedo,-,To fit like a ring on the finger,To fit perfectly, to be just right,N/A,N/A,"Figurative.","N/A","N/A"
+Slang,Andar con la pata coja,-,To walk with a lame leg,To be in a disadvantaged position, to have a weakness,N/A,N/A,"Figurative.","N/A","N/A"
+Slang,Meter baza,-,To put in a trick,To interrupt, to butt in (a conversation),N/A,N/A,"Figurative.","N/A","N/A"
+Slang,No ver tres en un burro,-,Not to see three on a donkey,To be very short-sighted, to not see clearly,N/A,N/A,"Figurative.","N/A","N/A"
+Slang,Tener pájaros en la cabeza,-,To have birds in the head,To be naive, to have unrealistic ideas,N/A,N/A,"Figurative.","N/A","N/A"
+Slang,Estar más tieso que una mojá,-,To be stiffer than a wet one,To be broke, penniless (lit. "stiffer than a wet rag"),N/A,N/A,"Humorous for being broke.","N/A","N/A"
+Slang,Ser un bombazo,-,To be a bomb,To be a bombshell (very attractive person),N/A,N/A,"For attractive people or big news.","N/A","N/A"
+Slang,Estar en la cuerda floja,-,To be on the tightrope,To be in a precarious situation,N/A,N/A,"Figurative.","N/A","N/A"
+Slang,Darle la razón a alguien,-,To give reason to someone,To agree with someone, to concede a point,N/A,N/A,"Common phrase.","N/A","N/A"
+Slang,Echar un vistazo,-,To throw a glance,To take a quick look,N/A,N/A,"Common phrase.","N/A","N/A"
+Slang,Estar con el agua hasta el cuello,-,To be with water up to the neck,To be overwhelmed, in deep trouble,N/A,N/A,"Figurative.","N/A","N/A"
+Slang,Hacer de tripas corazón,-,To make heart from guts,To be brave, to gather courage,N/A,N/A,"Figurative.","N/A","N/A"
+Slang,Sacarle jugo a algo,-,To extract juice from something,To get the most out of something, to exploit,N/A,N/A,"Figurative.","N/A","N/A"
+Slang,Estar en la cresta de la ola,-,To be on the crest of the wave,To be at the peak of success,N/A,N/A,"Figurative.","N/A","N/A"
+Slang,Poner el grito en el cielo,-,To put the scream in the sky,To complain loudly, to protest vehemently,N/A,N/A,"Figurative.","N/A","N/A"
+Slang,Ser de carne y hueso,-,To be of flesh and bone,To be human, flawed,N/A,N/A,"Figurative.","N/A","N/A"
+Slang,No hay tu tía,-,There's no your aunt,There's no remedy, no solution,N/A,N/A,"Figurative.","N/A","N/A"
+Slang,Tomar cartas en el asunto,-,To take cards in the matter,To take action, to intervene,N/A,N/A,"Figurative.","N/A","N/A"
+Slang,A duras penas,-,With hard pains,Barely, with great difficulty,N/A,N/A,"Common phrase.","N/A","N/A"
+Slang,Estar como una tabla,-,To be like a board,To be very thin,N/A,N/A,"Figurative for thinness.","N/A","N/A"
+Slang,Hacer la vista gorda,-,To make the fat eye,To turn a blind eye, to ignore intentionally,N/A,N/A,"Figurative.","N/A","N/A"
+Slang,Quedarse con los crespos hechos,-,To be left with the curled hair done,To be left empty-handed, disappointed,N/A,N/A,"Figurative.","N/A","N/A"
+Slang,Estar en la olla,-,To be in the pot,To be in a very bad situation, financially ruined,N/A,N/A,"Figurative for dire circumstances.","N/A","N/A"
+Slang,Ser un bobo/a,-,To be a fool,To be silly, naive,N/A,N/A,"Mildly derogatory.","N/A","Gendered"
+Slang,Estar picado/a,-,To be bitten,To be annoyed, offended (often by a joke or slight),N/A,N/A,"Figurative for being bothered.","N/A","Gendered"
+Slang,Hacer el oso,-,To do the bear,To make a fool of oneself, to embarrass oneself,N/A,N/A,"Similar to ¡Qué oso!","N/A","N/A"
+Slang,Estar con los pelos de punta,-,To have one's hairs on end,To be scared, terrified,N/A,N/A,"Figurative.","N/A","N/A"
+Slang,Meter un gol de media cancha,-,To score a half-court goal,To achieve a great success, an impressive feat,N/A,N/A,"From soccer, highly impressive.","N/A","N/A"
+Slang,Hacerse el de la vista gorda,-,To make oneself the one with the fat eye,To pretend not to see, to ignore deliberately,N/A,N/A,"Similar to hacer la vista gorda.","N/A","N/A"
+Slang,Estar con un pie en el estribo,-,To have one foot in the stirrup,To be about to leave, to be ready to go,N/A,N/A,"Figurative.","N/A","N/A"
+Slang,No tener ni voz ni voto,-,To have neither voice nor vote,To have no say, no influence,N/A,N/A,"Figurative.","N/A","N/A"
+Slang,Ponerle la cara,-,To put the face,To face a problem, to take responsibility,N/A,N/A,"Figurative.","N/A","N/A"
+Slang,Estar como pez en el agua,-,To be like a fish in water,To be in one's element, comfortable,N/A,N/A,"Figurative.","N/A","N/A"
+Slang,Cantar las cuarenta,-,To sing the forty,To tell someone off, to speak frankly,N/A,N/A,"Figurative.","N/A","N/A"
+Slang,Poner el cascabel al gato,-,To put the bell on the cat,To take the first difficult step,N/A,N/A,"Figurative.","N/A","N/A"
+Slang,Más ciego que un topo,-,Blinder than a mole,Extremely blind, visually impaired,N/A,N/A,"Figurative.","N/A","N/A"
+Slang,Más sordo que una tapia,-,Deafer than a wall,Extremely deaf,N/A,N/A,"Figurative.","N/A","N/A"
+Slang,Estar más solo que la una,-,To be lonelier than one o'clock,To be completely alone,N/A,N/A,"Figurative.","N/A","N/A"
+Slang,Tener la cabeza en las nubes,-,To have one's head in the clouds,To be a daydreamer, distracted,N/A,N/A,"Similar to estar en las nubes. [25]","N/A","N/A"
+Slang,Estar en la cuerda floja,-,To be on the tightrope,To be in a precarious situation,N/A,N/A,"Figurative.","N/A","N/A"
+Slang,Darle la razón a alguien,-,To give reason to someone,To agree with someone, to concede a point,N/A,N/A,"Common phrase.","N/A","N/A"
+Slang,Echar un vistazo,-,To throw a glance,To take a quick look,N/A,N/A,"Common phrase.","N/A","N/A"
+Slang,Estar con el agua hasta el cuello,-,To be with water up to the neck,To be overwhelmed, in deep trouble,N/A,N/A,"Figurative.","N/A","N/A"
+Slang,Hacer de tripas corazón,-,To make heart from guts,To be brave, to gather courage,N/A,N/A,"Figurative.","N/A","N/A"
+Slang,Sacarle jugo a algo,-,To extract juice from something,To get the most out of something, to exploit,N/A,N/A,"Figurative.","N/A","N/A"
+Slang,Estar en la cresta de la ola,-,To be on the crest of the wave,To be at the peak of success,N/A,N/A,"Figurative.","N/A","N/A"
+Slang,Poner el grito en el cielo,-,To put the scream in the sky,To complain loudly, to protest vehemently,N/A,N/A,"Figurative.","N/A","N/A"
+Slang,Ser de carne y hueso,-,To be of flesh and bone,To be human, flawed,N/A,N/A,"Figurative.","N/A","N/A"
+Slang,No hay tu tía,-,There's no your aunt,There's no remedy, no solution,N/A,N/A,"Figurative.","N/A","N/A"
+Slang,Tomar cartas en el asunto,-,To take cards in the matter,To take action, to intervene,N/A,N/A,"Figurative.","N/A","N/A"
+Slang,A duras penas,-,With hard pains,Barely, with great difficulty,N/A,N/A,"Common phrase.","N/A","N/A"
+Slang,Estar como una tabla,-,To be like a board,To be very thin,N/A,N/A,"Figurative for thinness.","N/A","N/A"
+Slang,Hacer la vista gorda,-,To make the fat eye,To turn a blind eye, to ignore intentionally,N/A,N/A,"Figurative.","N/A","N/A"
+Slang,Quedarse con los crespos hechos,-,To be left with the curled hair done,To be left empty-handed, disappointed,N/A,N/A,"Figurative.","N/A","N/A"
+Slang,Echar la pata,-,To throw the paw,To die (colloquial),N/A,N/A,"Informal, often humorous.","N/A","N/A"
+Slang,Estar con el agua al cuello,-,To be with water up to the neck,To be in a difficult financial situation,N/A,N/A,"Figurative.","N/A","N/A"
+Slang,Darle la razón a alguien,-,To give reason to someone,To agree with someone, to concede a point,N/A,N/A,"Common phrase.","N/A","N/A"
+Slang,Echar un vistazo,-,To throw a glance,To take a quick look,N/A,N/A,"Common phrase.","N/A","N/A"
+Slang,Estar con el agua hasta el cuello,-,To be with water up to the neck,To be overwhelmed, in deep trouble,N/A,N/A,"Figurative.","N/A","N/A"
+Slang,Hacer de tripas corazón,-,To make heart from guts,To be brave, to gather courage,N/A,N/A,"Figurative.","N/A","N/A"
+Slang,Sacarle jugo a algo,-,To extract juice from something,To get the most out of something, to exploit,N/A,N/A,"Figurative.","N/A","N/A"
+Slang,Estar en la cresta de la ola,-,To be on the crest of the wave,To be at the peak of success,N/A,N/A,"Figurative.","N/A","N/A"
+Slang,Poner el grito en el cielo,-,To put the scream in the sky,To complain loudly, to protest vehemently,N/A,N/A,"Figurative.","N/A","N/A"
+Slang,Ser de carne y hueso,-,To be of flesh and bone,To be human, flawed,N/A,N/A,"Figurative.","N/A","N/A"
+Slang,No hay tu tía,-,There's no your aunt,There's no remedy, no solution,N/A,N/A,"Figurative.","N/A","N/A"
+Slang,Tomar cartas en el asunto,-,To take cards in the matter,To take action, to intervene,N/A,N/A,"Figurative.","N/A","N/A"
+Slang,A duras penas,-,With hard pains,Barely, with great difficulty,N/A,N/A,"Common phrase.","N/A","N/A"
+Slang,Estar como una tabla,-,To be like a board,To be very thin,N/A,N/A,"Figurative for thinness.","N/A","N/A"
+Slang,Hacer la vista gorda,-,To make the fat eye,To turn a blind eye, to ignore intentionally,N/A,N/A,"Figurative.","N/A","N/A"
+Slang,Quedarse con los crespos hechos,-,To be left with the curled hair done,To be left empty-handed, disappointed,N/A,N/A,"Figurative.","N/A","N/A"
+Slang,Estar en la olla,-,To be in the pot,To be in a very bad situation, financially ruined,N/A,N/A,"Figurative for dire circumstances.","N/A","N/A"
+Slang,Ser un bobo/a,-,To be a fool,To be silly, naive,N/A,N/A,"Mildly derogatory.","N/A","Gendered"
+Slang,Estar picado/a,-,To be bitten,To be annoyed, offended (often by a joke or slight),N/A,N/A,"Figurative for being bothered.","N/A","Gendered"
+Slang,Hacer el oso,-,To do the bear,To make a fool of oneself, to embarrass oneself,N/A,N/A,"Similar to ¡Qué oso!","N/A","N/A"
+Slang,Estar con los pelos de punta,-,To have one's hairs on end,To be scared, terrified,N/A,N/A,"Figurative.","N/A","N/A"
+Slang,Meter un gol de media cancha,-,To score a half-court goal,To achieve a great success, an impressive feat,N/A,N/A,"From soccer, highly impressive.","N/A","N/A"
+Slang,Hacerse el de la vista gorda,-,To make oneself the one with the fat eye,To pretend not to see, to ignore deliberately,N/A,N/A,"Similar to hacer la vista gorda.","N/A","N/A"
+Slang,Estar con un pie en el estribo,-,To have one foot in the stirrup,To be about to leave, to be ready to go,N/A,N/A,"Figurative.","N/A","N/A"
+Slang,No tener ni voz ni voto,-,To have neither voice nor vote,To have no say, no influence,N/A,N/A,"Figurative.","N/A","N/A"
+Slang,Ponerle la cara,-,To put the face,To face a problem, to take responsibility,N/A,N/A,"Figurative.","N/A","N/A"
+Slang,Estar como pez en el agua,-,To be like a fish in water,To be in one's element, comfortable,N/A,N/A,"Figurative.","N/A","N/A"
+Slang,Cantar las cuarenta,-,To sing the forty,To tell someone off, to speak frankly,N/A,N/A,"Figurative.","N/A","N/A"
+Slang,Poner el cascabel al gato,-,To put the bell on the cat,To take the first difficult step,N/A,N/A,"Figurative.","N/A","N/A"
+Slang,Más ciego que un topo,-,Blinder than a mole,Extremely blind, visually impaired,N/A,N/A,"Figurative.","N/A","N/A"
+Slang,Más sordo que una tapia,-,Deafer than a wall,Extremely deaf,N/A,N/A,"Figurative.","N/A","N/A"
+Slang,Estar más solo que la una,-,To be lonelier than one o'clock,To be completely alone,N/A,N/A,"Figurative.","N/A","N/A"
+Slang,Tener la cabeza en las nubes,-,To have one's head in the clouds,To be a daydreamer, distracted,N/A,N/A,"Similar to estar en las nubes. [25]","N/A","N/A"
+Slang,Comer cuento,-,To eat story,To believe a lie easily,N/A,N/A,"Similar to comerse el cuento. [25]","N/A","N/A"
+Slang,Estar mamado hasta la coronilla,-,To be tired up to the crown,To be completely fed up, exhausted,N/A,N/A,"Intensified version of mamado.","N/A","N/A"
+Slang,Tener mala espina,-,To have a bad thorn,To have a bad feeling, to distrust,N/A,N/A,"Figurative.","N/A","N/A"
+Slang,Echar la culpa,-,To throw the blame,To blame someone,N/A,N/A,"Common phrase.","N/A","N/A"
+Slang,Pisar el acelerador,-,To step on the accelerator,To speed up, to hurry,N/A,N/A,"Figurative.","N/A","N/A"
+Slang,Andar con pies de plomo,-,To walk with lead feet,To proceed cautiously,N/A,N/A,"Figurative.","N/A","N/A"
+Slang,Darle la espalda a alguien,-,To give someone one's back,To turn one's back on someone, to abandon them,N/A,N/A,"Figurative.","N/A","N/A"
+Slang,Estar en sus cabales,-,To be in one's senses,To be in one's right mind, sane,N/A,N/A,"Figurative.","N/A","N/A"
+Slang,No tener vuelta de hoja,-,To have no leaf turn,To be irreversible, unchangeable,N/A,N/A,"Figurative.","N/A","N/A"
+Slang,Meter un gol,-,To score a goal,To succeed, to achieve something (figurative),N/A,N/A,"From soccer.","N/A","N/A"
+Slang,Cantar la tabla,-,To sing the multiplication table,To tell someone off, to give a piece of one's mind,N/A,N/A,"Figurative.","N/A","N/A"
+Slang,Poner el dedo en la llaga,-,To put the finger on the wound,To hit a raw nerve, to touch on a sensitive issue,N/A,N/A,"Figurative.","N/A","N/A"
+Slang,Echar por tierra,-,To throw to the ground,To ruin, to destroy,N/A,N/A,"Figurative.","N/A","N/A"
+Slang,Agarrar el toro por los cuernos,-,To grab the bull by the horns,To take the bull by the horns, to face a problem directly,N/A,N/A,"Figurative.","N/A","N/A"
+Slang,Pasar la noche en blanco,-,To spend the night in white,To have a sleepless night,N/A,N/A,"Figurative.","N/A","N/A"
+Slang,Echar un cable,-,To throw a cable,To lend a hand, to help out,N/A,N/A,"Figurative.","N/A","N/A"
+Slang,Estar de bote en bote,-,To be from boat to boat,To be packed, overflowing (a place),N/A,N/A,"Figurative.","N/A","N/A"
+Slang,Darle palo a algo/alguien,-,To give a stick to something/someone,To criticize harshly, to beat up (figurative),N/A,N/A,"Figurative.","N/A","N/A"
+Slang,Echar la casa por la ventana,-,To throw the house out the window,To spare no expense, to go all out (for a celebration),N/A,N/A,"Similar to tirar la casa por la ventana. [25]","N/A","N/A"
+Slang,No tener dos dedos de frente,-,Not to have two fingers of forehead,To be stupid, to lack common sense,N/A,N/A,"Figurative.","N/A","N/A"
+Slang,Ser uña y mugre,-,To be fingernail and dirt,To be inseparable, very close friends,N/A,N/A,"Figurative for close bond.","N/A","N/A"
+Slang,Estar como sardina en lata,-,To be like sardine in a can,To be packed like sardines (in a crowded place),N/A,N/A,"Figurative for overcrowding.","N/A","N/A"
+Slang,Caer como anillo al dedo,-,To fit like a ring on the finger,To fit perfectly, to be just right,N/A,N/A,"Figurative.","N/A","N/A"
+Slang,Andar con la pata coja,-,To walk with a lame leg,To be in a disadvantaged position, to have a weakness,N/A,N/A,"Figurative.","N/A","N/A"
+Slang,Meter baza,-,To put in a trick,To interrupt, to butt in (a conversation),N/A,N/A,"Figurative.","N/A","N/A"
+Slang,No ver tres en un burro,-,Not to see three on a donkey,To be very short-sighted, to not see clearly,N/A,N/A,"Figurative.","N/A","N/A"
+Slang,Tener pájaros en la cabeza,-,To have birds in the head,To be naive, to have unrealistic ideas,N/A,N/A,"Figurative.","N/A","N/A"
+Slang,Estar más tieso que una mojá,-,To be stiffer than a wet one,To be broke, penniless (lit. "stiffer than a wet rag"),N/A,N/A,"Humorous for being broke.","N/A","N/A"
+Slang,Ser un bombazo,-,To be a bomb,To be a bombshell (very attractive person),N/A,N/A,"For attractive people or big news.","N/A","N/A"
+Slang,Estar en la cuerda floja,-,To be on the tightrope,To be in a precarious situation,N/A,N/A,"Figurative.","N/A","N/A"
+Slang,Darle la razón a alguien,-,To give reason to someone,To agree with someone, to concede a point,N/A,N/A,"Common phrase.","N/A","N/A"
+Slang,Echar un vistazo,-,To throw a glance,To take a quick look,N/A,N/A,"Common phrase.","N/A","N/A"
+Slang,Estar con el agua hasta el cuello,-,To be with water up to the neck,To be overwhelmed, in deep trouble,N/A,N/A,"Figurative.","N/A","N/A"
+Slang,Hacer de tripas corazón,-,To make heart from guts,To be brave, to gather courage,N/A,N/A,"Figurative.","N/A","N/A"
+Slang,Sacarle jugo a algo,-,To extract juice from something,To get the most out of something, to exploit,N/A,N/A,"Figurative.","N/A","N/A"
+Slang,Estar en la cresta de la ola,-,To be on the crest of the wave,To be at the peak of success,N/A,N/A,"Figurative.","N/A","N/A"
+Slang,Poner el grito en el cielo,-,To put the scream in the sky,To complain loudly, to protest vehemently,N/A,N/A,"Figurative.","N/A","N/A"
+Slang,Ser de carne y hueso,-,To be of flesh and bone,To be human, flawed,N/A,N/A,"Figurative.","N/A","N/A"
+Slang,No hay tu tía,-,There's no your aunt,There's no remedy, no solution,N/A,N/A,"Figurative.","N/A","N/A"
+Slang,Tomar cartas en el asunto,-,To take cards in the matter,To take action, to intervene,N/A,N/A,"Figurative.","N/A","N/A"
+Slang,A duras penas,-,With hard pains,Barely, with great difficulty,N/A,N/A,"Common phrase.","N/A","N/A"
+Slang,Estar como una tabla,-,To be like a board,To be very thin,N/A,N/A,"Figurative for thinness.","N/A","N/A"
+Slang,Hacer la vista gorda,-,To make the fat eye,To turn a blind eye, to ignore intentionally,N/A,N/A,"Figurative.","N/A","N/A"
+Slang,Quedarse con los crespos hechos,-,To be left with the curled hair done,To be left empty-handed, disappointed,N/A,N/A,"Figurative.","N/A","N/A"
+Slang,Echar la pata,-,To throw the paw,To die (colloquial),N/A,N/A,"Informal, often humorous.","N/A","N/A"
+Slang,Parcero,-,Buddy, mate,"¡Qué más parcero!","What's up, buddy!",Common term for a close friend. [3, 7, 8, 15, 16, 17, 18, 19, 20],"N/A","Masculine"
+Slang,Cacharro,-,Junk, old thing,"Ese carro es un cacharro.","That car is a piece of junk.",Refers to old or broken objects.","N/A","N/A"
+Slang,Trastear,-,To move things,To move house,N/A,N/A,"Informal verb for moving.","N/A","N/A"
+Slang,Dar un coco,-,To give a coconut,To hit someone on the head (playfully),N/A,N/A,"Children's playful hit.","N/A","N/A"
+Slang,Estar en la jugada,-,To be in the play,To be up-to-date, informed,"Él siempre está en la jugada con las noticias.","He's always in the know with the news.",Common. [28],"N/A","N/A"
+Slang,La platica,-,The little money,Money (affectionate or slighting),N/A,N/A,"Can imply small amount or cherished money.","N/A","N/A"
+Slang,Chisme,-,Gossip,N/A,N/A,"Common for rumors or personal information.","N/A","N/A"
+Slang,Echar chisme,-,To throw gossip,To gossip,N/A,N/A,"Common verb for gossiping.","N/A","N/A"
+Slang,Chismoso/a,-,Gossipy,N/A,N/A,"Describes a person who gossips.","N/A","Gendered"
+Slang,Mandar al carajo,-,To send to the carajo,To send to hell, to dismiss rudely,N/A,N/A,"Strong dismissal.","Strong","N/A"
+Slang,Chévere,Cool, nice, fantastic,"La fiesta estuvo chévere.","The party was cool.",Widely used throughout the country. [1, 6, 15, 16, 18, 20, 23, 24],"N/A","N/A"
+Slang,Bacano,-,Cool, awesome, very good,"¡Qué bacano tu celular nuevo!","How cool is your new phone!",Widely used. [3, 6, 15, 16, 20, 21, 23, 24],"N/A","N/A"
+Slang,Pilas,-,Batteries,"Be alert, pay attention, be careful","¡Pilas con la moto!","Watch out for the motorcycle!",Common in Colombia. [13, 18, 27, 28],"N/A","N/A"
+Slang,Jartera,-,"Boredom, annoyance","Qué jartera tener que madrugar.","What a pain to have to get up early.",Common. [13, 16],"N/A","N/A"
+Slang,Vaina,-,Thing,stuff,matter,"Pásame esa vaina.","Hand me that thing.",Very versatile word. [3, 13, 16, 18, 20],"N/A","N/A"
+Slang,Parce,-,Friend,buddy,"¿Qué hubo, parce?","What's up, buddy?",Short for parcero, widely used. [3, 7, 8, 15, 16, 17, 18, 19, 20],"N/A","N/A"
+Slang,Chino,-,Kid, child,"Mis chinos están jugando.","My kids are playing.",Also can mean friend. [13, 18, 19],"N/A","N/A"
+Slang,Polas,-,Beers,"Vamos por unas polas.","Let's go for some beers.",Common. [3, 8, 18, 19],"N/A","N/A"
+Slang,Guaro,-,Aguardiente (anise-flavored liquor),N/A,N/A,"Colombia's national spirit. [6, 15, 18, 20]","N/A","N/A"
+Slang,Mecato,-,Snacks,"Tráeme un mecato.","Bring me a snack.",Common term for snacks. [6, 21],"N/A","N/A"
+Slang,Tinto,-,Black coffee,"¿Quieres un tinto?","Do you want a black coffee?",Ubiquitous in Colombia. [3, 15, 17, 18, 22, 23, 41],"N/A","N/A"
+Slang,Rumba,-,Party,"¡Qué rumba la de anoche!","What a party last night!",Common for parties/fiestas. [3, 13, 15, 18, 20, 22],"N/A","N/A"
+Slang,Guayabo,-,Hangover,"Tengo un guayabo horrible.","I have a terrible hangover.",Common term. [3, 6, 16, 21],"N/A","N/A"
+Slang,Trancón,-,Traffic jam,"Hay mucho trancón.","There's a lot of traffic.",Common in major cities. [16],"N/A","N/A"
+Slang,Mañé,-,Tacky,distasteful,"Esa camisa es muy mañé.","That shirt is very tacky.",Common in Antioquia/Coffee Triangle. [23],"N/A","N/A"
+Slang,Mera vuelta,-,"Big hassle, difficult task","Qué mera vuelta hacer 

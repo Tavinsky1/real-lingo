@@ -1,0 +1,226 @@
+{% extends "entries/base.html" %}
+
+{% block title %}Dashboard - LingoWorld{% endblock title %}
+
+{% block content %}
+<div class="row mb-4">
+    <div class="col">
+        <h1 class="display-6">
+            <i class="bi bi-person-circle me-2"></i>
+            Welcome back, {{ user.username }}!
+        </h1>
+        <p class="lead">Track your learning progress and manage your favorite entries</p>
+    </div>
+</div>
+
+<!-- Statistics Cards -->
+<div class="row g-4 mb-5">
+    <div class="col-md-3 col-6">
+        <div class="card text-center h-100">
+            <div class="card-body">
+                <i class="bi bi-heart-fill text-danger display-4 mb-2"></i>
+                <h3 class="card-title">{{ stats.total_favorites }}</h3>
+                <p class="card-text text-muted">Favorites</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3 col-6">
+        <div class="card text-center h-100">
+            <div class="card-body">
+                <i class="bi bi-book text-primary display-4 mb-2"></i>
+                <h3 class="card-title">{{ stats.total_entries_viewed }}</h3>
+                <p class="card-text text-muted">Entries Viewed</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3 col-6">
+        <div class="card text-center h-100">
+            <div class="card-body">
+                <i class="bi bi-eye text-success display-4 mb-2"></i>
+                <h3 class="card-title">{{ stats.total_views }}</h3>
+                <p class="card-text text-muted">Total Views</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3 col-6">
+        <div class="card text-center h-100">
+            <div class="card-body">
+                <i class="bi bi-graph-up text-info display-4 mb-2"></i>
+                <h3 class="card-title">{{ stats.difficulty_stats.Mastered|default:0 }}</h3>
+                <p class="card-text text-muted">Mastered</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <!-- Favorites Section -->
+    <div class="col-lg-6 mb-4">
+        <div class="card h-100">
+            <div class="card-header d-flex justify-content-between align-items-center">
+                <h5 class="mb-0">
+                    <i class="bi bi-heart me-2"></i>Recent Favorites
+                </h5>
+                <a href="/api/favorites/" class="btn btn-sm btn-outline-primary">View All</a>
+            </div>
+            <div class="card-body">
+                {% if favorites %}
+                    {% for favorite in favorites %}
+                    <div class="d-flex align-items-center mb-3 {% if not forloop.last %}border-bottom pb-3{% endif %}">
+                        <div class="flex-grow-1">
+                            <h6 class="mb-1">
+                                <a href="{% url 'entry-detail' favorite.entry.id %}" class="text-decoration-none">
+                                    {{ favorite.entry.term }}
+                                </a>
+                            </h6>
+                            <small class="text-muted">
+                                {{ favorite.entry.language_code|upper }}
+                                {% if favorite.entry.category %}
+                                    • {{ favorite.entry.get_category_display }}
+                                {% endif %}
+                            </small>
+                            {% if favorite.entry.notes %}
+                                <p class="small text-muted mb-1">{{ favorite.entry.notes|truncatewords:15 }}</p>
+                            {% endif %}
+                        </div>
+                        <div class="text-end">
+                            <small class="text-muted">{{ favorite.created_at|timesince }} ago</small>
+                        </div>
+                    </div>
+                    {% endfor %}
+                {% else %}
+                    <div class="text-center text-muted py-4">
+                        <i class="bi bi-heart display-1 mb-3"></i>
+                        <p>No favorites yet! Start exploring and save your favorite entries.</p>
+                        <a href="{% url 'entry-list' %}" class="btn btn-primary">Explore Entries</a>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+    <!-- Recent Progress Section -->
+    <div class="col-lg-6 mb-4">
+        <div class="card h-100">
+            <div class="card-header d-flex justify-content-between align-items-center">
+                <h5 class="mb-0">
+                    <i class="bi bi-clock-history me-2"></i>Recent Activity
+                </h5>
+                <a href="/api/progress/" class="btn btn-sm btn-outline-success">View All</a>
+            </div>
+            <div class="card-body">
+                {% if recent_progress %}
+                    {% for progress in recent_progress %}
+                    <div class="d-flex align-items-center mb-3 {% if not forloop.last %}border-bottom pb-3{% endif %}">
+                        <div class="flex-grow-1">
+                            <h6 class="mb-1">
+                                <a href="{% url 'entry-detail' progress.entry.id %}" class="text-decoration-none">
+                                    {{ progress.entry.term }}
+                                </a>
+                            </h6>
+                            <div class="d-flex align-items-center gap-2">
+                                <span class="badge bg-light text-dark">{{ progress.times_viewed }} views</span>
+                                {% if progress.difficulty_rating %}
+                                    <span class="badge 
+                                        {% if progress.difficulty_rating == 'EASY' %}bg-success
+                                        {% elif progress.difficulty_rating == 'MEDIUM' %}bg-warning
+                                        {% elif progress.difficulty_rating == 'HARD' %}bg-danger
+                                        {% elif progress.difficulty_rating == 'MASTERED' %}bg-primary
+                                        {% else %}bg-secondary{% endif %}">
+                                        {{ progress.get_difficulty_rating_display }}
+                                    </span>
+                                {% endif %}
+                            </div>
+                        </div>
+                        <div class="text-end">
+                            <small class="text-muted">{{ progress.last_viewed|timesince }} ago</small>
+                        </div>
+                    </div>
+                    {% endfor %}
+                {% else %}
+                    <div class="text-center text-muted py-4">
+                        <i class="bi bi-clock-history display-1 mb-3"></i>
+                        <p>No activity yet! Start learning to see your progress here.</p>
+                        <a href="{% url 'entry-list' %}" class="btn btn-success">Start Learning</a>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Learning Progress Chart -->
+{% if stats.difficulty_stats %}
+<div class="row mt-4">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="mb-0">
+                    <i class="bi bi-bar-chart me-2"></i>Learning Progress
+                </h5>
+            </div>
+            <div class="card-body">
+                <div class="row text-center">
+                    {% for difficulty, count in stats.difficulty_stats.items %}
+                    <div class="col-md-3 col-6 mb-3">
+                        <div class="p-3 rounded bg-light">
+                            <div class="h3 mb-1 
+                                {% if difficulty == 'Easy' %}text-success
+                                {% elif difficulty == 'Medium' %}text-warning
+                                {% elif difficulty == 'Hard' %}text-danger
+                                {% elif difficulty == 'Mastered' %}text-primary
+                                {% else %}text-secondary{% endif %}">
+                                {{ count }}
+                            </div>
+                            <div class="text-muted">{{ difficulty }}</div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endif %}
+
+<!-- Quick Actions -->
+<div class="row mt-4">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="mb-0">
+                    <i class="bi bi-lightning me-2"></i>Quick Actions
+                </h5>
+            </div>
+            <div class="card-body">
+                <div class="row g-3">
+                    <div class="col-md-3 col-6">
+                        <a href="{% url 'entry-list' %}?random=true" class="btn btn-outline-primary w-100">
+                            <i class="bi bi-shuffle d-block mb-1"></i>
+                            Random Terms
+                        </a>
+                    </div>
+                    <div class="col-md-3 col-6">
+                        <a href="{% url 'entry-list' %}" class="btn btn-outline-success w-100">
+                            <i class="bi bi-search d-block mb-1"></i>
+                            Search & Explore
+                        </a>
+                    </div>
+                    <div class="col-md-3 col-6">
+                        <a href="/api/favorites/" class="btn btn-outline-danger w-100">
+                            <i class="bi bi-heart d-block mb-1"></i>
+                            My Favorites
+                        </a>
+                    </div>
+                    <div class="col-md-3 col-6">
+                        <a href="/api/progress/statistics/" class="btn btn-outline-info w-100">
+                            <i class="bi bi-graph-up d-block mb-1"></i>
+                            Detailed Stats
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}

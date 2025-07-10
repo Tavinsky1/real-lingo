@@ -1,0 +1,389 @@
+{% load i18n %}
+{% extends "entries/base.html" %}
+
+{% block title %}
+    Dashboard - REAL LINGO
+{% endblock title %}
+
+{% block content %}
+    <div class="container">
+        <!-- Welcome Header -->
+        <div class="hero-section mb-5">
+            <div class="hero-content text-center py-5">
+                <h1 class="display-5 fw-bold text-white mb-3 animate__animated animate__fadeInDown">
+                    <i class="bi bi-speedometer2 me-3"></i>
+                    ¡Hola, {{ user.username|title }}!
+                </h1>
+                <p class="lead text-white mb-4 animate__animated animate__fadeInUp">
+                    Bienvenido a tu panel personal de REAL LINGO
+                </p>
+                
+                <!-- Quick Stats -->
+                <div class="row g-4 justify-content-center">
+                    <div class="col-md-2 col-6">
+                        <div class="stats-card animate__animated animate__fadeInUp animate__delay-1s">
+                            <span class="stats-number">{{ user_stats.favorites_count|default:"0" }}</span>
+                            <div class="stats-label">Favoritos</div>
+                        </div>
+                    </div>
+                    <div class="col-md-2 col-6">
+                        <div class="stats-card animate__animated animate__fadeInUp animate__delay-1s">
+                            <span class="stats-number">{{ user_stats.viewed_count|default:"0" }}</span>
+                            <div class="stats-label">Vistos</div>
+                        </div>
+                    </div>
+                    <div class="col-md-2 col-6">
+                        <div class="stats-card animate__animated animate__fadeInUp animate__delay-2s">
+                            <span class="stats-number">{{ user_stats.learned_count|default:"0" }}</span>
+                            <div class="stats-label">Aprendidos</div>
+                        </div>
+                    </div>
+                    <div class="col-md-2 col-6">
+                        <div class="stats-card animate__animated animate__fadeInUp animate__delay-2s">
+                            <span class="stats-number">{{ user_stats.streak_days|default:"0" }}</span>
+                            <div class="stats-label">Días seguidos</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row g-4">
+            <!-- Left Column -->
+            <div class="col-lg-8">
+                <!-- Quick Actions -->
+                <div class="card mb-4 animate__animated animate__fadeInLeft">
+                    <div class="card-header d-flex align-items-center">
+                        <i class="bi bi-lightning-charge me-2 text-primary"></i>
+                        <h5 class="mb-0">Acciones rápidas</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="row g-3">
+                            <div class="col-md-3 col-6">
+                                <a href="{% url 'entry-list' %}?random=true" class="btn btn-primary w-100 d-flex flex-column align-items-center p-3">
+                                    <i class="bi bi-shuffle fs-3 mb-2"></i>
+                                    <span>Término aleatorio</span>
+                                </a>
+                            </div>
+                            <div class="col-md-3 col-6">
+                                <a href="{% url 'entry-list' %}?favorites=true" class="btn btn-outline-danger w-100 d-flex flex-column align-items-center p-3">
+                                    <i class="bi bi-heart-fill fs-3 mb-2"></i>
+                                    <span>Mis favoritos</span>
+                                </a>
+                            </div>
+                            <div class="col-md-3 col-6">
+                                <a href="{% url 'entry-list' %}" class="btn btn-outline-secondary w-100 d-flex flex-column align-items-center p-3">
+                                    <i class="bi bi-search fs-3 mb-2"></i>
+                                    <span>Explorar todo</span>
+                                </a>
+                            </div>
+                            <div class="col-md-3 col-6">
+                                <button onclick="startDailyChallenge()" class="btn btn-outline-success w-100 d-flex flex-column align-items-center p-3">
+                                    <i class="bi bi-trophy fs-3 mb-2"></i>
+                                    <span>Desafío diario</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Recent Favorites -->
+                {% if recent_favorites %}
+                    <div class="card mb-4 animate__animated animate__fadeInLeft animate__delay-1s">
+                        <div class="card-header d-flex justify-content-between align-items-center">
+                            <div class="d-flex align-items-center">
+                                <i class="bi bi-heart me-2 text-danger"></i>
+                                <h5 class="mb-0">Favoritos recientes</h5>
+                            </div>
+                            <a href="{% url 'entry-list' %}?favorites=true" class="btn btn-sm btn-outline-primary">
+                                Ver todos
+                            </a>
+                        </div>
+                        <div class="card-body">
+                            <div class="row g-3">
+                                {% for favorite in recent_favorites %}
+                                    <div class="col-md-6">
+                                        <div class="p-3 bg-light rounded-3 hover-shadow">
+                                            <h6 class="mb-1">
+                                                <a href="{% url 'entry-detail' favorite.entry.pk %}" class="text-decoration-none">
+                                                    {{ favorite.entry.term }}
+                                                </a>
+                                            </h6>
+                                            {% if favorite.entry.notes %}
+                                                <p class="small text-muted mb-0">{{ favorite.entry.notes|truncatewords:15 }}</p>
+                                            {% endif %}
+                                            <small class="text-muted">
+                                                <i class="bi bi-clock me-1"></i>{{ favorite.created_at|timesince }} atrás
+                                            </small>
+                                        </div>
+                                    </div>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                {% endif %}
+
+                <!-- Learning Progress -->
+                <div class="card mb-4 animate__animated animate__fadeInLeft animate__delay-2s">
+                    <div class="card-header d-flex align-items-center">
+                        <i class="bi bi-graph-up me-2 text-success"></i>
+                        <h5 class="mb-0">Progreso de aprendizaje</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <h6 class="text-muted mb-3">Esta semana</h6>
+                                <div class="progress mb-3" style="height: 8px;">
+                                    <div class="progress-bar bg-gradient" role="progressbar" style="width: {{ user_stats.weekly_progress|default:0 }}%"></div>
+                                </div>
+                                <p class="small text-muted">{{ user_stats.weekly_viewed|default:0 }} términos vistos de {{ user_stats.weekly_goal|default:50 }}</p>
+                            </div>
+                            <div class="col-md-6">
+                                <h6 class="text-muted mb-3">Este mes</h6>
+                                <div class="progress mb-3" style="height: 8px;">
+                                    <div class="progress-bar bg-gradient" role="progressbar" style="width: {{ user_stats.monthly_progress|default:0 }}%"></div>
+                                </div>
+                                <p class="small text-muted">{{ user_stats.monthly_viewed|default:0 }} términos vistos de {{ user_stats.monthly_goal|default:200 }}</p>
+                            </div>
+                        </div>
+                        
+                        <!-- Achievement Badges -->
+                        <div class="mt-4">
+                            <h6 class="text-muted mb-3">Logros recientes</h6>
+                            <div class="d-flex flex-wrap gap-2">
+                                {% if user_stats.favorites_count >= 10 %}
+                                    <span class="badge bg-danger p-2">
+                                        <i class="bi bi-heart-fill me-1"></i>Coleccionista
+                                    </span>
+                                {% endif %}
+                                {% if user_stats.viewed_count >= 100 %}
+                                    <span class="badge bg-primary p-2">
+                                        <i class="bi bi-eye-fill me-1"></i>Explorador
+                                    </span>
+                                {% endif %}
+                                {% if user_stats.streak_days >= 7 %}
+                                    <span class="badge bg-success p-2">
+                                        <i class="bi bi-fire me-1"></i>Constante
+                                    </span>
+                                {% endif %}
+                                {% if user_stats.learned_count >= 50 %}
+                                    <span class="badge bg-warning p-2">
+                                        <i class="bi bi-mortarboard-fill me-1"></i>Erudito
+                                    </span>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Recommended Terms -->
+                <div class="card animate__animated animate__fadeInLeft animate__delay-3s">
+                    <div class="card-header d-flex justify-content-between align-items-center">
+                        <div class="d-flex align-items-center">
+                            <i class="bi bi-lightbulb me-2 text-warning"></i>
+                            <h5 class="mb-0">Recomendados para vos</h5>
+                        </div>
+                        <button class="btn btn-sm btn-outline-primary" onclick="loadRecommendations()">
+                            <i class="bi bi-arrow-repeat me-1"></i>Actualizar
+                        </button>
+                    </div>
+                    <div class="card-body">
+                        <div class="row g-3" id="recommendationsContainer">
+                            <!-- Recommendations will be loaded here -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Column -->
+            <div class="col-lg-4">
+                <!-- Daily Goal -->
+                <div class="card mb-4 sticky-top animate__animated animate__fadeInRight" style="top: 100px;">
+                    <div class="card-header text-center bg-gradient text-white">
+                        <h6 class="mb-0">
+                            <i class="bi bi-target me-2"></i>Meta diaria
+                        </h6>
+                    </div>
+                    <div class="card-body text-center">
+                        <div class="position-relative d-inline-block mb-3">
+                            <svg width="120" height="120" viewBox="0 0 120 120">
+                                <circle cx="60" cy="60" r="54" fill="none" stroke="#e9ecef" stroke-width="8"/>
+                                <circle cx="60" cy="60" r="54" fill="none" stroke="var(--primary-color)" stroke-width="8" 
+                                        stroke-dasharray="339.292" stroke-dashoffset="{{ user_stats.daily_progress_offset|default:339 }}" 
+                                        stroke-linecap="round" transform="rotate(-90 60 60)"/>
+                            </svg>
+                            <div class="position-absolute top-50 start-50 translate-middle">
+                                <div class="h4 mb-0 text-primary">{{ user_stats.daily_viewed|default:0 }}</div>
+                                <small class="text-muted">de {{ user_stats.daily_goal|default:5 }}</small>
+                            </div>
+                        </div>
+                        <p class="small text-muted mb-3">Términos vistos hoy</p>
+                        {% if user_stats.daily_completed %}
+                            <span class="badge bg-success">
+                                <i class="bi bi-check-circle me-1"></i>¡Meta completada!
+                            </span>
+                        {% else %}
+                            <button class="btn btn-primary btn-sm" onclick="continueExploring()">
+                                <i class="bi bi-play me-1"></i>Continuar
+                            </button>
+                        {% endif %}
+                    </div>
+                </div>
+
+                <!-- Activity Feed -->
+                <div class="card animate__animated animate__fadeInRight animate__delay-1s">
+                    <div class="card-header">
+                        <h6 class="mb-0">
+                            <i class="bi bi-activity me-2"></i>Actividad reciente
+                        </h6>
+                    </div>
+                    <div class="card-body">
+                        <div class="timeline">
+                            {% for activity in recent_activity %}
+                                <div class="timeline-item d-flex mb-3">
+                                    <div class="timeline-marker bg-primary rounded-circle me-3 mt-1" style="width: 8px; height: 8px;"></div>
+                                    <div class="flex-grow-1">
+                                        <div class="small">
+                                            <strong>{{ activity.action }}</strong>
+                                            {% if activity.entry %}
+                                                <a href="{% url 'entry-detail' activity.entry.pk %}" class="text-decoration-none">
+                                                    {{ activity.entry.term }}
+                                                </a>
+                                            {% endif %}
+                                        </div>
+                                        <div class="text-muted small">{{ activity.created_at|timesince }} atrás</div>
+                                    </div>
+                                </div>
+                            {% empty %}
+                                <p class="text-muted small text-center">
+                                    <i class="bi bi-clock me-1"></i>
+                                    No hay actividad reciente
+                                </p>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock content %}
+
+{% block extra_js %}
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        loadRecommendations();
+        updateDashboardStats();
+    });
+    
+    function loadRecommendations() {
+        fetch('/api/entries/recommendations/')
+            .then(response => response.json())
+            .then(data => {
+                displayRecommendations(data.results || data);
+            })
+            .catch(error => {
+                console.error('Error loading recommendations:', error);
+                // Load random entries as fallback
+                fetch('/api/entries/random/?count=4')
+                    .then(response => response.json())
+                    .then(data => displayRecommendations(data.results || data));
+            });
+    }
+    
+    function displayRecommendations(entries) {
+        const container = document.getElementById('recommendationsContainer');
+        let html = '';
+        
+        entries.slice(0, 4).forEach(entry => {
+            html += `
+                <div class="col-md-6">
+                    <div class="p-3 bg-light rounded-3 hover-shadow h-100">
+                        <h6 class="mb-1">
+                            <a href="/entries/${entry.id}/" class="text-decoration-none">
+                                ${entry.term}
+                            </a>
+                        </h6>
+                        ${entry.notes ? `<p class="small text-muted mb-2">${entry.notes.substring(0, 60)}...</p>` : ''}
+                        <div class="d-flex justify-content-between align-items-center">
+                            <button class="btn btn-sm btn-outline-primary" onclick="window.location.href='/entries/${entry.id}/'">
+                                Ver
+                            </button>
+                            <button class="favorite-btn btn btn-sm" onclick="toggleFavorite(${entry.id})">
+                                <i class="bi bi-heart"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            `;
+        });
+        
+        container.innerHTML = html;
+    }
+    
+    function startDailyChallenge() {
+        // Redirect to a filtered view with random terms
+        window.location.href = '/entries/?challenge=daily';
+    }
+    
+    function continueExploring() {
+        window.location.href = '/entries/?random=true';
+    }
+    
+    function updateDashboardStats() {
+        fetch('/api/user-stats/')
+            .then(response => response.json())
+            .then(data => {
+                // Update progress bars and stats
+                updateProgressBars(data);
+            })
+            .catch(error => console.error('Error updating stats:', error));
+    }
+    
+    function updateProgressBars(stats) {
+        // Update weekly progress
+        const weeklyBar = document.querySelector('.progress-bar');
+        if (weeklyBar && stats.weekly_progress) {
+            weeklyBar.style.width = stats.weekly_progress + '%';
+        }
+        
+        // Update daily progress circle
+        const dailyCircle = document.querySelector('circle[stroke="var(--primary-color)"]');
+        if (dailyCircle && stats.daily_progress_offset) {
+            dailyCircle.style.strokeDashoffset = stats.daily_progress_offset;
+        }
+    }
+</script>
+
+<style>
+    .hover-shadow {
+        transition: box-shadow 0.3s ease;
+    }
+    
+    .hover-shadow:hover {
+        box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    }
+    
+    .timeline-item::before {
+        content: '';
+        position: absolute;
+        left: 11px;
+        top: 20px;
+        bottom: -10px;
+        width: 2px;
+        background: #e9ecef;
+    }
+    
+    .timeline-item:last-child::before {
+        display: none;
+    }
+    
+    .stats-card {
+        transition: all 0.3s ease;
+    }
+    
+    .stats-card:hover {
+        transform: translateY(-8px);
+        box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+    }
+</style>
+{% endblock extra_js %}

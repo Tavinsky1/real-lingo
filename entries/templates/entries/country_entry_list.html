@@ -1,0 +1,536 @@
+{% extends "entries/base.html" %}
+{% load i18n %}
+
+{% block title %}
+    {{ country_info.name }} Slang Dictionary - REAL LINGO
+{% endblock title %}
+
+{% block content %}
+    <div class="container-f                            <a href="{% url 'country-entries' country %}?random=true" class="btn btn-outline-secondary me-2">
+                                <i class="bi bi-shuffle me-1"></i>{% translate 'random_terms' %}
+                            </a>d" data-country="{{ country }}">
+        <!-- Country Header -->
+        <div class="country-header text-center py-3">
+            <div class="container">
+                <div class="d-flex align-items-center justify-content-between">
+                    <a href="{% url 'country-selection' %}" class="btn btn-outline-light">
+                        <i class="bi bi-arrow-left me-1"></i>{% translate 'countries' %}
+                    </a>
+                    <div class="text-center">
+                        <span class="country-flag me-2">{{ country_info.flag }}</span>
+                        <h1 class="h3 mb-0 d-inline">{{ country_info.name }} Slang</h1>
+                    </div>
+                    <a href="{% url 'country-home' country %}" class="btn btn-outline-light">
+                        <i class="bi bi-house me-1"></i>{% translate 'home' %}
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Search Bar -->
+        <form method="get" action="" class="mb-4 d-flex align-items-center">
+            <input type="text" name="q" class="form-control form-control-lg me-2" placeholder="Search slang" value="{{ request.GET.q|default:'' }}">
+            <button type="submit" class="btn btn-primary btn-lg px-4">Search</button>
+        </form>
+
+        <!-- Popular Categories -->
+        {% if popular_categories %}
+            <div class="mb-4">
+                <h3 class="h5 fw-bold mb-3">Popular Categories</h3>
+                <div class="row g-3">
+                    {% for category in popular_categories %}
+                        <div class="col-auto">
+                            <a href="?category={{ category.slug }}" class="btn btn-outline-secondary btn-lg rounded-pill">{{ category.name }}</a>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        {% endif %}
+
+        <!-- Search and Filters -->
+        <div class="search-section py-4 bg-light">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-8">
+                        <form method="get" class="search-form">
+                            <div class="input-group">
+                                <span class="input-group-text">
+                                    <i class="bi bi-search"></i>
+                                </span>
+                                <input type="text" 
+                                       name="search" 
+                                       class="form-control" 
+                                       value="{{ search_query }}"
+                                       placeholder="{% if country == 'argentina' %}Search lunfardo terms...{% elif country == 'australia' %}Search Aussie slang...{% elif country == 'germany' %}Search German slang...{% endif %}"
+                                       autocomplete="off">
+                                <button class="btn btn-primary" type="submit">
+                                    Search
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="col-lg-4">
+                        <div class="d-flex gap-2">
+                            <a href="{% url 'country-entries' country %}?random=true" 
+                               class="btn btn-outline-secondary {% if random_mode %}active{% endif %}">
+                                <i class="bi bi-shuffle me-1"></i>Random
+                            </a>
+                            {% if request.user.is_authenticated %}
+                            <a href="{% url 'country-entries' country %}?favorites=true" 
+                               class="btn btn-outline-danger {% if favorites_only %}active{% endif %}">
+                                <i class="bi bi-heart me-1"></i>Favorites
+                            </a>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Enhanced Quiz Button -->
+        <div class="quiz-button-section py-5 bg-gradient">
+            <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col-lg-8 text-center">
+                        <h3 class="text-white fw-bold mb-3">
+                            <i class="bi bi-trophy-fill me-2 text-warning"></i>
+                            Test Your {{ country_info.name }} Slang Knowledge!
+                        </h3>
+                        <p class="text-white-75 mb-4">
+                            Challenge yourself with {{ country_info.name }} slang terms and discover how much you really know!
+                        </p>
+                        <button id="startQuizBtn" class="quiz-btn-enhanced btn btn-lg px-5 py-3 shadow-lg fw-bold" onclick="startCountryQuiz('{{ country }}')">
+                            <i class="bi bi-lightning-charge-fill me-2"></i>
+                            <span class="quiz-btn-text">Start {{ country_info.name }} Quiz</span>
+                            <i class="bi bi-arrow-right ms-2"></i>
+                        </button>
+                        <div class="quiz-stats mt-3">
+                            <small class="text-white-75">
+                                <i class="bi bi-clock me-1"></i>5 questions • 
+                                <i class="bi bi-star me-1"></i>Track your progress • 
+                                <i class="bi bi-trophy me-1"></i>Earn achievements
+                            </small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Statistics -->
+        <div class="stats-bar py-3 border-bottom">
+            <div class="container">
+                <div class="row align-items-center">
+                    <div class="col-md-6">
+                        <div class="d-flex align-items-center text-muted">
+                            <i class="bi bi-info-circle me-2"></i>
+                            {% if is_paginated %}
+                                Showing {{ page_obj.start_index }}-{{ page_obj.end_index }} of {{ page_obj.paginator.count }} terms
+                            {% else %}
+                                {% if random_mode %}
+                                    Random selection of {{ entries|length }} terms
+                                {% else %}
+                                    {{ entries|length }} terms found
+                                {% endif %}
+                            {% endif %}
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="d-flex align-items-center justify-content-md-end">
+                            <small class="text-muted me-3">
+                                <i class="bi bi-book me-1"></i>{{ total_entries }} total terms
+                            </small>
+                            <small class="text-muted">
+                                <i class="bi bi-tags me-1"></i>{{ total_tags }} categories
+                            </small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Entries Grid -->
+        <div class="entries-section py-4">
+            <div class="container">
+                {% if entries %}
+                    <div class="row g-4">
+                        {% for entry in entries %}
+                        <div class="col-md-6 col-lg-4">
+                            <div class="entry-card card entry-card-enhanced border-0 shadow-sm h-100 hover-lift" data-entry-id="{{ entry.id }}">
+                                <div class="card-body">
+                                    <div class="d-flex justify-content-between align-items-start mb-2">
+                                        <h5 class="card-title mb-0">
+                                            <a href="{% url 'entry-detail' entry.id %}" class="text-decoration-none text-primary" title="View details for {{ entry.term }}">
+                                                <span style="color: #2d3a8c; background: #e0e7ff; border-radius: 8px; padding: 4px 12px; box-shadow: 0 2px 12px rgba(45,58,140,0.08); letter-spacing: 1px; font-weight: bold; font-size: 1.2rem;">{{ entry.term }}</span>
+                                            </a>
+                                        </h5>
+                                        {% if request.user.is_authenticated %}
+                                        <button class="btn btn-sm favorite-btn-enhanced" 
+                                                data-entry-id="{{ entry.id }}"
+                                                title="Add to favorites">
+                                            <i class="bi bi-heart"></i>
+                                        </button>
+                                        {% endif %}
+                                    </div>
+                                    
+                                    <p class="card-text text-muted mb-3">
+                                        {{ entry.notes|truncatewords:12 }}
+                                    </p>
+                                    
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        {% if entry.category %}
+                                        <span class="category-pill">{{ entry.category }}</span>
+                                        {% else %}
+                                        <span></span>
+                                        {% endif %}
+                                        
+                                        {% if entry.tags.all %}
+                                        <div class="entry-tags">
+                                            {% for tag in entry.tags.all|slice:":2" %}
+                                            <span class="category-pill small me-1">{{ tag.name }}</span>
+                                            {% endfor %}
+                                            {% if entry.tags.count > 2 %}
+                                            <span class="tooltip-enhanced text-muted small" data-tooltip="{{ entry.tags.count|add:'-2' }} more tags">+{{ entry.tags.count|add:"-2" }}</span>
+                                            {% endif %}
+                                        </div>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+
+                    <!-- Pagination -->
+                    {% if is_paginated %}
+                    <div class="pagination-section py-4">
+                        <div class="container">
+                            <nav aria-label="Page navigation">
+                                <ul class="pagination justify-content-center">{% if page_obj.has_previous %}<li class="page-item"><a class="page-link" href="?page=1{% if search_query %}&search={{ search_query }}{% endif %}{% if selected_category %}&category={{ selected_category }}{% endif %}{% if favorites_only %}&favorites=true{% endif %}" title="First page" aria-label="Go to first page"><i class="bi bi-chevron-double-left"></i></a></li><li class="page-item"><a class="page-link" href="?page={{ page_obj.previous_page_number }}{% if search_query %}&search={{ search_query }}{% endif %}{% if selected_category %}&category={{ selected_category }}{% endif %}{% if favorites_only %}&favorites=true{% endif %}" title="Previous page" aria-label="Go to previous page"><i class="bi bi-chevron-left"></i></a></li>{% endif %}{% for page_num in page_obj.paginator.page_range %}{% if page_num == page_obj.number %}<li class="page-item active"><span class="page-link">{{ page_num }}</span></li>{% elif page_num > page_obj.number|add:'-3' and page_num < page_obj.number|add:'3' %}<li class="page-item"><a class="page-link" href="?page={{ page_num }}{% if search_query %}&search={{ search_query }}{% endif %}{% if selected_category %}&category={{ selected_category }}{% endif %}{% if favorites_only %}&favorites=true{% endif %}" title="Page {{ page_num }}" aria-label="Go to page {{ page_num }}">{{ page_num }}</a></li>{% endif %}{% endfor %}{% if page_obj.has_next %}<li class="page-item"><a class="page-link" href="?page={{ page_obj.next_page_number }}{% if search_query %}&search={{ search_query }}{% endif %}{% if selected_category %}&category={{ selected_category }}{% endif %}{% if favorites_only %}&favorites=true{% endif %}" title="Next page" aria-label="Go to next page"><i class="bi bi-chevron-right"></i></a></li><li class="page-item"><a class="page-link" href="?page={{ page_obj.paginator.num_pages }}{% if search_query %}&search={{ search_query }}{% endif %}{% if selected_category %}&category={{ selected_category }}{% endif %}{% if favorites_only %}&favorites=true{% endif %}" title="Last page" aria-label="Go to last page"><i class="bi bi-chevron-double-right"></i></a></li>{% endif %}</ul>
+                                </ul>
+                            </nav>
+                        </div>
+                    </div>
+                    {% endif %}
+
+                {% else %}
+                    <!-- No Results -->
+                    <div class="no-results text-center py-5">
+                        <div class="mb-4">
+                            <i class="bi bi-search display-1 text-muted"></i>
+                        </div>
+                        <h3 class="text-muted mb-3">No terms found</h3>
+                        <p class="text-muted mb-4">
+                            {% if search_query %}
+                                No results for "{{ search_query }}" in {{ country_info.name }} slang.
+                            {% else %}
+                                No terms available with the current filters.
+                            {% endif %}
+                        </p>
+                        <div class="d-flex justify-content-center gap-2">
+                            <a href="{% url 'country-entries' country %}" class="btn btn-primary">
+                                <i class="bi bi-arrow-left me-1"></i>Clear Filters
+                            </a>
+                            <a href="{% url 'country-entries' country %}?random=true" class="btn btn-outline-primary">
+                                <i class="bi bi-shuffle me-1"></i>Random Terms
+                            </a>
+                        </div>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+
+        <!-- Random Words at the End -->
+        {% if random_words %}
+            <div class="mt-5">
+                <h3 class="h5 fw-bold mb-3">Random Words</h3>
+                <div class="row g-3">
+                    {% for word in random_words %}
+                        <div class="col-auto">
+                            <span class="badge bg-info text-dark fs-6">{{ word }}</span>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        {% endif %}
+    </div>
+
+    <style>
+        .country-header {
+            {% if country == 'argentina' %}
+            background: var(--gradient-argentina);
+            {% elif country == 'australia' %}
+            background: linear-gradient(135deg, #FF6B6B 0%, #4ECDC4 50%, #45B7D1 100%);
+            {% elif country == 'germany' %}
+            background: linear-gradient(135deg, #000000 0%, #DD0000 50%, #FFCE00 100%);
+            {% elif country == 'colombia' %}
+            background: linear-gradient(135deg, #FDE047 0%, #3B82F6 50%, #EF4444 100%);
+            {% elif country == 'belgium' %}
+            background: linear-gradient(135deg, #000000 0%, #FFD700 50%, #ED2939 100%);
+            {% endif %}
+            color: white;
+        }
+
+        .country-flag {
+            font-size: 1.5rem;
+        }
+
+        .entry-card {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .entry-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-lg) !important;
+        }
+
+        .hover-lift {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        /* Enhanced Quiz Button Section */
+        .quiz-button-section {
+            {% if country == 'argentina' %}
+            background: var(--gradient-argentina);
+            {% elif country == 'australia' %}
+            background: linear-gradient(135deg, #FF6B6B 0%, #4ECDC4 50%, #45B7D1 100%);
+            {% elif country == 'germany' %}
+            background: linear-gradient(135deg, #000000 0%, #DD0000 50%, #FFCE00 100%);
+            {% elif country == 'colombia' %}
+            background: linear-gradient(135deg, #FDE047 0%, #3B82F6 50%, #EF4444 100%);
+            {% elif country == 'belgium' %}
+            background: linear-gradient(135deg, #000000 0%, #FFD700 50%, #ED2939 100%);
+            {% else %}
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            {% endif %}
+            position: relative;
+            overflow: hidden;
+        }
+
+        .quiz-button-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="quiz-pattern" width="20" height="20" patternUnits="userSpaceOnUse"><circle cx="10" cy="10" r="1" fill="rgba(255,255,255,0.1)"/></pattern></defs><rect width="100" height="100" fill="url(%23quiz-pattern)"/></svg>');
+            opacity: 0.3;
+            animation: patternFloat 15s linear infinite;
+        }
+
+        @keyframes patternFloat {
+            0% { transform: translateX(0) translateY(0); }
+            25% { transform: translateX(-10px) translateY(-5px); }
+            50% { transform: translateX(-20px) translateY(-10px); }
+            75% { transform: translateX(-10px) translateY(-15px); }
+            100% { transform: translateX(0) translateY(-20px); }
+        }
+
+        .quiz-btn-enhanced {
+            background: linear-gradient(135deg, #fff 0%, #f8f9fa 100%);
+            color: #2d3436;
+            border: 3px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50px;
+            font-size: 1.2rem;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+            font-weight: 700;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2), 0 0 0 1px rgba(255, 255, 255, 0.1);
+        }
+
+        .quiz-btn-enhanced::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+            transition: left 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .quiz-btn-enhanced:hover {
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3), 0 0 0 1px rgba(255, 255, 255, 0.2);
+            background: linear-gradient(135deg, #ffffff 0%, #f1f3f4 100%);
+            border-color: rgba(255, 255, 255, 0.5);
+        }
+
+        .quiz-btn-enhanced:hover::before {
+            left: 100%;
+        }
+
+        .quiz-btn-enhanced:active {
+            transform: translateY(-1px) scale(1.02);
+            transition: all 0.1s ease;
+        }
+
+        .quiz-btn-enhanced .bi {
+            font-size: 1.3em;
+            vertical-align: middle;
+        }
+
+        .quiz-btn-enhanced .bi-lightning-charge-fill {
+            color: #f39c12;
+            animation: lightningPulse 2s ease-in-out infinite;
+        }
+
+        @keyframes lightningPulse {
+            0%, 100% { 
+                color: #f39c12; 
+                text-shadow: 0 0 5px rgba(243, 156, 18, 0.5);
+            }
+            50% { 
+                color: #e67e22; 
+                text-shadow: 0 0 10px rgba(230, 126, 34, 0.8);
+            }
+        }
+
+        .quiz-btn-enhanced .bi-arrow-right {
+            transition: transform 0.3s ease;
+        }
+
+        .quiz-btn-enhanced:hover .bi-arrow-right {
+            transform: translateX(5px);
+        }
+
+        .text-white-75 {
+            color: rgba(255, 255, 255, 0.75);
+        }
+
+        .quiz-stats {
+            animation: fadeInUp 0.6s ease-out 0.3s both;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Mobile responsiveness for quiz button */
+        @media (max-width: 768px) {
+            .quiz-btn-enhanced {
+                font-size: 1rem;
+                padding: 0.8rem 2rem !important;
+            }
+            
+            .quiz-button-section h3 {
+                font-size: 1.3rem;
+            }
+            
+            .quiz-button-section p {
+                font-size: 0.9rem;
+            }
+        }
+
+        .favorite-btn:hover {
+            color: #dc3545 !important;
+            border-color: #dc3545 !important;
+        }
+
+        .search-form .form-control:focus {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 0.2rem rgba(46, 134, 193, 0.25);
+        }
+
+        .stats-bar {
+            background: var(--gray-100);
+        }
+
+        .entry-tags .badge {
+            font-size: 0.7rem;
+        }
+
+        .pagination .page-link {
+            color: var(--primary-color);
+            border-color: var(--gray-300);
+        }
+
+        .pagination .page-item.active .page-link {
+            background-color: var(--primary-color);
+            border-color: var(--primary-color);
+        }
+
+        .pagination .page-link:hover {
+            color: var(--primary-dark);
+            background-color: var(--gray-200);
+        }
+
+        @media (max-width: 768px) {
+            .country-header .d-flex {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            
+            .search-section .row > div {
+                margin-bottom: 1rem;
+            }
+        }
+    </style>
+
+    <script>
+        // Favorite functionality
+        function toggleFavorite(entryId) {
+            // This would integrate with your existing favorite system
+            console.log('Toggle favorite for entry:', entryId);
+            // Add AJAX call here
+        }
+
+        // Quiz functionality
+        function startCountryQuiz(country) {
+            // Add loading animation to button
+            const btn = document.getElementById('startQuizBtn');
+            const originalContent = btn.innerHTML;
+            btn.innerHTML = '<i class="bi bi-arrow-repeat spin me-2"></i>Loading Quiz...';
+            btn.disabled = true;
+            
+            // Start the quiz if SlangQuiz is available
+            if (window.slangQuiz) {
+                setTimeout(() => {
+                    window.slangQuiz.show(country);
+                    // Restore button
+                    btn.innerHTML = originalContent;
+                    btn.disabled = false;
+                }, 800);
+            } else {
+                // Fallback if quiz not loaded
+                alert('Quiz is loading... Please try again in a moment.');
+                btn.innerHTML = originalContent;
+                btn.disabled = false;
+            }
+        }
+
+        // Search suggestions (similar to existing implementation)
+        document.addEventListener('DOMContentLoaded', function() {
+            const searchInput = document.querySelector('input[name="search"]');
+            if (searchInput) {
+                // Add search suggestions functionality here
+            }
+            
+            // Add CSS for button loading animation
+            const style = document.createElement('style');
+            style.textContent = `
+                .spin {
+                    animation: spin 1s linear infinite;
+                }
+                @keyframes spin {
+                    0% { transform: rotate(0deg); }
+                    100% { transform: rotate(360deg); }
+                }
+            `;
+            document.head.appendChild(style);
+        });
+    </script>
+
+    <!-- Include Quiz Modal -->
+    {% include 'entries/slang_quiz.html' %}
+{% endblock content %}

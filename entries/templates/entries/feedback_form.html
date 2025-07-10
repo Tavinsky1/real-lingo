@@ -1,0 +1,272 @@
+{% extends "entries/base.html" %}
+{% load static %}
+
+{% block title %}Send Feedback - REAL LINGO{% endblock %}
+
+{% block content %}
+<div class="container my-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <div class="card shadow-lg border-0">
+                <div class="card-header bg-primary text-white">
+                    <h2 class="mb-0">
+                        <i class="bi bi-chat-square-text me-2"></i>
+                        Send Us Your Feedback
+                    </h2>
+                    <p class="mb-0 mt-2 opacity-90">
+                        Help us improve Real Lingo! Your feedback is valuable to us.
+                    </p>
+                </div>
+                
+                <div class="card-body p-4">
+                    {% if messages %}
+                    <div class="alert-container mb-4">
+                        {% for message in messages %}
+                        <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+                            {{ message }}
+                            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                        </div>
+                        {% endfor %}
+                    </div>
+                    {% endif %}
+                    
+                    <form method="post" class="needs-validation" novalidate>
+                        {% csrf_token %}
+                        
+                        <div class="row g-3">
+                            <!-- Feedback Type -->
+                            <div class="col-md-6">
+                                <label for="{{ form.feedback_type.id_for_label }}" class="form-label">
+                                    <i class="bi bi-tags me-1"></i>
+                                    {{ form.feedback_type.label }}
+                                </label>
+                                {{ form.feedback_type }}
+                                {% if form.feedback_type.help_text %}
+                                <div class="form-text">{{ form.feedback_type.help_text }}</div>
+                                {% endif %}
+                                {% if form.feedback_type.errors %}
+                                <div class="invalid-feedback d-block">
+                                    {% for error in form.feedback_type.errors %}
+                                    {{ error }}
+                                    {% endfor %}
+                                </div>
+                                {% endif %}
+                            </div>
+                            
+                            <!-- Country Context -->
+                            <div class="col-md-6">
+                                <label for="{{ form.country_context.id_for_label }}" class="form-label">
+                                    <i class="bi bi-globe me-1"></i>
+                                    {{ form.country_context.label }}
+                                </label>
+                                {{ form.country_context }}
+                                {% if form.country_context.help_text %}
+                                <div class="form-text">{{ form.country_context.help_text }}</div>
+                                {% endif %}
+                                {% if form.country_context.errors %}
+                                <div class="invalid-feedback d-block">
+                                    {% for error in form.country_context.errors %}
+                                    {{ error }}
+                                    {% endfor %}
+                                </div>
+                                {% endif %}
+                            </div>
+                        </div>
+                        
+                        <!-- Title -->
+                        <div class="mb-3 mt-3">
+                            <label for="{{ form.title.id_for_label }}" class="form-label">
+                                <i class="bi bi-type me-1"></i>
+                                {{ form.title.label }} <span class="text-danger">*</span>
+                            </label>
+                            {{ form.title }}
+                            {% if form.title.help_text %}
+                            <div class="form-text">{{ form.title.help_text }}</div>
+                            {% endif %}
+                            {% if form.title.errors %}
+                            <div class="invalid-feedback d-block">
+                                {% for error in form.title.errors %}
+                                {{ error }}
+                                {% endfor %}
+                            </div>
+                            {% endif %}
+                        </div>
+                        
+                        <!-- Description -->
+                        <div class="mb-4">
+                            <label for="{{ form.description.id_for_label }}" class="form-label">
+                                <i class="bi bi-chat-left-text me-1"></i>
+                                {{ form.description.label }} <span class="text-danger">*</span>
+                            </label>
+                            {{ form.description }}
+                            {% if form.description.help_text %}
+                            <div class="form-text">{{ form.description.help_text }}</div>
+                            {% endif %}
+                            {% if form.description.errors %}
+                            <div class="invalid-feedback d-block">
+                                {% for error in form.description.errors %}
+                                {{ error }}
+                                {% endfor %}
+                            </div>
+                            {% endif %}
+                        </div>
+                        
+                        <!-- Info Box -->
+                        <div class="alert alert-info mb-4">
+                            <h6 class="alert-heading">
+                                <i class="bi bi-info-circle me-1"></i>
+                                What happens next?
+                            </h6>
+                            <ul class="mb-0">
+                                <li>Your feedback will be reviewed by our team</li>
+                                <li>We may contact you for clarification if needed</li>
+                                <li>Bug reports and critical issues get priority attention</li>
+                                <li>Feature requests are considered for future updates</li>
+                            </ul>
+                        </div>
+                        
+                        <!-- Submit Button -->
+                        <div class="d-flex justify-content-between align-items-center">
+                            <a href="{% url 'country-selection' %}" class="btn btn-outline-secondary">
+                                <i class="bi bi-arrow-left me-1"></i>
+                                Cancel
+                            </a>
+                            <button type="submit" class="btn btn-primary btn-lg">
+                                <i class="bi bi-send me-2"></i>
+                                Send Feedback
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            
+            <!-- Feedback Guidelines -->
+            <div class="card mt-4 border-0 bg-light">
+                <div class="card-body">
+                    <h5>💡 Feedback Guidelines</h5>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <h6>✅ Great feedback includes:</h6>
+                            <ul class="list-unstyled">
+                                <li>• Clear, specific descriptions</li>
+                                <li>• Steps to reproduce issues</li>
+                                <li>• What you expected vs. what happened</li>
+                                <li>• Screenshots when helpful</li>
+                            </ul>
+                        </div>
+                        <div class="col-md-6">
+                            <h6>📋 Feedback Types:</h6>
+                            <ul class="list-unstyled">
+                                <li><strong>Bug Report:</strong> Something isn't working</li>
+                                <li><strong>Feature Request:</strong> New functionality ideas</li>
+                                <li><strong>Improvement:</strong> Make existing features better</li>
+                                <li><strong>Content:</strong> Suggestions for content/entries</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+.card {
+    border-radius: 15px;
+}
+
+.card-header {
+    border-radius: 15px 15px 0 0 !important;
+}
+
+.form-control, .form-select {
+    border-radius: 8px;
+    border: 2px solid #e9ecef;
+    transition: all 0.3s ease;
+}
+
+.form-control:focus, .form-select:focus {
+    border-color: #007bff;
+    box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+}
+
+.btn {
+    border-radius: 8px;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+.btn-primary {
+    background: linear-gradient(135deg, #007bff 0%, #0056b3 100%);
+    border: none;
+}
+
+.btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(0, 123, 255, 0.3);
+}
+
+.alert {
+    border-radius: 10px;
+    border: none;
+}
+
+.alert-info {
+    background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%);
+    color: #0d47a1;
+}
+
+@media (max-width: 768px) {
+    .card-body {
+        padding: 20px;
+    }
+    
+    .btn-lg {
+        font-size: 1rem;
+        padding: 12px 20px;
+    }
+}
+</style>
+
+<script>
+// Add form validation
+(function() {
+    'use strict';
+    
+    // Fetch all forms with validation
+    var forms = document.querySelectorAll('.needs-validation');
+    
+    Array.prototype.slice.call(forms).forEach(function(form) {
+        form.addEventListener('submit', function(event) {
+            if (!form.checkValidity()) {
+                event.preventDefault();
+                event.stopPropagation();
+            }
+            form.classList.add('was-validated');
+        }, false);
+    });
+})();
+
+// Character counter for description
+document.addEventListener('DOMContentLoaded', function() {
+    const description = document.querySelector('textarea[name="description"]');
+    if (description) {
+        const maxLength = 2000;
+        const counter = document.createElement('div');
+        counter.className = 'form-text text-end';
+        counter.style.fontSize = '0.875rem';
+        
+        function updateCounter() {
+            const remaining = maxLength - description.value.length;
+            counter.textContent = `${description.value.length}/${maxLength} characters`;
+            counter.style.color = remaining < 100 ? '#dc3545' : '#6c757d';
+        }
+        
+        description.addEventListener('input', updateCounter);
+        description.parentNode.appendChild(counter);
+        updateCounter();
+    }
+});
+</script>
+
+{% endblock %}

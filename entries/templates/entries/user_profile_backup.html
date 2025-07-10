@@ -1,0 +1,872 @@
+<!-- Enhanced User Profile & Settings Template -->
+{% extends "entries/base.html" %}
+
+{% block title %}User Profile & Settings{% endblock %}
+
+{% block extra_css %}
+<style>
+.profile-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.profile-header {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    padding: 40px;
+    border-radius: 20px;
+    margin-bottom: 30px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+}
+
+.profile-header::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grain" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="20" cy="20" r="1" fill="white" opacity="0.1"/><circle cx="80" cy="80" r="1" fill="white" opacity="0.1"/><circle cx="40" cy="60" r="1" fill="white" opacity="0.1"/></pattern></defs><rect width="100" height="100" fill="url(%23grain)"/></svg>');
+    animation: float 20s infinite linear;
+}
+
+@keyframes float {
+    0% { transform: translate(-50%, -50%) rotate(0deg); }
+    100% { transform: translate(-50%, -50%) rotate(360deg); }
+}
+
+.profile-avatar {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #ffeaa7, #fab1a0);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 48px;
+    margin: 0 auto 20px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+    position: relative;
+    z-index: 1;
+}
+
+.profile-name {
+    font-size: 28px;
+    font-weight: 700;
+    margin-bottom: 10px;
+    position: relative;
+    z-index: 1;
+}
+
+.profile-stats {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    margin-top: 20px;
+    position: relative;
+    z-index: 1;
+}
+
+.profile-stat {
+    text-align: center;
+}
+
+.profile-stat-number {
+    font-size: 24px;
+    font-weight: 700;
+    display: block;
+}
+
+.profile-stat-label {
+    font-size: 14px;
+    opacity: 0.9;
+}
+
+.profile-content {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: 30px;
+}
+
+.profile-sidebar {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.profile-main {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.profile-card {
+    background: white;
+    border-radius: 16px;
+    padding: 24px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+    position: relative;
+    overflow: hidden;
+}
+
+.profile-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, #667eea, #764ba2);
+}
+
+.card-title {
+    font-size: 18px;
+    font-weight: 700;
+    color: #1e293b;
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.achievement-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+    gap: 12px;
+}
+
+.achievement-item {
+    text-align: center;
+    padding: 12px;
+    border-radius: 12px;
+    background: #f8fafc;
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.achievement-item.completed {
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    color: white;
+    transform: scale(1.05);
+}
+
+.achievement-item:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+.achievement-icon {
+    font-size: 24px;
+    margin-bottom: 8px;
+    display: block;
+}
+
+.achievement-name {
+    font-size: 12px;
+    font-weight: 600;
+    margin-bottom: 4px;
+}
+
+.achievement-progress {
+    font-size: 10px;
+    opacity: 0.8;
+}
+
+.settings-form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.form-label {
+    font-weight: 600;
+    color: #374151;
+}
+
+.form-input {
+    padding: 12px 16px;
+    border: 2px solid #e5e7eb;
+    border-radius: 8px;
+    font-size: 14px;
+    transition: all 0.3s ease;
+}
+
+.form-input:focus {
+    outline: none;
+    border-color: #667eea;
+    box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+}
+
+.form-select {
+    padding: 12px 16px;
+    border: 2px solid #e5e7eb;
+    border-radius: 8px;
+    background: white;
+    font-size: 14px;
+    transition: all 0.3s ease;
+}
+
+.form-checkbox {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px;
+    background: #f8fafc;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.form-checkbox:hover {
+    background: #f1f5f9;
+}
+
+.form-checkbox input {
+    width: 18px;
+    height: 18px;
+    accent-color: #667eea;
+}
+
+.form-button {
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    color: white;
+    border: none;
+    padding: 14px 24px;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.form-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(102, 126, 234, 0.3);
+}
+
+.language-preferences {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    gap: 12px;
+}
+
+.language-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px;
+    background: #f8fafc;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.language-item.selected {
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    color: white;
+}
+
+.language-item:hover {
+    transform: translateY(-1px);
+}
+
+.recent-activity {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.activity-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px;
+    background: #f8fafc;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+}
+
+.activity-item:hover {
+    background: #f1f5f9;
+}
+
+.activity-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 16px;
+}
+
+.activity-content {
+    flex: 1;
+}
+
+.activity-title {
+    font-weight: 600;
+    color: #1e293b;
+    margin-bottom: 4px;
+}
+
+.activity-time {
+    font-size: 12px;
+    color: #64748b;
+}
+
+.learning-streak {
+    text-align: center;
+    padding: 20px;
+}
+
+.streak-number {
+    font-size: 48px;
+    font-weight: 700;
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin-bottom: 8px;
+    display: block;
+}
+
+.streak-label {
+    color: #64748b;
+    font-weight: 500;
+}
+
+.progress-ring {
+    width: 100px;
+    height: 100px;
+    margin: 0 auto 16px;
+    position: relative;
+}
+
+.progress-ring-circle {
+    fill: none;
+    stroke: #e5e7eb;
+    stroke-width: 8;
+}
+
+.progress-ring-circle.progress {
+    stroke: url(#gradient);
+    stroke-linecap: round;
+    transform: rotate(-90deg);
+    transform-origin: 50% 50%;
+    animation: progressAnimation 2s ease-out;
+}
+
+@keyframes progressAnimation {
+    from { stroke-dasharray: 0, 314; }
+}
+
+.tab-buttons {
+    display: flex;
+    gap: 4px;
+    background: #f1f5f9;
+    border-radius: 12px;
+    padding: 4px;
+    margin-bottom: 20px;
+}
+
+.tab-button {
+    flex: 1;
+    padding: 12px 16px;
+    border: none;
+    background: none;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.tab-button.active {
+    background: white;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    color: #667eea;
+}
+
+.tab-content {
+    display: none;
+}
+
+.tab-content.active {
+    display: block;
+}
+
+@media (max-width: 768px) {
+    .profile-content {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+    
+    .profile-stats {
+        flex-direction: column;
+        gap: 15px;
+    }
+    
+    .achievement-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+    
+    .language-preferences {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="profile-container">
+    <!-- Profile Header -->
+    <div class="profile-header">
+        <div class="profile-avatar">
+            👤
+        </div>
+        <div class="profile-name">{{ user.username }}</div>
+        <div class="profile-stats">
+            <div class="profile-stat">
+                <span class="profile-stat-number" id="totalFavorites">0</span>
+                <span class="profile-stat-label">Favorites</span>
+            </div>
+            <div class="profile-stat">
+                <span class="profile-stat-number" id="totalLearned">0</span>
+                <span class="profile-stat-label">Learned</span>
+            </div>
+            <div class="profile-stat">
+                <span class="profile-stat-number" id="streakDays">0</span>
+                <span class="profile-stat-label">Day Streak</span>
+            </div>
+            <div class="profile-stat">
+                <span class="profile-stat-number" id="achievementPoints">0</span>
+                <span class="profile-stat-label">Points</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="profile-content">
+        <!-- Sidebar -->
+        <div class="profile-sidebar">
+            <!-- Learning Streak Card -->
+            <div class="profile-card">
+                <div class="card-title">🔥 Learning Streak</div>
+                <div class="learning-streak">
+                    <svg class="progress-ring" viewBox="0 0 100 100">
+                        <defs>
+                            <linearGradient id="gradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                                <stop offset="0%" style="stop-color:#667eea"/>
+                                <stop offset="100%" style="stop-color:#764ba2"/>
+                            </linearGradient>
+                        </defs>
+                        <circle class="progress-ring-circle" cx="50" cy="50" r="42"/>
+                        <circle class="progress-ring-circle progress" cx="50" cy="50" r="42" 
+                                stroke-dasharray="0, 314" id="streakProgress"/>
+                    </svg>
+                    <span class="streak-number" id="streakNumber">0</span>
+                    <div class="streak-label">Days in a row</div>
+                </div>
+            </div>
+
+            <!-- Quick Actions -->
+            <div class="profile-card">
+                <div class="card-title">⚡ Quick Actions</div>
+                <div style="display: flex; flex-direction: column; gap: 12px;">
+                    <button class="form-button" onclick="startQuiz()">
+                        🧠 Take Quiz
+                    </button>
+                    <button class="form-button" onclick="viewWordOfDay()">
+                        📅 Word of the Day
+                    </button>
+                    <button class="form-button" onclick="browseRandom()">
+                        🎲 Random Terms
+                    </button>
+                </div>
+            </div>
+
+            <!-- Recent Activity -->
+            <div class="profile-card">
+                <div class="card-title">📊 Recent Activity</div>
+                <div class="recent-activity" id="recentActivity">
+                    <!-- Populated by JavaScript -->
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="profile-main">
+            <!-- Tab Navigation -->
+            <div class="tab-buttons">
+                <button class="tab-button active" onclick="switchTab('achievements')">
+                    🏆 Achievements
+                </button>
+                <button class="tab-button" onclick="switchTab('settings')">
+                    ⚙️ Settings
+                </button>
+                <button class="tab-button" onclick="switchTab('stats')">
+                    📈 Statistics
+                </button>
+            </div>
+
+            <!-- Achievements Tab -->
+            <div id="achievementsTab" class="tab-content active">
+                <div class="profile-card">
+                    <div class="card-title">🏆 Your Achievements</div>
+                    <div class="achievement-grid" id="achievementGrid">
+                        <!-- Populated by JavaScript -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- Settings Tab -->
+            <div id="settingsTab" class="tab-content">
+                <div class="profile-card">
+                    <div class="card-title">⚙️ Account Settings</div>
+                    <form class="settings-form" onsubmit="saveSettings(event)">
+                        <div class="form-group">
+                            <label class="form-label">Email</label>
+                            <input type="email" class="form-input" value="{{ user.email }}" name="email">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="form-label">Display Name</label>
+                            <input type="text" class="form-input" value="{{ user.username }}" name="display_name">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="form-label">Daily Learning Goal</label>
+                            <select class="form-select" name="daily_goal">
+                                <option value="3">3 terms per day</option>
+                                <option value="5" selected>5 terms per day</option>
+                                <option value="10">10 terms per day</option>
+                                <option value="15">15 terms per day</option>
+                                <option value="20">20 terms per day</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="form-label">Preferred Learning Languages</label>
+                            <div class="language-preferences">
+                                <div class="language-item" onclick="toggleLanguage(this, 'en')">
+                                    <input type="checkbox" name="languages" value="en">
+                                    <span>🇺🇸 English</span>
+                                </div>
+                                <div class="language-item" onclick="toggleLanguage(this, 'es')">
+                                    <input type="checkbox" name="languages" value="es">
+                                    <span>🇪🇸 Spanish</span>
+                                </div>
+                                <div class="language-item" onclick="toggleLanguage(this, 'fr')">
+                                    <input type="checkbox" name="languages" value="fr">
+                                    <span>🇫🇷 French</span>
+                                </div>
+                                <div class="language-item" onclick="toggleLanguage(this, 'de')">
+                                    <input type="checkbox" name="languages" value="de">
+                                    <span>🇩🇪 German</span>
+                                </div>
+                                <div class="language-item" onclick="toggleLanguage(this, 'it')">
+                                    <input type="checkbox" name="languages" value="it">
+                                    <span>🇮🇹 Italian</span>
+                                </div>
+                                <div class="language-item" onclick="toggleLanguage(this, 'ja')">
+                                    <input type="checkbox" name="languages" value="ja">
+                                    <span>🇯🇵 Japanese</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="form-label">Notifications</label>
+                            <div class="form-checkbox">
+                                <input type="checkbox" name="daily_reminders" checked>
+                                <span>Daily learning reminders</span>
+                            </div>
+                            <div class="form-checkbox">
+                                <input type="checkbox" name="achievement_notifications" checked>
+                                <span>Achievement notifications</span>
+                            </div>
+                            <div class="form-checkbox">
+                                <input type="checkbox" name="weekly_progress" checked>
+                                <span>Weekly progress reports</span>
+                            </div>
+                        </div>
+                        
+                        <button type="submit" class="form-button">
+                            Save Settings
+                        </button>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Statistics Tab -->
+            <div id="statisticsTab" class="tab-content">
+                <div class="profile-card">
+                    <div class="card-title">📈 Learning Statistics</div>
+                    <div id="statisticsContent">
+                        <!-- Populated by JavaScript -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+class UserProfile {
+    constructor() {
+        this.init();
+    }
+    
+    async init() {
+        await this.loadUserStats();
+        await this.loadAchievements();
+        await this.loadRecentActivity();
+    }
+    
+    async loadUserStats() {
+        try {
+            const response = await fetch('/api/analytics/dashboard_stats/');
+            const data = await response.json();
+            
+            document.getElementById('totalFavorites').textContent = data.total_favorites;
+            document.getElementById('totalLearned').textContent = data.total_learned;
+            document.getElementById('streakDays').textContent = data.streak_days;
+            document.getElementById('achievementPoints').textContent = data.achievement_points;
+            
+            // Update streak visualization
+            const streakProgress = document.getElementById('streakProgress');
+            const streakNumber = document.getElementById('streakNumber');
+            const progress = Math.min(data.streak_days / 30, 1) * 314; // Max 30 days for full circle
+            
+            streakProgress.style.strokeDasharray = `${progress}, 314`;
+            streakNumber.textContent = data.streak_days;
+            
+        } catch (error) {
+            console.error('Error loading user stats:', error);
+        }
+    }
+    
+    async loadAchievements() {
+        try {
+            const response = await fetch('/api/analytics/achievements/');
+            const achievements = await response.json();
+            
+            const grid = document.getElementById('achievementGrid');
+            grid.innerHTML = '';
+            
+            achievements.forEach(achievement => {
+                const item = document.createElement('div');
+                item.className = `achievement-item ${achievement.completed ? 'completed' : ''}`;
+                item.onclick = () => this.showAchievementDetails(achievement);
+                
+                item.innerHTML = `
+                    <span class="achievement-icon">${achievement.icon}</span>
+                    <div class="achievement-name">${achievement.name}</div>
+                    <div class="achievement-progress">
+                        ${achievement.progress}/${achievement.max_progress}
+                    </div>
+                `;
+                
+                grid.appendChild(item);
+            });
+            
+        } catch (error) {
+            console.error('Error loading achievements:', error);
+        }
+    }
+    
+    async loadRecentActivity() {
+        try {
+            const response = await fetch('/api/analytics/dashboard_stats/');
+            const data = await response.json();
+            
+            const container = document.getElementById('recentActivity');
+            container.innerHTML = '';
+            
+            data.recent_activity.slice(0, 5).forEach(activity => {
+                const item = document.createElement('div');
+                item.className = 'activity-item';
+                
+                const icon = activity.type === 'viewed' ? '👁️' : '❤️';
+                
+                item.innerHTML = `
+                    <div class="activity-icon">${icon}</div>
+                    <div class="activity-content">
+                        <div class="activity-title">
+                            ${activity.type === 'viewed' ? 'Viewed' : 'Favorited'} "${activity.entry_term}"
+                        </div>
+                        <div class="activity-time">
+                            ${this.formatTime(activity.timestamp)}
+                        </div>
+                    </div>
+                `;
+                
+                container.appendChild(item);
+            });
+            
+        } catch (error) {
+            console.error('Error loading recent activity:', error);
+        }
+    }
+    
+    showAchievementDetails(achievement) {
+        // Show achievement details in a modal or notification
+        const message = `
+            ${achievement.icon} ${achievement.name}
+            
+            ${achievement.description}
+            
+            Progress: ${achievement.progress}/${achievement.max_progress}
+            ${achievement.completed ? '✅ Completed!' : ''}
+            Points: ${achievement.points}
+        `;
+        
+        if (window.lingoNotificationSystem) {
+            window.lingoNotificationSystem.show(message, 'info');
+        } else {
+            alert(message);
+        }
+    }
+    
+    formatTime(timestamp) {
+        const date = new Date(timestamp);
+        const now = new Date();
+        const diff = now - date;
+        
+        if (diff < 60000) return 'Just now';
+        if (diff < 3600000) return `${Math.floor(diff / 60000)}m ago`;
+        if (diff < 86400000) return `${Math.floor(diff / 3600000)}h ago`;
+        return `${Math.floor(diff / 86400000)}d ago`;
+    }
+}
+
+function switchTab(tabName) {
+    // Update tab buttons
+    document.querySelectorAll('.tab-button').forEach(btn => btn.classList.remove('active'));
+    event.target.classList.add('active');
+    
+    // Update tab content
+    document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
+    document.getElementById(tabName + 'Tab').classList.add('active');
+    
+    // Load specific tab content
+    if (tabName === 'stats') {
+        loadStatistics();
+    }
+}
+
+function toggleLanguage(element, languageCode) {
+    const checkbox = element.querySelector('input');
+    checkbox.checked = !checkbox.checked;
+    element.classList.toggle('selected', checkbox.checked);
+}
+
+async function saveSettings(event) {
+    event.preventDefault();
+    
+    const formData = new FormData(event.target);
+    const settings = Object.fromEntries(formData.entries());
+    
+    // Handle multiple language selections
+    const languages = Array.from(document.querySelectorAll('input[name="languages"]:checked'))
+        .map(cb => cb.value);
+    settings.languages = languages;
+    
+    try {
+        // In a real implementation, you'd send this to your settings API
+        console.log('Saving settings:', settings);
+        
+        if (window.lingoNotificationSystem) {
+            window.lingoNotificationSystem.show('Settings saved successfully!', 'success');
+        }
+    } catch (error) {
+        console.error('Error saving settings:', error);
+        if (window.lingoNotificationSystem) {
+            window.lingoNotificationSystem.show('Error saving settings', 'error');
+        }
+    }
+}
+
+async function loadStatistics() {
+    try {
+        const response = await fetch('/api/analytics/dashboard_stats/');
+        const data = await response.json();
+        
+        const container = document.getElementById('statisticsContent');
+        container.innerHTML = `
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px;">
+                <div style="text-align: center; padding: 20px; background: #f8fafc; border-radius: 12px;">
+                    <h3>🎯 Daily Progress</h3>
+                    <div style="font-size: 24px; font-weight: bold; color: #667eea;">
+                        ${Math.round(data.daily_progress)}%
+                    </div>
+                </div>
+                <div style="text-align: center; padding: 20px; background: #f8fafc; border-radius: 12px;">
+                    <h3>📅 Weekly Progress</h3>
+                    <div style="font-size: 24px; font-weight: bold; color: #667eea;">
+                        ${Math.round(data.weekly_progress)}%
+                    </div>
+                </div>
+                <div style="text-align: center; padding: 20px; background: #f8fafc; border-radius: 12px;">
+                    <h3>📊 Monthly Progress</h3>
+                    <div style="font-size: 24px; font-weight: bold; color: #667eea;">
+                        ${Math.round(data.monthly_progress)}%
+                    </div>
+                </div>
+            </div>
+            
+            <div style="margin-top: 30px;">
+                <h3>🌍 Favorite Languages</h3>
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 15px; margin-top: 15px;">
+                    ${data.favorite_languages.map(lang => `
+                        <div style="padding: 15px; background: #f8fafc; border-radius: 8px; text-align: center;">
+                            <div style="font-weight: bold;">${lang.entry__language_code.toUpperCase()}</div>
+                            <div style="color: #64748b;">${lang.count} favorites</div>
+                        </div>
+                    `).join('')}
+                </div>
+            </div>
+            
+            <div style="margin-top: 30px;">
+                <h3>📚 Favorite Categories</h3>
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 15px; margin-top: 15px;">
+                    ${data.favorite_categories.map(cat => `
+                        <div style="padding: 15px; background: #f8fafc; border-radius: 8px; text-align: center;">
+                            <div style="font-weight: bold;">${cat.entry__category}</div>
+                            <div style="color: #64748b;">${cat.count} favorites</div>
+                        </div>
+                    `).join('')}
+                </div>
+            </div>
+        `;
+    } catch (error) {
+        console.error('Error loading statistics:', error);
+    }
+}
+
+function startQuiz() {
+    window.location.href = '/api/quiz/questions/';
+}
+
+function viewWordOfDay() {
+    window.location.href = '/api/word-of-the-day/';
+}
+
+function browseRandom() {
+    window.location.href = '/api/entries/?random_count=10';
+}
+
+// Initialize when page loads
+document.addEventListener('DOMContentLoaded', () => {
+    window.userProfile = new UserProfile();
+});
+</script>
+{% endblock %}

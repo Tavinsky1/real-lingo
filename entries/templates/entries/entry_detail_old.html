@@ -1,0 +1,297 @@
+{% load i18n %}
+{% extends "entries/base.html" %}
+
+{% block title %}
+    {{ entry.term }} - REAL LINGO
+{% endblock title %}
+
+{% block content %}
+    <!-- Navigation -->
+    <nav aria-label="breadcrumb" class="mb-4">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item">
+                <a href="{% url 'entry-list' %}"><i class="bi bi-house"></i> Home</a>
+            </li>
+            {% if entry.category %}
+            <li class="breadcrumb-item">
+                <a href="{% url 'entry-list' %}?category={{ entry.category }}">{{ entry.get_category_display }}</a>
+            </li>
+            {% endif %}
+            <li class="breadcrumb-item active" aria-current="page">{{ entry.term }}</li>
+        </ol>
+    </nav>
+
+    <div class="row">
+        <!-- Main Content -->
+        <div class="col-lg-8">
+            <!-- Entry Header -->
+            <div class="card mb-4">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-start mb-3">
+                        <div>
+                            <h1 class="display-6 mb-2">{{ entry.term }}</h1>
+                            <div class="d-flex flex-wrap gap-2 mb-3">
+                                {% if entry.language_code %}
+                                    <span class="badge bg-primary fs-6">
+                                        <i class="bi bi-globe me-1"></i>{{ entry.language_code|upper }}
+                                    </span>
+                                {% endif %}
+                                {% if entry.region_code %}
+                                    <span class="badge bg-info fs-6">
+                                        <i class="bi bi-geo-alt me-1"></i>{{ entry.region_code }}
+                                    </span>
+                                {% endif %}
+                                {% if entry.category %}
+                                    <span class="badge bg-success fs-6">
+                                        <i class="bi bi-folder me-1"></i>{{ entry.get_category_display }}
+                                    </span>
+                                {% endif %}
+                                {% if entry.part_of_speech %}
+                                    <span class="badge bg-warning text-dark fs-6">
+                                        <i class="bi bi-chat-text me-1"></i>{{ entry.part_of_speech }}
+                                    </span>
+                                {% endif %}
+                            </div>
+                        </div>
+                        <div class="text-end">
+                            <button class="btn btn-outline-danger btn-lg favorite-btn" onclick="toggleFavorite({{ entry.id }})" title="Add to favorites">
+                                <i class="bi bi-heart"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    {% if entry.notes %}
+                        <div class="border-top pt-3">
+                            <h5><i class="bi bi-chat-quote me-2"></i>Definition</h5>
+                            <p class="fs-5 text-muted">{{ entry.notes|linebreaksbr }}</p>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+
+            <!-- Translations -->
+            {% if entry.translations.all %}
+            <div class="card mb-4">
+                <div class="card-header">
+                    <h5 class="mb-0"><i class="bi bi-translate me-2"></i>Translations</h5>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        {% for translation in entry.translations.all %}
+                        <div class="col-md-6 mb-3">
+                            <div class="p-3 bg-light rounded">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <span class="fw-medium">{{ translation.translation }}</span>
+                                    {% if translation.language_code %}
+                                        <span class="badge bg-secondary">{{ translation.language_code|upper }}</span>
+                                    {% endif %}
+                                </div>
+                                {% if translation.notes %}
+                                    <small class="text-muted d-block mt-1">{{ translation.notes }}</small>
+                                {% endif %}
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+            {% endif %}
+
+            <!-- Examples -->
+            {% if entry.examples.all %}
+            <div class="card mb-4">
+                <div class="card-header">
+                    <h5 class="mb-0"><i class="bi bi-chat-left-quote me-2"></i>Examples</h5>
+                </div>
+                <div class="card-body">
+                    {% for example in entry.examples.all %}
+                    <div class="mb-3 {% if not forloop.last %}border-bottom pb-3{% endif %}">
+                        <blockquote class="blockquote mb-2">
+                            <p class="mb-1">"{{ example.sentence }}"</p>
+                        </blockquote>
+                        {% if example.translation %}
+                            <div class="text-muted">
+                                <strong>Translation:</strong> {{ example.translation }}
+                            </div>
+                        {% endif %}
+                        {% if example.context %}
+                            <div class="text-muted mt-1">
+                                <strong>Context:</strong> {{ example.context }}
+                            </div>
+                        {% endif %}
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+            {% endif %}
+
+            <!-- Tags -->
+            {% if entry.tags.all %}
+            <div class="card mb-4">
+                <div class="card-header">
+                    <h5 class="mb-0"><i class="bi bi-tags me-2"></i>Tags</h5>
+                </div>
+                <div class="card-body">
+                    <div class="d-flex flex-wrap gap-2">
+                        {% for tag in entry.tags.all %}
+                            <a href="{% url 'entry-list' %}?tag={{ tag.name }}" 
+                               class="tag-badge text-decoration-none"
+                               style="background-color: {{ tag.color|default:'#e9ecef' }}; color: {% if tag.color %}{{ tag.color|default:'#000' }}{% else %}#000{% endif %}"
+                               title="{% if tag.description %}{{ tag.description }}{% else %}Click to see more entries with this tag{% endif %}">
+                                <i class="bi bi-tag me-1"></i>{{ tag.name }}
+                            </a>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+            {% endif %}
+        </div>
+
+        <!-- Sidebar -->
+        <div class="col-lg-4">
+            <!-- Quick Actions -->
+            <div class="card mb-4">
+                <div class="card-header">
+                    <h6 class="mb-0"><i class="bi bi-lightning me-2"></i>Quick Actions</h6>
+                </div>
+                <div class="card-body">
+                    <div class="d-grid gap-2">
+                        <button class="btn btn-outline-primary" onclick="shareEntry()">
+                            <i class="bi bi-share me-2"></i>Share Entry
+                        </button>
+                        <button class="btn btn-outline-info" onclick="pronounceEntry()">
+                            <i class="bi bi-volume-up me-2"></i>Pronounce
+                        </button>
+                        <a href="{% url 'entry-list' %}?random=true" class="btn btn-outline-success">
+                            <i class="bi bi-shuffle me-2"></i>Random Entry
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Similar Entries -->
+            <div class="card mb-4">
+                <div class="card-header">
+                    <h6 class="mb-0"><i class="bi bi-collection me-2"></i>Similar Entries</h6>
+                </div>
+                <div class="card-body" id="similarEntriesContainer">
+                    <div class="text-center text-muted">
+                        <div class="spinner-border spinner-border-sm me-2" role="status">
+                            <span class="visually-hidden">Loading...</span>
+                        </div>
+                        Loading similar entries...
+                    </div>
+                </div>
+            </div>
+
+            <!-- Entry Stats -->
+            <div class="card">
+                <div class="card-header">
+                    <h6 class="mb-0"><i class="bi bi-info-circle me-2"></i>Entry Information</h6>
+                </div>
+                <div class="card-body">
+                    <div class="row g-2 text-center">
+                        <div class="col-6">
+                            <div class="p-2 bg-light rounded">
+                                <div class="fw-bold text-primary">{{ entry.translations.count }}</div>
+                                <small class="text-muted">Translations</small>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="p-2 bg-light rounded">
+                                <div class="fw-bold text-success">{{ entry.examples.count }}</div>
+                                <small class="text-muted">Examples</small>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="p-2 bg-light rounded">
+                                <div class="fw-bold text-info">{{ entry.tags.count }}</div>
+                                <small class="text-muted">Tags</small>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="p-2 bg-light rounded">
+                                <div class="fw-bold text-warning">ID</div>
+                                <small class="text-muted">{{ entry.id }}</small>
+                            </div>
+                        </div>
+                    </div>
+                    <hr class="my-3">
+                    <div class="text-center">
+                        <small class="text-muted">
+                            <div><strong>Added:</strong> {{ entry.created_at|date:"M d, Y" }}</div>
+                            <div><strong>Updated:</strong> {{ entry.updated_at|date:"M d, Y" }}</div>
+                        </small>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock content %}
+
+{% block extra_js %}
+<script>
+    // Load similar entries
+    function loadSimilarEntries() {
+        fetch(`/api/entries/{{ entry.id }}/similar/`)
+            .then(response => response.json())
+            .then(data => {
+                const container = document.getElementById('similarEntriesContainer');
+                
+                if (data.similar_entries && data.similar_entries.length > 0) {
+                    let html = '';
+                    data.similar_entries.forEach(entry => {
+                        html += `
+                            <div class="mb-2">
+                                <a href="/entries/${entry.id}/" class="text-decoration-none">
+                                    <div class="p-2 border rounded hover-bg-light">
+                                        <div class="fw-medium">${entry.term}</div>
+                                        ${entry.notes ? `<small class="text-muted">${entry.notes.substring(0, 50)}...</small>` : ''}
+                                    </div>
+                                </a>
+                            </div>
+                        `;
+                    });
+                    container.innerHTML = html;
+                } else {
+                    container.innerHTML = '<div class="text-muted text-center">No similar entries found</div>';
+                }
+            })
+            .catch(error => {
+                console.error('Error loading similar entries:', error);
+                const container = document.getElementById('similarEntriesContainer');
+                container.innerHTML = '<div class="text-muted text-center">Error loading similar entries</div>';
+            });
+    }
+    
+    function shareEntry() {
+        if (navigator.share) {
+            navigator.share({
+                title: '{{ entry.term }} - REAL LINGO',
+                text: '{{ entry.notes|default:"Check out this Argentinian slang term!" }}',
+                url: window.location.href
+            });
+        } else {
+            // Fallback: copy to clipboard
+            navigator.clipboard.writeText(window.location.href).then(() => {
+                alert('Link copied to clipboard!');
+            });
+        }
+    }
+    
+    function pronounceEntry() {
+        if ('speechSynthesis' in window) {
+            const utterance = new SpeechSynthesisUtterance('{{ entry.term }}');
+            utterance.lang = 'es-AR'; // Argentinian Spanish
+            speechSynthesis.speak(utterance);
+        } else {
+            alert('Speech synthesis not supported in your browser');
+        }
+    }
+    
+    // Load similar entries when page loads
+    document.addEventListener('DOMContentLoaded', function() {
+        loadSimilarEntries();
+    });
+</script>
+{% endblock extra_js %}

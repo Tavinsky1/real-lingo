@@ -1,0 +1,116 @@
+{% extends 'entries/base.html' %}
+{% load static %}
+
+{% block title %}{{ title }}{% endblock %}
+
+{% block extra_css %}
+<style>
+    .verification-container {
+        max-width: 600px;
+        margin: 4rem auto;
+        padding: 2rem;
+        text-align: center;
+        background: white;
+        border-radius: 15px;
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+
+    .verification-icon {
+        width: 80px;
+        height: 80px;
+        margin: 0 auto 2rem;
+        background: linear-gradient(135deg, #667eea, #764ba2);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-size: 2rem;
+    }
+
+    .verification-title {
+        color: #2c3e50;
+        margin-bottom: 1rem;
+        font-weight: 600;
+    }
+
+    .verification-message {
+        color: #6c757d;
+        margin-bottom: 2rem;
+        line-height: 1.6;
+        font-size: 1.1rem;
+    }
+
+    .resend-link {
+        display: inline-block;
+        padding: 0.75rem 1.5rem;
+        background: linear-gradient(135deg, #6c63ff, #8e44ad);
+        color: white;
+        text-decoration: none;
+        border-radius: 8px;
+        font-weight: 500;
+        transition: all 0.3s ease;
+        margin-top: 1rem;
+    }
+
+    .resend-link:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(108, 99, 255, 0.3);
+        color: white;
+        text-decoration: none;
+    }
+
+    .help-text {
+        margin-top: 2rem;
+        padding: 1rem;
+        background: #f8f9fa;
+        border-radius: 8px;
+        color: #6c757d;
+        font-size: 0.9rem;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="verification-container">
+    <div class="verification-icon">
+        <i class="fas fa-envelope"></i>
+    </div>
+    
+    <h2 class="verification-title">
+        {% if language == 'es' %}
+            Verificación de Email Pendiente
+        {% else %}
+            Email Verification Pending
+        {% endif %}
+    </h2>
+    
+    <p class="verification-message">
+        {% if language == 'es' %}
+            Hemos enviado un email de verificación a tu dirección de correo. 
+            Por favor revisa tu bandeja de entrada y haz clic en el enlace de verificación 
+            para activar tu cuenta.
+        {% else %}
+            We've sent a verification email to your address. 
+            Please check your inbox and click the verification link to activate your account.
+        {% endif %}
+    </p>
+    
+    <div class="help-text">
+        {% if language == 'es' %}
+            ¿No recibiste el email? Revisa tu carpeta de spam o haz clic en el botón de abajo para reenviar.
+        {% else %}
+            Didn't receive the email? Check your spam folder or click the button below to resend.
+        {% endif %}
+    </div>
+    
+    <a href="{% url 'resend-verification' %}" class="resend-link">
+        {% if language == 'es' %}
+            Reenviar Email de Verificación
+        {% else %}
+            Resend Verification Email
+        {% endif %}
+    </a>
+</div>
+{% endblock %}

@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz Debug Test</title>
+    <style>
+        body { font-family: Arial, sans-serif; padding: 20px; }
+        .debug-info { background: #f0f0f0; padding: 15px; margin: 10px 0; border-radius: 5px; }
+        .test-button { padding: 10px 20px; margin: 10px; cursor: pointer; }
+    </style>
+</head>
+<body>
+    <h1>Quiz Assignment Debug Test</h1>
+    
+    <!-- Same HTML structure as the real quiz -->
+    <div class="slang-quiz-widget" id="slangQuiz" style="display: none;">
+        <div class="card border-0 shadow-lg">
+            <div class="card-header bg-gradient text-white text-center">
+                <h5 class="mb-0" id="quizTitle">Quiz</h5>
+                <div class="quiz-progress mt-2">
+                    <small>Question <span id="currentQuestion">1</span> of <span id="totalQuestions">5</span> | Score: <span id="currentScore">0</span>/<span id="maxScore">5</span></small>
+                </div>
+            </div>
+            <div class="card-body">
+                <div class="quiz-content" id="quizContent">
+                    <div class="quiz-question mb-4">
+                        <h6 id="questionText">Loading question...</h6>
+                    </div>
+                    <div class="quiz-options" id="optionsContainer">
+                        <!-- Options will be inserted here by JavaScript -->
+                    </div>
+                </div>
+                <div class="quiz-controls mt-3" style="text-align: center;">
+                    <button class="btn btn-outline-secondary me-2" id="skipBtn" style="display: none;">Skip</button>
+                    <button class="btn btn-primary" id="nextBtn" style="display: none;">Next</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="debug-info">
+        <h3>Debug Information</h3>
+        <div id="debugOutput"></div>
+    </div>
+
+    <button class="test-button" onclick="testQuizCreation()">Test Quiz Creation</button>
+    <button class="test-button" onclick="showDebugInfo()">Show Debug Info</button>
+    <button class="test-button" onclick="testDOMAssignment()">Test DOM Assignment (Should Be Blocked)</button>
+    <button class="test-button" onclick="testQuizButtonClick()">Test Quiz Button Click</button>
+
+    <script>
+        // Global debug tracking for window.slangQuiz assignments with protection
+        if (!window._slangQuizDebugTracker) {
+            window._slangQuizDebugTracker = true;
+            console.log('🚀 Installing window.slangQuiz assignment tracker...');
+            
+            // Create a property descriptor to track all assignments and prevent DOM element assignment
+            let _slangQuiz = null;
+            Object.defineProperty(window, 'slangQuiz', {
+                get: function() {
+                    return _slangQuiz;
+                },
+                set: function(value) {
+                    console.log('🔍 TRACKER: window.slangQuiz assignment detected!');
+                    console.log('🔍 TRACKER: New value type:', typeof value);
+                    console.log('🔍 TRACKER: New value:', value);
+                    console.log('🔍 TRACKER: Is DOM element:', !!(value && value.nodeType));
+                    
+                    // PREVENT DOM element assignment!
+                    if (value && value.nodeType) {
+                        console.error('🚨 BLOCKED: Attempt to assign DOM element to window.slangQuiz!');
+                        console.error('🚨 Stack trace:', new Error().stack);
+                        console.error('🚨 Ignoring assignment of:', value);
+                        showDebugInfo(); // Update UI
+                        return; // Don't assign DOM elements
+                    }
+                    
+                    // Only allow null/undefined or valid quiz instances
+                    if (value === null || value === undefined || (typeof value === 'object' && typeof value.show === 'function')) {
+                        console.log('✅ TRACKER: Valid assignment accepted');
+                        _slangQuiz = value;
+                    } else {
+                        console.error('🚨 BLOCKED: Invalid assignment to window.slangQuiz:', value);
+                        console.error('🚨 Stack trace:', new Error().stack);
+                    }
+                    
+                    showDebugInfo(); // Update UI
+                },
+                configurable: true,
+                enumerable: true
+            });
+            console.log('✅ Assignment tracker with DOM protection installed successfully');
+        }
+
+        // Simplified SlangQuiz class for testing
+        class SlangQuiz {
+            constructor() {
+                console.log('🏗️ SlangQuiz constructor starting...');
+                this.currentQuestionIndex = 0;
+                this.score = 0;
+                this.selectedAnswer = null;
+                this.currentCountry = 'argentina';
+                this.questions = [
+                    {
+                        term: "che",
+                        question: "What does 'che' mean in Argentine slang?",
+                        options: ["Hey/dude", "Money", "House", "Food"],
+                        correct: 0,
+                        explanation: "'Che' is a common Argentine interjection meaning 'hey' or 'dude'"
+                    }
+                ];
+                console.log('🎉 SlangQuiz constructor completed successfully');
+            }
+
+            show() {
+                console.log('Showing quiz...');
+                const quizElement = document.getElementById('slangQuiz');
+                if (quizElement) {
+                    quizElement.style.display = 'block';
+                    console.log('Quiz displayed');
+                }
+            }
+
+            close() {
+                console.log('Closing quiz...');
+                const quizElement = document.getElementById('slangQuiz');
+                if (quizElement) {
+                    quizElement.style.display = 'none';
+                }
+            }
+        }
+
+        function testQuizCreation() {
+            console.log('=== TESTING QUIZ CREATION ===');
+            
+            try {
+                console.log('🔧 Creating SlangQuiz instance...');
+                const quizInstance = new SlangQuiz();
+                console.log('🔍 Quiz instance created:', quizInstance);
+                console.log('🔍 Quiz instance type:', typeof quizInstance);
+                console.log('🔍 Quiz instance has show method:', typeof quizInstance.show);
+                
+                if (quizInstance && typeof quizInstance.show === 'function') {
+                    window.slangQuiz = quizInstance;
+                    console.log('✅ Quiz instance assigned to window.slangQuiz');
+                } else {
+                    console.error('❌ Quiz instance invalid or missing show() method!');
+                    window.slangQuiz = null;
+                }
+            } catch (error) {
+                console.error('❌ Error creating quiz instance:', error);
+                window.slangQuiz = null;
+            }
+        }
+
+        function showDebugInfo() {
+            const debugOutput = document.getElementById('debugOutput');
+            const info = [];
+            
+            info.push(`<strong>window.slangQuiz:</strong> ${window.slangQuiz ? '✅ Exists' : '❌ Not defined'}`);
+            
+            if (window.slangQuiz) {
+                info.push(`<strong>Type:</strong> ${typeof window.slangQuiz}`);
+                info.push(`<strong>Is DOM element:</strong> ${window.slangQuiz.nodeType ? '✅ Yes' : '❌ No'}`);
+                info.push(`<strong>Has show method:</strong> ${typeof window.slangQuiz.show === 'function' ? '✅ Yes' : '❌ No'}`);
+                
+                if (window.slangQuiz.nodeType) {
+                    info.push(`<strong>Element tag:</strong> ${window.slangQuiz.tagName}`);
+                    info.push(`<strong>Element class:</strong> ${window.slangQuiz.className}`);
+                    info.push(`<strong>Element id:</strong> ${window.slangQuiz.id}`);
+                }
+            }
+            
+            debugOutput.innerHTML = info.join('<br>');
+        }
+
+        // Test assignment of DOM element (to simulate the bug)
+        function testDOMAssignment() {
+            console.log('=== TESTING DOM ASSIGNMENT (simulating bug) ===');
+            const quizElement = document.getElementById('slangQuiz');
+            console.log('Attempting to assign DOM element to window.slangQuiz...');
+            window.slangQuiz = quizElement;
+            console.log('Assignment attempt completed. Current window.slangQuiz:', window.slangQuiz);
+        }
+
+        // Test quiz button click (simulate the actual use case)
+        function testQuizButtonClick() {
+            console.log('=== TESTING QUIZ BUTTON CLICK SIMULATION ===');
+            
+            // First ensure we have a valid quiz instance
+            if (!window.slangQuiz || typeof window.slangQuiz.show !== 'function') {
+                console.log('No valid quiz instance, creating one first...');
+                testQuizCreation();
+            }
+            
+            // Now try to use it like the real button would
+            if (window.slangQuiz && typeof window.slangQuiz.show === 'function') {
+                console.log('Calling window.slangQuiz.show()...');
+                try {
+                    window.slangQuiz.show();
+                    console.log('✅ Quiz show() called successfully!');
+                } catch (error) {
+                    console.error('❌ Error calling quiz show():', error);
+                }
+            } else {
+                console.error('❌ No valid quiz instance available for button click');
+            }
+        }
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            showDebugInfo();
+            console.log('=== TEST PAGE LOADED ===');
+            console.log('Quiz element in DOM:', document.getElementById('slangQuiz'));
+            
+            // Automatically test quiz creation on load
+            setTimeout(testQuizCreation, 1000);
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,313 @@
+{% load i18n %}
+<!-- Word Cloud Component -->
+<div class="word-cloud-widget hidden" id="wordCloudWidget">
+    <div class="word-cloud-container">
+        <div class="word-cloud-header">
+            <h5 class="mb-0">
+                <i class="bi bi-cloud me-2"></i>
+                REAL LINGO
+            </h5>
+            <button class="btn btn-sm btn-outline-light" onclick="toggleWordCloud()">
+                <i class="bi bi-x"></i>
+            </button>
+        </div>
+        <div class="word-cloud-content" id="wordCloudContent">
+            <!-- Words will be dynamically generated -->
+        </div>
+        <div class="word-cloud-footer">
+            <button class="btn btn-sm btn-outline-light" onclick="refreshWordCloud()">
+                <i class="bi bi-arrow-clockwise me-1"></i>Refresh
+            </button>
+        </div>
+    </div>
+</div>
+
+<style>
+.hidden {
+    display: none;
+}
+
+.word-cloud-widget {
+    position: fixed;
+    bottom: 20px;
+    left: 20px;
+    width: 350px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+    z-index: 1500;
+    animation: slideInLeft 0.5s ease-out;
+    color: white;
+}
+
+.word-cloud-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 20px 10px;
+    border-bottom: 1px solid rgba(255,255,255,0.2);
+}
+
+.word-cloud-content {
+    padding: 20px;
+    min-height: 150px;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+
+.word-cloud-footer {
+    padding: 10px 20px 15px;
+    text-align: center;
+    border-top: 1px solid rgba(255,255,255,0.2);
+}
+
+.cloud-word {
+    display: inline-block;
+    padding: 5px 10px;
+    background: rgba(255,255,255,0.2);
+    border-radius: 20px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-weight: 500;
+    text-decoration: none;
+    color: white;
+    animation: fadeInScale 0.5s ease-out;
+}
+
+.cloud-word:hover {
+    background: rgba(255,255,255,0.4);
+    transform: scale(1.1);
+    color: white;
+}
+
+.cloud-word.size-1 { font-size: 0.8rem; }
+.cloud-word.size-2 { font-size: 0.9rem; }
+.cloud-word.size-3 { font-size: 1rem; }
+.cloud-word.size-4 { font-size: 1.2rem; }
+.cloud-word.size-5 { font-size: 1.4rem; }
+
+@keyframes slideInLeft {
+    from {
+        transform: translateX(-400px);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+@keyframes fadeInScale {
+    from {
+        opacity: 0;
+        transform: scale(0.5);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+@media (max-width: 768px) {
+    .word-cloud-widget {
+        width: 90%;
+        left: 5%;
+        bottom: 10px;
+    }
+}
+</style>
+
+<script>
+class WordCloud {
+    constructor() {
+        this.words = this.getPopularWords();
+        this.isVisible = false;
+        this.init();
+    }
+
+    getPopularWords() {
+        // Sample popular words - in a real app, this would come from an API
+        const argentineWords = [
+            { word: 'che', size: 5, definition: 'Hey, dude' },
+            { word: 'boludo', size: 4, definition: 'Dude, friend' },
+            { word: 'pibe', size: 4, definition: 'Young person' },
+            { word: 'mina', size: 3, definition: 'Girl, woman' },
+            { word: 'laburo', size: 3, definition: 'Work, job' },
+            { word: 'guita', size: 2, definition: 'Money' },
+            { word: 'bondi', size: 2, definition: 'Bus' },
+            { word: 'chabon', size: 2, definition: 'Guy, man' },
+            { word: 'mate', size: 3, definition: 'Traditional drink' },
+            { word: 'quilombo', size: 2, definition: 'Mess, chaos' }
+        ];
+
+        const australianWords = [
+            { word: 'mate', size: 5, definition: 'Friend' },
+            { word: 'arvo', size: 3, definition: 'Afternoon' },
+            { word: 'barbie', size: 3, definition: 'Barbecue' },
+            { word: 'bogan', size: 2, definition: 'Unsophisticated person' },
+            { word: 'crikey', size: 2, definition: 'Expression of surprise' },
+            { word: 'dunny', size: 2, definition: 'Toilet' },
+            { word: 'fair dinkum', size: 3, definition: 'Genuine, true' },
+            { word: 'sheila', size: 2, definition: 'Woman' },
+            { word: 'bloke', size: 3, definition: 'Man' },
+            { word: 'ripper', size: 2, definition: 'Excellent' }
+        ];
+
+        const germanWords = [
+            { word: 'alter', size: 4, definition: 'Dude' },
+            { word: 'geil', size: 3, definition: 'Cool, awesome' },
+            { word: 'krass', size: 3, definition: 'Extreme, crazy' },
+            { word: 'digger', size: 2, definition: 'Friend' },
+            { word: 'bock', size: 2, definition: 'Desire, want' },
+            { word: 'chillen', size: 2, definition: 'To chill, relax' },
+            { word: 'abgehen', size: 2, definition: 'To party hard' },
+            { word: 'hammer', size: 2, definition: 'Awesome' },
+            { word: 'checken', size: 2, definition: 'To understand' },
+            { word: 'mega', size: 3, definition: 'Really, very' }
+        ];
+
+        // Return random mix based on current page/country
+        const allWords = [...argentineWords, ...australianWords, ...germanWords];
+        return this.shuffleArray(allWords).slice(0, 12);
+    }
+
+    shuffleArray(array) {
+        const shuffled = [...array];
+        for (let i = shuffled.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+        }
+        return shuffled;
+    }
+
+    init() {
+        this.render();
+        this.setupAutoShow();
+    }
+
+    render() {
+        const content = document.getElementById('wordCloudContent');
+        if (!content) return;
+
+        content.innerHTML = '';
+        
+        this.words.forEach((wordData, index) => {
+            setTimeout(() => {
+                const wordElement = document.createElement('a');
+                wordElement.href = '#';
+                wordElement.className = `cloud-word size-${wordData.size}`;
+                wordElement.textContent = wordData.word;
+                wordElement.title = wordData.definition;
+                wordElement.style.animationDelay = `${index * 0.1}s`;
+                
+                wordElement.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    this.onWordClick(wordData);
+                });
+                
+                content.appendChild(wordElement);
+            }, index * 100);
+        });
+    }
+
+    onWordClick(wordData) {
+        // Show word definition
+        if (window.notificationSystem) {
+            window.notificationSystem.info(wordData.definition, wordData.word);
+        }
+
+        // Add word click effect
+        if (window.LingoWorldEnhancer) {
+            const enhancer = new window.LingoWorldEnhancer();
+            enhancer.showAchievement('Word Explored!', `"${wordData.word}" - ${wordData.definition}`, '📚');
+        }
+
+        // In a real app, this could navigate to the word definition
+        console.log('Clicked word:', wordData);
+    }
+
+    show() {
+        const widget = document.getElementById('wordCloudWidget');
+        if (widget) {
+            widget.style.display = 'block';
+            this.isVisible = true;
+        }
+    }
+
+    hide() {
+        const widget = document.getElementById('wordCloudWidget');
+        if (widget) {
+            widget.style.display = 'none';
+            this.isVisible = false;
+        }
+    }
+
+    toggle() {
+        if (this.isVisible) {
+            this.hide();
+        } else {
+            this.show();
+        }
+    }
+
+    refresh() {
+        this.words = this.getPopularWords();
+        this.render();
+        
+        if (window.notificationSystem) {
+            window.notificationSystem.info('Word cloud refreshed!', '', 2000);
+        }
+    }
+
+    setupAutoShow() {
+        // Show word cloud occasionally
+        let pageViews = parseInt(localStorage.getItem('pageViews') || '0');
+        pageViews++;
+        localStorage.setItem('pageViews', pageViews.toString());
+
+        if (pageViews % 3 === 0 && pageViews > 2) {
+            setTimeout(() => {
+                this.show();
+                setTimeout(() => this.hide(), 8000);
+            }, 3000);
+        }
+    }
+}
+
+// Global functions
+function toggleWordCloud() {
+    if (window.wordCloud) {
+        window.wordCloud.toggle();
+    }
+}
+
+function refreshWordCloud() {
+    if (window.wordCloud) {
+        window.wordCloud.refresh();
+    }
+}
+
+// Initialize when DOM is ready
+document.addEventListener('DOMContentLoaded', function() {
+    window.wordCloud = new WordCloud();
+    
+    // Add word cloud trigger to navbar (optional)
+    const navbar = document.querySelector('.navbar-nav');
+    if (navbar) {
+        const wordCloudBtn = document.createElement('li');
+        wordCloudBtn.className = 'nav-item';
+        wordCloudBtn.innerHTML = `
+            <a class="nav-link" href="#" onclick="toggleWordCloud(); return false;" title="Popular Words">
+                <i class="bi bi-cloud"></i>
+            </a>
+        `;
+        navbar.appendChild(wordCloudBtn);
+    }
+});
+
+// Export for use in other scripts
+window.WordCloud = WordCloud;
+</script>

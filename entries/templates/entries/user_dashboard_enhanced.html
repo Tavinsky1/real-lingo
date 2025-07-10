@@ -1,0 +1,440 @@
+{% load i18n %}
+{% extends "entries/base.html" %}
+
+{% block title %}
+    Dashboard - REAL LINGO
+{% endblock title %}
+
+{% block content %}
+    <div class="container-fluid">
+        <!-- Dashboard Header -->
+        <div class="dashboard-header py-4 bg-gradient text-white">
+            <div class="container">
+                <div class="row align-items-center">
+                    <div class="col-md-8">
+                        <h1 class="h2 mb-1">
+                            <i class="bi bi-speedometer2 me-2"></i>
+                            Welcome back, {{ user.username }}!
+                        </h1>
+                        <p class="mb-0 opacity-75">Your slang learning journey continues</p>
+                    </div>
+                    <div class="col-md-4 text-end">
+                        <div class="user-avatar">
+                            <div class="avatar-circle">
+                                <i class="bi bi-person-fill"></i>
+                            </div>
+                            <div class="user-level mt-2">
+                                <span class="badge bg-warning">Level {{ user_level|default:1 }}</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Stats Overview -->
+        <div class="stats-overview py-4">
+            <div class="container">
+                <div class="row g-4">
+                    <div class="col-md-3">
+                        <div class="stat-card stat-card-enhanced card border-0 shadow-sm h-100">
+                            <div class="card-body text-center">
+                                <i class="bi bi-heart-fill display-4 text-danger mb-3"></i>
+                                <h3 class="stat-number-enhanced mb-1">{{ favorites_count|default:0 }}</h3>
+                                <p class="text-muted mb-0">Favorites</p>
+                                <div class="progress mt-2" style="height: 4px;">
+                                    <div class="progress-bar bg-danger" style="width: {{ favorites_progress|default:0 }}%"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="stat-card stat-card-enhanced card border-0 shadow-sm h-100">
+                            <div class="card-body text-center">
+                                <i class="bi bi-eye-fill display-4 text-info mb-3"></i>
+                                <h3 class="stat-number-enhanced mb-1">{{ viewed_count|default:0 }}</h3>
+                                <p class="text-muted mb-0">Terms Learned</p>
+                                <div class="progress mt-2" style="height: 4px;">
+                                    <div class="progress-bar bg-info" style="width: {{ learning_progress|default:0 }}%"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="stat-card stat-card-enhanced card border-0 shadow-sm h-100">
+                            <div class="card-body text-center">
+                                <i class="bi bi-calendar-week display-4 text-success mb-3"></i>
+                                <h3 class="stat-number-enhanced mb-1">{{ streak_days|default:0 }}</h3>
+                                <p class="text-muted mb-0">Day Streak</p>
+                                <div class="progress mt-2" style="height: 4px;">
+                                    <div class="progress-bar bg-success" style="width: {{ streak_progress|default:0 }}%"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="stat-card stat-card-enhanced card border-0 shadow-sm h-100">
+                            <div class="card-body text-center">
+                                <i class="bi bi-trophy-fill display-4 text-warning mb-3"></i>
+                                <h3 class="stat-number-enhanced mb-1">{{ achievements_count|default:0 }}</h3>
+                                <p class="text-muted mb-0">Achievements</p>
+                                <div class="progress mt-2" style="height: 4px;">
+                                    <div class="progress-bar bg-warning" style="width: {{ achievements_progress|default:0 }}%"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Dashboard Content -->
+        <div class="dashboard-content py-4">
+            <div class="container">
+                <div class="row g-4">
+                    <!-- Learning Progress -->
+                    <div class="col-lg-8">
+                        <div class="card border-0 shadow-sm mb-4">
+                            <div class="card-header bg-transparent border-bottom-0">
+                                <h5 class="mb-0">
+                                    <i class="bi bi-graph-up me-2"></i>
+                                    Learning Progress
+                                </h5>
+                            </div>
+                            <div class="card-body">
+                                <div class="learning-chart-container">
+                                    <canvas id="learningChart" width="400" height="200"></canvas>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Recent Activity -->
+                        <div class="card border-0 shadow-sm">
+                            <div class="card-header bg-transparent border-bottom-0">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <h5 class="mb-0">
+                                        <i class="bi bi-clock-history me-2"></i>
+                                        Recent Activity
+                                    </h5>
+                                    <a href="#" class="btn btn-sm btn-outline-primary">View All</a>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <div class="activity-timeline">
+                                    {% for activity in recent_activities %}
+                                    <div class="activity-item d-flex align-items-start mb-3">
+                                        <div class="activity-icon me-3">
+                                            {% if activity.type == 'favorite' %}
+                                            <i class="bi bi-heart-fill text-danger"></i>
+                                            {% elif activity.type == 'viewed' %}
+                                            <i class="bi bi-eye-fill text-info"></i>
+                                            {% elif activity.type == 'quiz' %}
+                                            <i class="bi bi-question-circle-fill text-warning"></i>
+                                            {% endif %}
+                                        </div>
+                                        <div class="activity-content flex-grow-1">
+                                            <p class="mb-1">{{ activity.description }}</p>
+                                            <small class="text-muted">{{ activity.timestamp|timesince }} ago</small>
+                                        </div>
+                                    </div>
+                                    {% empty %}
+                                    <div class="text-center text-muted py-4">
+                                        <i class="bi bi-clock display-4 mb-3"></i>
+                                        <p>Start exploring to see your activity here!</p>
+                                        <a href="{% url 'country-selection' %}" class="btn btn-primary">
+                                            <i class="bi bi-flag me-1"></i>Choose a Country
+                                        </a>
+                                    </div>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Sidebar -->
+                    <div class="col-lg-4">
+                        <!-- Quick Actions -->
+                        <div class="card border-0 shadow-sm mb-4">
+                            <div class="card-header bg-transparent border-bottom-0">
+                                <h5 class="mb-0">
+                                    <i class="bi bi-lightning-fill me-2"></i>
+                                    Quick Actions
+                                </h5>
+                            </div>
+                            <div class="card-body">
+                                <div class="d-grid gap-2">
+                                    <button class="btn btn-primary" onclick="window.slangQuiz.show('{{ request.session.selected_country|default:"argentina" }}')">
+                                        <i class="bi bi-question-circle me-2"></i>Take Quiz
+                                    </button>
+                                    <a href="{% url 'country-selection' %}" class="btn btn-outline-primary">
+                                        <i class="bi bi-flag me-2"></i>Explore Countries
+                                    </a>
+                                    <a href="#" class="btn btn-outline-secondary" onclick="showRandomTerm()">
+                                        <i class="bi bi-shuffle me-2"></i>Random Term
+                                    </a>
+                                    <a href="#" class="btn btn-outline-info">
+                                        <i class="bi bi-heart me-2"></i>View Favorites
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Achievements -->
+                        <div class="card border-0 shadow-sm mb-4">
+                            <div class="card-header bg-transparent border-bottom-0">
+                                <h5 class="mb-0">
+                                    <i class="bi bi-trophy me-2"></i>
+                                    Achievements
+                                </h5>
+                            </div>
+                            <div class="card-body">
+                                <div class="achievements-grid">
+                                    <div class="achievement-badge earned" title="First Favorite">
+                                        <i class="bi bi-heart-fill"></i>
+                                        <span>Heart Collector</span>
+                                    </div>
+                                    <div class="achievement-badge earned" title="First Quiz">
+                                        <i class="bi bi-question-circle"></i>
+                                        <span>Quiz Master</span>
+                                    </div>
+                                    <div class="achievement-badge" title="100 Terms Learned">
+                                        <i class="bi bi-book"></i>
+                                        <span>Scholar</span>
+                                    </div>
+                                    <div class="achievement-badge" title="7 Day Streak">
+                                        <i class="bi bi-calendar-week"></i>
+                                        <span>Dedicated</span>
+                                    </div>
+                                    <div class="achievement-badge" title="All Countries">
+                                        <i class="bi bi-globe"></i>
+                                        <span>Explorer</span>
+                                    </div>
+                                    <div class="achievement-badge" title="Quiz Perfect Score">
+                                        <i class="bi bi-star"></i>
+                                        <span>Perfectionist</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Country Progress -->
+                        <div class="card border-0 shadow-sm">
+                            <div class="card-header bg-transparent border-bottom-0">
+                                <h5 class="mb-0">
+                                    <i class="bi bi-flag me-2"></i>
+                                    Country Progress
+                                </h5>
+                            </div>
+                            <div class="card-body">
+                                <div class="country-progress-item mb-3">
+                                    <div class="d-flex justify-content-between align-items-center mb-2">
+                                        <span>🇦🇷 Argentina</span>
+                                        <span class="text-muted">{{ argentina_progress|default:0 }}%</span>
+                                    </div>
+                                    <div class="progress" style="height: 6px;">
+                                        <div class="progress-bar bg-primary" style="width: {{ argentina_progress|default:0 }}%"></div>
+                                    </div>
+                                </div>
+                                <div class="country-progress-item mb-3">
+                                    <div class="d-flex justify-content-between align-items-center mb-2">
+                                        <span>🇦🇺 Australia</span>
+                                        <span class="text-muted">{{ australia_progress|default:0 }}%</span>
+                                    </div>
+                                    <div class="progress" style="height: 6px;">
+                                        <div class="progress-bar bg-success" style="width: {{ australia_progress|default:0 }}%"></div>
+                                    </div>
+                                </div>
+                                <div class="country-progress-item">
+                                    <div class="d-flex justify-content-between align-items-center mb-2">
+                                        <span>🇩🇪 Germany</span>
+                                        <span class="text-muted">{{ germany_progress|default:0 }}%</span>
+                                    </div>
+                                    <div class="progress" style="height: 6px;">
+                                        <div class="progress-bar bg-warning" style="width: {{ germany_progress|default:0 }}%"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <style>
+        .dashboard-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+
+        .user-avatar .avatar-circle {
+            width: 60px;
+            height: 60px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            margin: 0 auto;
+        }
+
+        .activity-timeline {
+            max-height: 400px;
+            overflow-y: auto;
+        }
+
+        .activity-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: #f8f9fa;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+        }
+
+        .achievements-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+            gap: 15px;
+        }
+
+        .achievement-badge {
+            text-align: center;
+            padding: 15px 10px;
+            border-radius: 10px;
+            background: #f8f9fa;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            opacity: 0.5;
+        }
+
+        .achievement-badge.earned {
+            background: linear-gradient(45deg, #FFD700, #FFA500);
+            color: #333;
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        .achievement-badge:hover {
+            transform: translateY(-2px);
+        }
+
+        .achievement-badge i {
+            font-size: 24px;
+            display: block;
+            margin-bottom: 8px;
+        }
+
+        .achievement-badge span {
+            font-size: 12px;
+            font-weight: 600;
+            display: block;
+        }
+
+        .learning-chart-container {
+            height: 200px;
+            position: relative;
+        }
+
+        .country-progress-item .progress {
+            border-radius: 10px;
+            background: #e9ecef;
+        }
+
+        .country-progress-item .progress-bar {
+            border-radius: 10px;
+        }
+
+        @media (max-width: 768px) {
+            .achievements-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+            
+            .dashboard-header .row {
+                flex-direction: column;
+                text-align: center;
+                gap: 1rem;
+            }
+        }
+    </style>
+
+    {% block extra_js %}
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        // Learning Progress Chart
+        const ctx = document.getElementById('learningChart').getContext('2d');
+        const chart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+                datasets: [{
+                    label: 'Terms Learned',
+                    data: [5, 8, 12, 7, 15, 20, 10],
+                    borderColor: '#667eea',
+                    backgroundColor: 'rgba(102, 126, 234, 0.1)',
+                    tension: 0.4,
+                    fill: true
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        display: false
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        grid: {
+                            color: 'rgba(0,0,0,0.1)'
+                        }
+                    },
+                    x: {
+                        grid: {
+                            display: false
+                        }
+                    }
+                }
+            }
+        });
+
+        // Random term function
+        function showRandomTerm() {
+            // This would typically fetch from an API
+            if (window.LingoWorldEnhancer) {
+                const enhancer = new window.LingoWorldEnhancer();
+                enhancer.showAchievement('Random Term!', 'Here\'s a new word to learn', '🎲');
+            }
+            
+            // Redirect to random term (you'd implement this endpoint)
+            window.location.href = '/random-term/';
+        }
+
+        // Achievement click handlers
+        document.querySelectorAll('.achievement-badge').forEach(badge => {
+            badge.addEventListener('click', function() {
+                const title = this.getAttribute('title');
+                if (this.classList.contains('earned')) {
+                    alert(`Achievement: ${title}\nCongratulations! You've earned this badge.`);
+                } else {
+                    alert(`Achievement: ${title}\nKeep going to unlock this achievement!`);
+                }
+            });
+        });
+
+        // Animate stats on load
+        document.addEventListener('DOMContentLoaded', function() {
+            const statNumbers = document.querySelectorAll('.stat-number-enhanced');
+            statNumbers.forEach((stat, index) => {
+                setTimeout(() => {
+                    stat.style.animation = `bounceIn 0.8s ease-out`;
+                }, index * 200);
+            });
+        });
+    </script>
+    {% endblock extra_js %}
+{% endblock content %}

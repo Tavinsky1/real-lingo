@@ -1,0 +1,490 @@
+{% load i18n %}
+<!-- Slang Quiz Overlay -->
+<div id="quizOverlay" class="quiz-overlay">
+    <div id="quizContainer" class="quiz-container">
+        <!-- Quiz content will be dynamically inserted here -->
+    </div>
+</div>
+
+<style>
+/* Quiz overlay styles - NO BLUR EFFECTS */
+.quiz-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.8);
+    z-index: 1999;
+    display: none;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 20px;
+    overflow-y: auto;
+}
+
+.quiz-container {
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+    width: 100%;
+    max-width: 600px;
+    margin-top: 20px;
+    z-index: 2000;
+    position: relative;
+}
+
+.quiz-header {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    padding: 20px;
+    border-radius: 12px 12px 0 0;
+    text-align: center;
+}
+
+.quiz-body {
+    padding: 30px;
+}
+
+.quiz-option {
+    display: block;
+    width: 100%;
+    padding: 15px;
+    margin: 10px 0;
+    border: 2px solid #e9ecef;
+    border-radius: 8px;
+    background: white;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    text-align: left;
+}
+
+.quiz-option:hover {
+    border-color: #667eea;
+    background: #f8f9ff;
+}
+
+.quiz-option.selected {
+    border-color: #667eea;
+    background: #667eea;
+    color: white;
+}
+
+.quiz-option.correct {
+    border-color: #28a745;
+    background: #28a745;
+    color: white;
+}
+
+.quiz-option.incorrect {
+    border-color: #dc3545;
+    background: #dc3545;
+    color: white;
+}
+
+.quiz-progress {
+    width: 100%;
+    height: 20px;
+    background-color: #e9ecef;
+    border-radius: 10px;
+    margin: 20px 0;
+}
+
+.quiz-progress-bar {
+    height: 100%;
+    background: linear-gradient(90deg, #667eea, #764ba2);
+    border-radius: 10px;
+    transition: width 0.3s ease;
+}
+
+.quiz-score {
+    text-align: center;
+    padding: 30px;
+}
+
+.close-quiz {
+    position: absolute;
+    top: 15px;
+    right: 20px;
+    background: none;
+    border: none;
+    color: white;
+    font-size: 24px;
+    cursor: pointer;
+    z-index: 2001;
+}
+
+.floating-text {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: rgba(0, 0, 0, 0.8);
+    color: white;
+    padding: 10px 20px;
+    border-radius: 5px;
+    z-index: 2002;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+@media (max-width: 768px) {
+    .quiz-overlay {
+        padding: 10px;
+    }
+    
+    .quiz-container {
+        margin-top: 10px;
+    }
+    
+    .quiz-body {
+        padding: 20px;
+    }
+}
+</style>
+
+<script>
+class SlangQuiz {
+    constructor() {
+        this.currentQuiz = null;
+        this.currentQuestion = 0;
+        this.score = 0;
+        this.selectedAnswer = null;
+        this.language = 'english';
+        this.currentCountry = null;
+        
+        // Simplified question sets
+        this.quizData = {
+            argentina: [
+                {
+                    term: "che",
+                    question: "What does 'che' mean in Argentine Spanish?",
+                    options: ["Hello", "Hey/dude", "Goodbye", "Thank you"],
+                    correct: 1,
+                    explanation: "'Che' is used as 'hey' or 'dude' in Argentina"
+                },
+                {
+                    term: "boludo",
+                    question: "What does 'boludo' mean?",
+                    options: ["Smart person", "Dude/fool", "Money", "Food"],
+                    correct: 1,
+                    explanation: "'Boludo' can mean 'dude' or 'fool' depending on context"
+                },
+                {
+                    term: "quilombo",
+                    question: "What does 'quilombo' refer to?",
+                    options: ["Party", "Mess/chaos", "House", "Car"],
+                    correct: 1,
+                    explanation: "'Quilombo' means a mess or chaotic situation"
+                },
+                {
+                    term: "laburo",
+                    question: "What does 'laburo' mean?",
+                    options: ["Work/job", "Food", "Music", "Money"],
+                    correct: 0,
+                    explanation: "'Laburo' is Argentine slang for work or job"
+                },
+                {
+                    term: "chabon",
+                    question: "What does 'chabon' mean?",
+                    options: ["House", "Guy/dude", "Food", "Money"],
+                    correct: 1,
+                    explanation: "'Chabon' means guy or dude in Argentine slang"
+                }
+            ],
+            australia: [
+                {
+                    term: "mate",
+                    question: "What does 'mate' mean in Australian slang?",
+                    options: ["Enemy", "Friend/buddy", "Stranger", "Boss"],
+                    correct: 1,
+                    explanation: "'Mate' is a friendly term for friend or buddy"
+                },
+                {
+                    term: "arvo",
+                    question: "What does 'arvo' mean?",
+                    options: ["Morning", "Night", "Afternoon", "Evening"],
+                    correct: 2,
+                    explanation: "'Arvo' is short for afternoon"
+                },
+                {
+                    term: "brekkie",
+                    question: "What does 'brekkie' refer to?",
+                    options: ["Lunch", "Dinner", "Breakfast", "Snack"],
+                    correct: 2,
+                    explanation: "'Brekkie' is Australian slang for breakfast"
+                },
+                {
+                    term: "fair dinkum",
+                    question: "What does 'fair dinkum' mean?",
+                    options: ["Fake", "Genuine/true", "Expensive", "Cheap"],
+                    correct: 1,
+                    explanation: "'Fair dinkum' means genuine or true"
+                },
+                {
+                    term: "sheila",
+                    question: "What does 'sheila' refer to?",
+                    options: ["Man", "Woman", "Child", "Elder"],
+                    correct: 1,
+                    explanation: "'Sheila' is Australian slang for a woman"
+                }
+            ],
+            germany: [
+                {
+                    term: "geil",
+                    question: "What does 'geil' mean in modern German slang?",
+                    options: ["Terrible", "Awesome/cool", "Expensive", "Difficult"],
+                    correct: 1,
+                    explanation: "'Geil' in modern slang means 'awesome' or 'cool'"
+                },
+                {
+                    term: "krass",
+                    question: "What does 'krass' express?",
+                    options: ["Boring", "Extreme/intense", "Quiet", "Simple"],
+                    correct: 1,
+                    explanation: "'Krass' means 'extreme', 'intense', or 'crazy'"
+                },
+                {
+                    term: "digga",
+                    question: "What does 'digga' mean?",
+                    options: ["Enemy", "Dude/buddy", "Teacher", "Stranger"],
+                    correct: 1,
+                    explanation: "'Digga' is slang for 'dude' or 'buddy'"
+                },
+                {
+                    term: "bock haben",
+                    question: "What does 'bock haben' mean?",
+                    options: ["To be tired", "To want/feel like", "To be angry", "To be confused"],
+                    correct: 1,
+                    explanation: "'Bock haben' means to want something or feel like doing something"
+                },
+                {
+                    term: "chillen",
+                    question: "What does 'chillen' mean?",
+                    options: ["To work hard", "To relax/chill", "To run fast", "To study"],
+                    correct: 1,
+                    explanation: "'Chillen' means to relax or chill out"
+                }
+            ],
+            colombia: [
+                {
+                    term: "parce",
+                    question: "What does 'parce' mean in Colombian Spanish?",
+                    options: ["Enemy", "Friend/buddy", "Stranger", "Boss"],
+                    correct: 1,
+                    explanation: "'Parce' is Colombian slang for friend or buddy"
+                },
+                {
+                    term: "chimba",
+                    question: "What does 'chimba' mean?",
+                    options: ["Bad", "Awesome/great", "Ugly", "Boring"],
+                    correct: 1,
+                    explanation: "'Chimba' means awesome or great in Colombian slang"
+                },
+                {
+                    term: "bacano",
+                    question: "What does 'bacano' mean?",
+                    options: ["Terrible", "Cool/nice", "Expensive", "Difficult"],
+                    correct: 1,
+                    explanation: "'Bacano' means cool or nice"
+                },
+                {
+                    term: "rumbear",
+                    question: "What does 'rumbear' mean?",
+                    options: ["To sleep", "To party", "To work", "To study"],
+                    correct: 1,
+                    explanation: "'Rumbear' means to party or go out"
+                },
+                {
+                    term: "vieja",
+                    question: "What does 'vieja' affectionately refer to?",
+                    options: ["Sister", "Mother/mom", "Aunt", "Grandmother"],
+                    correct: 1,
+                    explanation: "'Vieja' is used affectionately for mother or mom"
+                }
+            ],
+            belgium: [
+                {
+                    term: "dikke",
+                    question: "What does 'dikke' mean in Belgian Dutch slang?",
+                    options: ["Small", "Big/great", "Bad", "Ugly"],
+                    correct: 1,
+                    explanation: "'Dikke' can mean 'big' or 'great' in Belgian slang"
+                },
+                {
+                    term: "proper",
+                    question: "What does 'proper' mean in Belgian slang?",
+                    options: ["Dirty", "Clean/good", "Fast", "Slow"],
+                    correct: 1,
+                    explanation: "'Proper' means clean or good in Belgian slang"
+                },
+                {
+                    term: "kot",
+                    question: "What does 'kot' refer to?",
+                    options: ["Car", "Student room", "Food", "Book"],
+                    correct: 1,
+                    explanation: "'Kot' refers to a student room or small apartment"
+                },
+                {
+                    term: "ambetant",
+                    question: "What does 'ambetant' mean?",
+                    options: ["Happy", "Annoying", "Funny", "Quiet"],
+                    correct: 1,
+                    explanation: "'Ambetant' means annoying or bothersome"
+                },
+                {
+                    term: "schuif",
+                    question: "What does 'schuif' refer to?",
+                    options: ["Book", "Party", "Door", "Window"],
+                    correct: 1,
+                    explanation: "'Schuif' can refer to a party or gathering"
+                }
+            ]
+        };
+    }
+
+    show(country) {
+        this.currentCountry = country;
+        this.currentQuestion = 0;
+        this.score = 0;
+        this.selectedAnswer = null;
+        
+        const overlay = document.getElementById('quizOverlay');
+        const container = document.getElementById('quizContainer');
+        
+        overlay.style.display = 'flex';
+        container.innerHTML = this.createQuizHTML();
+        
+        // Scroll to top when quiz opens
+        window.scrollTo(0, 0);
+        document.body.style.overflow = 'hidden';
+        
+        this.loadQuestion();
+    }
+
+    createQuizHTML() {
+        return `
+            <button class="close-quiz" onclick="window.slangQuiz.close()">&times;</button>
+            <div class="quiz-header">
+                <h2>🌍 ${this.currentCountry.charAt(0).toUpperCase() + this.currentCountry.slice(1)} Slang Quiz</h2>
+                <div class="quiz-progress">
+                    <div class="quiz-progress-bar" id="progressBar" style="width: 0%"></div>
+                </div>
+                <p>Question <span id="questionNumber">1</span> of 5</p>
+            </div>
+            <div class="quiz-body" id="quizBody">
+                <!-- Question content will be loaded here -->
+            </div>
+        `;
+    }
+
+    loadQuestion() {
+        const question = this.quizData[this.currentCountry][this.currentQuestion];
+        const quizBody = document.getElementById('quizBody');
+        const questionNumber = document.getElementById('questionNumber');
+        const progressBar = document.getElementById('progressBar');
+        
+        questionNumber.textContent = this.currentQuestion + 1;
+        progressBar.style.width = `${((this.currentQuestion) / 5) * 100}%`;
+        
+        quizBody.innerHTML = `
+            <h3>${question.question}</h3>
+            <div class="quiz-options">
+                ${question.options.map((option, index) => `
+                    <button class="quiz-option" onclick="window.slangQuiz.selectAnswer(${index})">${option}</button>
+                `).join('')}
+            </div>
+            <div style="margin-top: 20px; text-align: center;">
+                <button id="nextButton" onclick="window.slangQuiz.nextQuestion()" style="display: none; padding: 10px 20px; background: #667eea; color: white; border: none; border-radius: 5px; cursor: pointer;">Next Question</button>
+            </div>
+        `;
+        
+        this.selectedAnswer = null;
+    }
+
+    selectAnswer(answerIndex) {
+        if (this.selectedAnswer !== null) return; // Prevent multiple selections
+        
+        this.selectedAnswer = answerIndex;
+        const question = this.quizData[this.currentCountry][this.currentQuestion];
+        const options = document.querySelectorAll('.quiz-option');
+        const nextButton = document.getElementById('nextButton');
+        
+        // Mark selected answer
+        options[answerIndex].classList.add('selected');
+        
+        // Show correct/incorrect
+        setTimeout(() => {
+            options[question.correct].classList.add('correct');
+            if (answerIndex !== question.correct) {
+                options[answerIndex].classList.add('incorrect');
+                this.showFloatingText('❌ Incorrect!');
+            } else {
+                this.score++;
+                this.showFloatingText('✅ Correct!');
+            }
+            
+            nextButton.style.display = 'inline-block';
+        }, 500);
+    }
+
+    showFloatingText(text) {
+        const floating = document.createElement('div');
+        floating.className = 'floating-text';
+        floating.textContent = text;
+        document.body.appendChild(floating);
+        
+        setTimeout(() => floating.style.opacity = '1', 100);
+        setTimeout(() => {
+            floating.style.opacity = '0';
+            setTimeout(() => document.body.removeChild(floating), 300);
+        }, 1500);
+    }
+
+    nextQuestion() {
+        this.currentQuestion++;
+        if (this.currentQuestion < 5) {
+            this.loadQuestion();
+        } else {
+            this.showResults();
+        }
+    }
+
+    showResults() {
+        const quizBody = document.getElementById('quizBody');
+        const progressBar = document.getElementById('progressBar');
+        const percentage = Math.round((this.score / 5) * 100);
+        
+        progressBar.style.width = '100%';
+        
+        let achievement = '';
+        if (percentage >= 80) achievement = '🏆 Slang Master!';
+        else if (percentage >= 60) achievement = '🎯 Good Knowledge!';
+        else if (percentage >= 40) achievement = '📚 Keep Learning!';
+        else achievement = '🌱 Just Getting Started!';
+        
+        quizBody.innerHTML = `
+            <div class="quiz-score">
+                <h2>Quiz Complete!</h2>
+                <div style="font-size: 48px; margin: 20px 0;">${achievement}</div>
+                <p style="font-size: 24px;">You scored ${this.score} out of 5 (${percentage}%)</p>
+                <div style="margin-top: 30px;">
+                    <button onclick="window.slangQuiz.show('${this.currentCountry}')" style="padding: 10px 20px; background: #667eea; color: white; border: none; border-radius: 5px; cursor: pointer; margin: 5px;">Try Again</button>
+                    <button onclick="window.slangQuiz.close()" style="padding: 10px 20px; background: #6c757d; color: white; border: none; border-radius: 5px; cursor: pointer; margin: 5px;">Close</button>
+                </div>
+            </div>
+        `;
+    }
+
+    close() {
+        const overlay = document.getElementById('quizOverlay');
+        overlay.style.display = 'none';
+        document.body.style.overflow = 'auto';
+    }
+}
+
+// Initialize quiz when page loads
+document.addEventListener('DOMContentLoaded', function() {
+    window.slangQuiz = new SlangQuiz();
+});
+</script>

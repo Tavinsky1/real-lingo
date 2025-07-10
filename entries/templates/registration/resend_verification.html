@@ -1,0 +1,160 @@
+{% extends 'entries/base.html' %}
+{% load static %}
+
+{% block title %}{{ title }}{% endblock %}
+
+{% block extra_css %}
+<style>
+    .resend-container {
+        max-width: 500px;
+        margin: 4rem auto;
+        padding: 2rem;
+        background: white;
+        border-radius: 15px;
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+
+    .resend-icon {
+        width: 60px;
+        height: 60px;
+        margin: 0 auto 2rem;
+        background: linear-gradient(135deg, #ff6b6b, #ee5a24);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-size: 1.5rem;
+    }
+
+    .form-group {
+        margin-bottom: 1.5rem;
+    }
+
+    .form-label {
+        display: block;
+        margin-bottom: 0.5rem;
+        color: #2c3e50;
+        font-weight: 500;
+    }
+
+    .form-control {
+        width: 100%;
+        padding: 0.75rem;
+        border: 2px solid #e9ecef;
+        border-radius: 8px;
+        font-size: 1rem;
+        transition: all 0.3s ease;
+    }
+
+    .form-control:focus {
+        outline: none;
+        border-color: #6c63ff;
+        box-shadow: 0 0 0 3px rgba(108, 99, 255, 0.1);
+    }
+
+    .btn-submit {
+        width: 100%;
+        padding: 0.75rem;
+        background: linear-gradient(135deg, #6c63ff, #8e44ad);
+        color: white;
+        border: none;
+        border-radius: 8px;
+        font-size: 1rem;
+        font-weight: 500;
+        cursor: pointer;
+        transition: all 0.3s ease;
+    }
+
+    .btn-submit:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(108, 99, 255, 0.3);
+    }
+
+    .instructions {
+        color: #6c757d;
+        margin-bottom: 2rem;
+        line-height: 1.6;
+    }
+
+    .back-link {
+        text-align: center;
+        margin-top: 2rem;
+    }
+
+    .back-link a {
+        color: #6c63ff;
+        text-decoration: none;
+        font-weight: 500;
+    }
+
+    .back-link a:hover {
+        text-decoration: underline;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="resend-container">
+    <div class="resend-icon">
+        <i class="fas fa-redo"></i>
+    </div>
+    
+    <h2 style="text-align: center; color: #2c3e50; margin-bottom: 1rem;">
+        {% if language == 'es' %}
+            Reenviar Email de Verificación
+        {% else %}
+            Resend Verification Email
+        {% endif %}
+    </h2>
+    
+    <p class="instructions">
+        {% if language == 'es' %}
+            Ingresa tu dirección de email para recibir un nuevo enlace de verificación.
+        {% else %}
+            Enter your email address to receive a new verification link.
+        {% endif %}
+    </p>
+    
+    <form method="post">
+        {% csrf_token %}
+        <div class="form-group">
+            <label for="email" class="form-label">
+                {% if language == 'es' %}
+                    Dirección de Email
+                {% else %}
+                    Email Address
+                {% endif %}
+            </label>
+            <input 
+                type="email" 
+                id="email" 
+                name="email" 
+                class="form-control" 
+                value="{{ user_email }}"
+                required
+                placeholder="{% if language == 'es' %}Ingresa tu email{% else %}Enter your email{% endif %}"
+            >
+        </div>
+        
+        <button type="submit" class="btn-submit">
+            {% if language == 'es' %}
+                Reenviar Email de Verificación
+            {% else %}
+                Resend Verification Email
+            {% endif %}
+        </button>
+    </form>
+    
+    <div class="back-link">
+        <a href="{% url 'login' %}">
+            {% if language == 'es' %}
+                ← Volver al Inicio de Sesión
+            {% else %}
+                ← Back to Login
+            {% endif %}
+        </a>
+    </div>
+</div>
+{% endblock %}

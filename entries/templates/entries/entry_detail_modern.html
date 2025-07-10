@@ -1,0 +1,462 @@
+{% extends "entries/base.html" %}
+{% load lingo_tags %}
+{% load i18n %}
+
+{% block title %}
+    {{ entry.term }} - REAL LINGO
+{% endblock title %}
+
+{% block content %}
+<style>
+.hidden {
+    display: none;
+}
+
+.sticky-sidebar {
+    top: 100px;
+}
+</style>
+    <div class="container">
+        <!-- Breadcrumb -->
+        <nav aria-label="breadcrumb" class="mb-4">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item">
+                    <a href="{% url 'entry-list' %}" class="text-decoration-none">
+                        <i class="bi bi-house me-1"></i>{% translate 'home' %}
+                    </a>
+                </li>
+                <li class="breadcrumb-item active">{{ entry.term }}</li>
+            </ol>
+        </nav>
+
+        <div class="row">
+            <!-- Main Content -->
+            <div class="col-lg-8">
+                <!-- Entry Header -->
+                <div class="card mb-4 border-0 shadow-lg">
+                    <div class="card-header bg-gradient text-white">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div class="d-flex align-items-center">
+                                <i class="bi bi-chat-quote fs-3 me-3"></i>
+                                <div>
+                                    <h1 class="h2 mb-0">{{ entry.term }}</h1>
+                                    <small class="text-light opacity-75">{% translate 'entry_header_term' term=entry.term %}</small>
+                                    {% if entry.language_code %}
+                                        <span class="badge bg-light text-dark mt-1 d-block">
+                                            <i class="bi bi-flag me-1"></i>{{ entry.language_code }}
+                                        </span>
+                                    {% endif %}
+                                </div>
+                            </div>
+                            <div class="d-flex gap-2">
+                                <button class="btn btn-outline-light btn-sm favorite-btn {% if entry.is_favorited %}favorited{% endif %}" 
+                                        onclick="toggleFavorite({{ entry.id }})" 
+                                        title="{% if entry.is_favorited %}{% translate 'remove_from_favorites' %}{% else %}{% translate 'add_to_favorites' %}{% endif %}">
+                                    <i class="bi {% if entry.is_favorited %}bi-heart-fill{% else %}bi-heart{% endif %} me-1"></i>
+                                    {% if entry.is_favorited %}{% translate 'favorite' %}{% else %}{% translate 'add' %}{% endif %}
+                                </button>
+                                <button class="btn btn-outline-light btn-sm" onclick="shareEntry()">
+                                    <i class="bi bi-share me-1"></i>{% translate 'share' %}
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    {% if entry.notes %}
+                        <div class="card-body">
+                            <h5 class="text-muted mb-3">
+                                <i class="bi bi-journal-text me-2"></i>{% translate 'definition' %}
+                            </h5>
+                            <p class="lead">{{ entry.notes|linebreaks }}</p>
+                        </div>
+                    {% endif %}
+                </div>
+
+                <!-- Translations -->
+                {% if entry.translations.all %}
+                    <div class="card mb-4">
+                        <div class="card-header d-flex align-items-center">
+                            <i class="bi bi-translate me-2 text-primary"></i>
+                            <h5 class="mb-0">{% translate 'translations' %}</h5>
+                        </div>
+                        <div class="card-body">
+                            <div class="row g-3">
+                                {% for translation in entry.translations.all %}
+                                    <div class="col-md-6">
+                                        <div class="p-3 bg-light rounded-3 d-flex align-items-center">
+                                            <div class="flex-grow-1">
+                                                <strong class="d-block">{{ translation.translation }}</strong>
+                                                {% if translation.language_code %}
+                                                    <small class="text-muted">{{ translation.language_code }}</small>
+                                                {% endif %}
+                                            </div>
+                                            <button class="btn btn-outline-secondary btn-sm" onclick="copyToClipboard('{{ translation.translation }}')" title="{% translate 'copy_translation' %}" aria-label="{% translate 'copy_translation_aria' %}">
+                                                <i class="bi bi-clipboard"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                {% endif %}
+
+                <!-- Tags/Categories -->
+                {% if entry.tags.all %}
+                    <div class="card mb-4">
+                        <div class="card-header d-flex align-items-center">
+                            <i class="bi bi-tags me-2 text-primary"></i>
+                            <h5 class="mb-0">{% translate 'categories' %}</h5>
+                        </div>
+                        <div class="card-body">
+                            <div class="d-flex flex-wrap gap-2">
+                                {% for tag in entry.tags.all %}
+                                    <a href="{% url 'entry-list' %}?tags={{ tag.name }}" 
+                                       class="tag-badge text-decoration-none">
+                                        <i class="bi bi-tag me-1"></i>{{ tag.name }}
+                                    </a>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                {% endif %}
+
+                <!-- Usage Examples -->
+                <div class="card mb-4">
+                    <div class="card-header d-flex align-items-center">
+                        <i class="bi bi-lightbulb me-2 text-primary"></i>
+                        <h5 class="mb-0">{% translate 'usage_examples' %}</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="alert alert-info mb-3">
+                            <i class="bi bi-info-circle me-2"></i>
+                            <strong>{% translate 'how_to_use' term=entry.term %}</strong>
+                        </div>
+                        
+                        <div class="row">
+                            <div class="col-md-6">
+                                <h6 class="text-muted mb-3">
+                                    <i class="bi bi-chat-left-quote me-2"></i>{% translate 'in_conversation' %}:
+                                </h6>
+                                <div class="bg-light p-3 rounded-3 mb-3">
+                                    <p class="mb-0 fst-italic">
+                                        "{% example_sentence country 'conversation' entry.term %}"
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <h6 class="text-muted mb-3">
+                                    <i class="bi bi-pen me-2"></i>{% translate 'in_context' %}:
+                                </h6>
+                                <div class="bg-light p-3 rounded-3 mb-3">
+                                    <p class="mb-0 fst-italic">
+                                        "{% example_sentence country 'context' entry.term %}"
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Similar Terms -->
+                <div id="similarTerms" class="card mb-4 hidden">
+                    <div class="card-header d-flex align-items-center">
+                        <i class="bi bi-arrow-left-right me-2 text-primary"></i>
+                        <h5 class="mb-0">{% translate 'related_terms' %}</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="row g-3" id="similarTermsContainer">
+                            <!-- Similar terms will be loaded here -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Sidebar -->
+            <div class="col-lg-4">
+                <!-- Quick Actions -->
+                <div class="card mb-4 sticky-top sticky-sidebar">
+                    <div class="card-header">
+                        <h6 class="mb-0">
+                            <i class="bi bi-lightning me-2"></i>{% translate 'quick_actions' %}
+                        </h6>
+                    </div>
+                    <div class="card-body">
+                        <div class="d-grid gap-2">
+                            <button class="btn btn-outline-primary btn-sm" onclick="pronounceWord('{{ entry.term }}')">
+                                <i class="bi bi-volume-up me-2"></i>{% translate 'pronounce' %}
+                            </button>
+                            <a href="{% url 'entry-list' %}?random=true" class="btn btn-outline-secondary btn-sm">
+                                <i class="bi bi-shuffle me-2"></i>{% translate 'random_term' %}
+                            </a>
+                            <button class="btn btn-outline-info btn-sm" onclick="searchMore('{{ entry.term }}')">
+                                <i class="bi bi-search me-2"></i>{% translate 'search_more_info' %}
+                            </button>
+                            {% if user.is_authenticated %}
+                                <button class="btn btn-outline-success btn-sm" onclick="markAsLearned({{ entry.id }})">
+                                    <i class="bi bi-check-circle me-2"></i>{% translate 'mark_as_learned' %}
+                                </button>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Statistics -->
+                <div class="card mb-4">
+                    <div class="card-header">
+                        <h6 class="mb-0">
+                            <i class="bi bi-graph-up me-2"></i>{% translate 'statistics' %}
+                        </h6>
+                    </div>
+                    <div class="card-body">
+                        <div class="row text-center">
+                            <div class="col-6">
+                                <div class="border-end">
+                                    <div class="h4 text-primary mb-1" id="viewCount">{{ entry.view_count|default:"0" }}</div>
+                                    <small class="text-muted">{% translate 'views' %}</small>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="h4 text-success mb-1" id="favoriteCount">{{ entry.favorite_count|default:"0" }}</div>
+                                <small class="text-muted">{% translate 'favorites' %}</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Navigation -->
+                <div class="card">
+                    <div class="card-header">
+                        <h6 class="mb-0">
+                            <i class="bi bi-compass me-2"></i>{% translate 'navigation' %}
+                        </h6>
+                    </div>
+                    <div class="card-body">
+                        <div class="d-grid gap-2">
+                            {% if previous_entry %}
+                                <a href="{% url 'entry-detail' previous_entry.pk %}" class="btn btn-outline-secondary btn-sm">
+                                    <i class="bi bi-arrow-left me-2"></i>{{ previous_entry.term }}
+                                </a>
+                            {% endif %}
+                            {% if next_entry %}
+                                <a href="{% url 'entry-detail' next_entry.pk %}" class="btn btn-outline-secondary btn-sm">
+                                    {{ next_entry.term }}<i class="bi bi-arrow-right ms-2"></i>
+                                </a>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Random Terms Section -->
+        <div class="mt-5">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <h4>
+                    <i class="bi bi-shuffle me-2"></i>{% translate 'explore_more_terms' %}
+                </h4>
+                <button class="btn btn-outline-primary btn-sm" onclick="loadMoreTerms()">
+                    <i class="bi bi-arrow-repeat me-1"></i>{% translate 'load_more' %}
+                </button>
+            </div>
+            <div class="row g-4" id="moreTermsContainer">
+                <!-- More terms will be loaded here -->
+            </div>
+        </div>
+    </div>
+{% endblock content %}
+
+{% block extra_js %}
+<script>
+    // Mark entry as viewed when page loads
+    document.addEventListener('DOMContentLoaded', function() {
+        markAsViewed({{ entry.id }});
+        loadSimilarTerms();
+        loadMoreTerms();
+        
+        // Add entrance animations
+        const cards = document.querySelectorAll('.card');
+        cards.forEach((card, index) => {
+            card.style.animationDelay = `${index * 0.1}s`;
+            card.classList.add('animate__animated', 'animate__fadeInUp');
+        });
+    });
+    
+    // Load similar terms
+    function loadSimilarTerms() {
+        fetch(`/api/entries/{{ entry.id }}/similar/`)
+            .then(response => response.json())
+            .then(data => {
+                if (data.length > 0) {
+                    displaySimilarTerms(data);
+                    document.getElementById('similarTerms').style.display = 'block';
+                }
+            })
+            .catch(error => console.error('Error loading similar terms:', error));
+    }
+    
+    function displaySimilarTerms(terms) {
+        const container = document.getElementById('similarTermsContainer');
+        let html = '';
+        
+        terms.slice(0, 4).forEach(term => {
+            html += `
+                <div class="col-md-6">
+                    <a href="/entries/${term.id}/" class="text-decoration-none">
+                        <div class="p-3 bg-light rounded-3 h-100 hover-shadow">
+                            <h6 class="mb-1 text-primary">${term.term}</h6>
+                            ${term.notes ? `<small class="text-muted">${term.notes.substring(0, 60)}...</small>` : ''}
+                        </div>
+                    </a>
+                </div>
+            `;
+        });
+        
+        container.innerHTML = html;
+    }
+    
+    // Load more random terms
+    function loadMoreTerms() {
+        fetch('/api/entries/random/?count=4')
+            .then(response => response.json())
+            .then data => {
+                displayMoreTerms(data.results || data);
+            })
+            .catch(error => console.error('Error loading more terms:', error));
+    }
+    
+    function displayMoreTerms(terms) {
+        const container = document.getElementById('moreTermsContainer');
+        let html = '';
+        
+        terms.forEach(term => {
+            const tags = term.tags ? term.tags.slice(0, 2).map(tag => 
+                `<span class="badge bg-secondary me-1">${tag.name}</span>`
+            ).join('') : '';
+            
+            html += `
+                <div class="col-md-6 col-lg-3">
+                    <div class="card h-100 hover-lift">
+                        <div class="card-body">
+                            <h6 class="card-title">
+                                <a href="/entries/${term.id}/" class="text-decoration-none">${term.term}</a>
+                            </h6>
+                            ${term.notes ? `<p class="card-text small text-muted">${term.notes.substring(0, 80)}...</p>` : ''}
+                            ${tags}
+                        </div>
+                    </div>
+                </div>
+            `;
+        });
+        
+        container.innerHTML = html;
+        
+        // Add animations
+        const newCards = container.querySelectorAll('.card');
+        newCards.forEach((card, index) => {
+            card.style.animationDelay = `${index * 0.1}s`;
+            card.classList.add('animate__animated', 'animate__fadeInUp');
+        });
+    }
+    
+    // Additional functionality
+    function shareEntry() {
+        if (navigator.share) {
+            navigator.share({
+                title: '{{ entry.term }} - REAL LINGO',
+                text: '{{ entry.notes|truncatewords:20 }}',
+                url: window.location.href
+            });
+        } else {
+            // Fallback: copy to clipboard
+            copyToClipboard(window.location.href);
+            showToast('{% translate "link_copied" %}', 'success');
+        }
+    }
+    
+    function copyToClipboard(text) {
+        navigator.clipboard.writeText(text).then(() => {
+            showToast('{% translate "copied_to_clipboard" %}', 'success');
+        });
+    }
+    
+    function pronounceWord(word) {
+        if ('speechSynthesis' in window) {
+            const utterance = new SpeechSynthesisUtterance(word);
+            utterance.lang = 'es-AR';
+            speechSynthesis.speak(utterance);
+        } else {
+            showToast('{% translate "browser_no_speech" %}', 'warning');
+        }
+    }
+    
+    function searchMore(term) {
+        const url = `https://www.google.com/search?q=${encodeURIComponent(term + ' lunfardo argentino')}`;
+        window.open(url, '_blank');
+    }
+    
+    function markAsLearned(entryId) {
+        {% if user.is_authenticated %}
+            fetch('/api/progress/mark_learned/', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': getCookie('csrftoken')
+                },
+                body: JSON.stringify({entry_id: entryId})
+            })
+            .then(response => response.json())
+            .then(data => {
+                showToast('{% translate "term_marked_learned" %}', 'success');
+            })
+            .catch(error => {
+                console.error('Error marking as learned:', error);
+                showToast('{% translate "error_marking_learned" %}', 'error');
+            });
+        {% else %}
+            showToast('{% translate "login_required_progress" %}', 'warning');
+        {% endif %}
+    }
+    
+    function showToast(message, type = 'info') {
+        // Create toast notification
+        const toast = document.createElement('div');
+        toast.className = `alert alert-${type === 'error' ? 'danger' : type} position-fixed`;
+        toast.style.cssText = 'top: 100px; right: 20px; z-index: 9999; min-width: 300px;';
+        toast.innerHTML = `
+            <div class="d-flex align-items-center">
+                <i class="bi bi-${type === 'success' ? 'check-circle' : type === 'error' ? 'exclamation-triangle' : 'info-circle'} me-2"></i>
+                ${message}
+                <button type="button" class="btn-close ms-auto" onclick="this.parentElement.parentElement.remove()"></button>
+            </div>
+        `;
+        
+        document.body.appendChild(toast);
+        
+        // Auto-remove after 3 seconds
+        setTimeout(() => {
+            if (toast.parentElement) {
+                toast.remove();
+            }
+        }, 3000);
+    }
+</script>
+
+<style>
+    .hover-shadow {
+        transition: box-shadow 0.3s ease;
+    }
+    
+    .hover-shadow:hover {
+        box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    }
+    
+    .hover-lift {
+        transition: transform 0.3s ease;
+    }
+    
+    .hover-lift:hover {
+        transform: translateY(-5px);
+    }
+</style>
+{% endblock extra_js %}

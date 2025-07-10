@@ -1,0 +1,268 @@
+{% extends "entries/base.html" %}
+{% load lingo_tags %}
+{% load i18n %}
+
+{% block title %}
+    {% translate 'add_entry' %} - REAL LINGO
+{% endblock title %}
+
+{% block content %}
+    <div class="container py-4">
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <!-- Add Entry Header -->
+                <div class="card border-0 shadow-sm mb-4">
+                    <div class="card-header bg-primary text-white text-center py-4">
+                        <div class="mb-3">
+                            <i class="bi bi-plus-circle display-4"></i>
+                        </div>
+                        <h3 class="mb-0">{% translate 'add_entry' %}</h3>
+                        <p class="mb-0 opacity-75">{% translate 'contribute' %} to REAL LINGO!</p>
+                    </div>
+                </div>
+
+                <!-- Add Entry Form -->
+                <div class="card border-0 shadow-sm">
+                    <div class="card-body p-4">
+                        {% if form.errors %}
+                            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                                <i class="bi bi-exclamation-triangle me-2"></i>
+                                <strong>Please correct the following errors:</strong>
+                                <ul class="mb-0 mt-2">
+                                    {% for field, errors in form.errors.items %}
+                                        {% for error in errors %}
+                                            <li>{{ field }}: {{ error }}</li>
+                                        {% endfor %}
+                                    {% endfor %}
+                                </ul>
+                                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                            </div>
+                        {% endif %}
+
+                        <form method="post" class="needs-validation" novalidate>
+                            {% csrf_token %}
+                            
+                            <!-- Term Field -->
+                            <div class="mb-4">
+                                <label for="{{ form.term.id_for_label }}" class="form-label fw-semibold">
+                                    <i class="bi bi-chat-quote me-1"></i>Term or Phrase *
+                                </label>
+                                {{ form.term }}
+                                {% if form.term.errors %}
+                                    <div class="invalid-feedback d-block">
+                                        {% for error in form.term.errors %}
+                                            {{ error }}
+                                        {% endfor %}
+                                    </div>
+                                {% endif %}
+                                <small class="form-text text-muted">
+                                    Enter the slang term, idiom, or phrase you want to add
+                                </small>
+                            </div>
+
+                            <!-- Language and Region Row -->
+                            <div class="row mb-4">
+                                <div class="col-md-6">
+                                    <label for="{{ form.language_code.id_for_label }}" class="form-label fw-semibold">
+                                        <i class="bi bi-globe me-1"></i>Language Code *
+                                    </label>
+                                    {{ form.language_code }}
+                                    {% if form.language_code.errors %}
+                                        <div class="invalid-feedback d-block">
+                                            {% for error in form.language_code.errors %}
+                                                {{ error }}
+                                            {% endfor %}
+                                        </div>
+                                    {% endif %}
+                                    <small class="form-text text-muted">
+                                        e.g., en, es, de, fr
+                                    </small>
+                                </div>
+                                
+                                <div class="col-md-6">
+                                    <label for="{{ form.region_code.id_for_label }}" class="form-label fw-semibold">
+                                        <i class="bi bi-geo-alt me-1"></i>Region Code
+                                    </label>
+                                    {{ form.region_code }}
+                                    {% if form.region_code.errors %}
+                                        <div class="invalid-feedback d-block">
+                                            {% for error in form.region_code.errors %}
+                                                {{ error }}
+                                            {% endfor %}
+                                        </div>
+                                    {% endif %}
+                                    <small class="form-text text-muted">
+                                        e.g., US-NY, Berlin, AU-NSW (optional)
+                                    </small>
+                                </div>
+                            </div>
+
+                            <!-- Category and Part of Speech Row -->
+                            <div class="row mb-4">
+                                <div class="col-md-6">
+                                    <label for="{{ form.category.id_for_label }}" class="form-label fw-semibold">
+                                        <i class="bi bi-tag me-1"></i>{% translate 'categories' %}
+                                    </label>
+                                    {{ form.category }}
+                                    {% if form.category.errors %}
+                                        <div class="invalid-feedback d-block">
+                                            {% for error in form.category.errors %}
+                                                {{ error }}
+                                            {% endfor %}
+                                        </div>
+                                    {% endif %}
+                                </div>
+                                
+                                <div class="col-md-6">
+                                    <label for="{{ form.part_of_speech.id_for_label }}" class="form-label fw-semibold">
+                                        <i class="bi bi-alphabet me-1"></i>Part of Speech
+                                    </label>
+                                    {{ form.part_of_speech }}
+                                    {% if form.part_of_speech.errors %}
+                                        <div class="invalid-feedback d-block">
+                                            {% for error in form.part_of_speech.errors %}
+                                                {{ error }}
+                                            {% endfor %}
+                                        </div>
+                                    {% endif %}
+                                    <small class="form-text text-muted">
+                                        e.g., noun, verb, adjective (optional)
+                                    </small>
+                                </div>
+                            </div>
+
+                            <!-- Notes Field -->
+                            <div class="mb-4">
+                                <label for="{{ form.notes.id_for_label }}" class="form-label fw-semibold">
+                                    <i class="bi bi-journal-text me-1"></i>Notes
+                                </label>
+                                {{ form.notes }}
+                                {% if form.notes.errors %}
+                                    <div class="invalid-feedback d-block">
+                                        {% for error in form.notes.errors %}
+                                            {{ error }}
+                                        {% endfor %}
+                                    </div>
+                                {% endif %}
+                                <small class="form-text text-muted">
+                                    Add cultural context, etymology, or usage notes (optional)
+                                </small>
+                            </div>
+
+                            <!-- Tags Field -->
+                            <div class="mb-4">
+                                <label class="form-label fw-semibold">
+                                    <i class="bi bi-tags me-1"></i>Tags
+                                </label>
+                                <div class="tags-container">
+                                    {{ form.tags }}
+                                </div>
+                                {% if form.tags.errors %}
+                                    <div class="invalid-feedback d-block">
+                                        {% for error in form.tags.errors %}
+                                            {{ error }}
+                                        {% endfor %}
+                                    </div>
+                                {% endif %}
+                                <small class="form-text text-muted">
+                                    Select relevant tags for this entry
+                                </small>
+                            </div>
+
+                            <!-- Submit Buttons -->
+                            <div class="d-flex gap-3 justify-content-end">
+                                <a href="{% url 'user-profile' %}" class="btn btn-secondary">
+                                    <i class="bi bi-arrow-left me-2"></i>Cancel
+                                </a>
+                                <button type="submit" class="btn btn-primary btn-lg">
+                                    <i class="bi bi-plus-circle me-2"></i>{% translate 'add_entry' %}
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+                <!-- Guidelines Card -->
+                <div class="card border-0 bg-light mt-4">
+                    <div class="card-body">
+                        <h6 class="text-primary mb-3">
+                            <i class="bi bi-info-circle me-2"></i>Contribution Guidelines
+                        </h6>
+                        <ul class="mb-0 small">
+                            <li>Make sure the term is authentic and commonly used</li>
+                            <li>Provide clear and accurate translations</li>
+                            <li>Include cultural context when relevant</li>
+                            <li>Use appropriate language and respect community standards</li>
+                            <li>Double-check spelling and language codes</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <style>
+        .form-control {
+            border-radius: 0.75rem;
+            padding: 0.75rem 1rem;
+            border: 2px solid #e9ecef;
+            transition: all 0.3s ease;
+        }
+        
+        .form-control:focus {
+            border-color: #667eea;
+            box-shadow: 0 0 0 0.2rem rgba(102, 126, 234, 0.25);
+        }
+        
+        .form-select {
+            border-radius: 0.75rem;
+            padding: 0.75rem 1rem;
+            border: 2px solid #e9ecef;
+            transition: all 0.3s ease;
+        }
+        
+        .form-select:focus {
+            border-color: #667eea;
+            box-shadow: 0 0 0 0.2rem rgba(102, 126, 234, 0.25);
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border: none;
+            padding: 0.75rem 1.5rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 0.5rem 1rem rgba(102, 126, 234, 0.3);
+        }
+        
+        .tags-container {
+            max-height: 200px;
+            overflow-y: auto;
+            border: 2px solid #e9ecef;
+            border-radius: 0.75rem;
+            padding: 1rem;
+        }
+        
+        .tags-container input[type="checkbox"] {
+            margin-right: 0.5rem;
+        }
+        
+        .tags-container label {
+            display: block;
+            margin-bottom: 0.5rem;
+            cursor: pointer;
+            padding: 0.25rem 0;
+        }
+        
+        .tags-container label:hover {
+            background-color: #f8f9fa;
+            border-radius: 0.25rem;
+            padding-left: 0.5rem;
+            padding-right: 0.5rem;
+        }
+    </style>
+{% endblock content %}

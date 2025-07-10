@@ -1,0 +1,19 @@
+{
+    "python.defaultInterpreterPath": "./lingo_env/bin/python",
+    "python.pythonPath": "./lingo_env/bin/python",
+    "python.terminal.activateEnvironment": true,
+    "python.linting.enabled": true,
+    "python.linting.pylintEnabled": false,
+    "python.linting.flake8Enabled": true,
+    "python.formatting.provider": "black",
+    "files.associations": {
+        "*.html": "django-html"
+    },
+    "emmet.includeLanguages": {
+        "django-html": "html"
+    },
+    "python.analysis.extraPaths": [
+        "./lingo_env/lib/python3.9/site-packages"
+    ],
+    "python.analysis.autoSearchPaths": true
+}

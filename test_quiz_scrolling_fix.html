@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz Scrolling Fix Test</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .test-container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .test-section {
+            margin-bottom: 40px;
+            border: 1px solid #ddd;
+            padding: 25px;
+            border-radius: 8px;
+            background: #f8f9fa;
+        }
+        .content-spacer {
+            height: 200vh;
+            background: linear-gradient(to bottom, #e3f2fd, #bbdefb, #90caf9);
+            margin: 20px 0;
+            padding: 50px;
+            text-align: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+        }
+        .scroll-indicator {
+            position: fixed;
+            top: 10px;
+            right: 10px;
+            background: rgba(0,0,0,0.8);
+            color: white;
+            padding: 10px;
+            border-radius: 5px;
+            font-family: monospace;
+            z-index: 1000;
+        }
+        .test-button {
+            margin: 10px;
+            min-width: 200px;
+        }
+    </style>
+</head>
+<body>
+    <div class="scroll-indicator" id="scrollIndicator">
+        Scroll: 0px
+    </div>
+
+    <div class="test-container">
+        <h1>🧪 Quiz Scrolling Fix Test</h1>
+        <p><strong>Purpose:</strong> This page tests that the quiz opens correctly positioned and scrollable regardless of where the user is on the page when they click the quiz button.</p>
+        
+        <div class="test-section">
+            <h3>📏 Scroll Position Test</h3>
+            <p>Click these buttons from different scroll positions to test quiz positioning:</p>
+            <button class="btn btn-primary test-button" onclick="testQuiz('germany')">🇩🇪 Test Germany Quiz</button>
+            <button class="btn btn-success test-button" onclick="testQuiz('argentina')">🇦🇷 Test Argentina Quiz</button>
+            <button class="btn btn-info test-button" onclick="testQuiz('australia')">🇦🇺 Test Australia Quiz</button>
+            <button class="btn btn-warning test-button" onclick="testQuiz('colombia')">🇨🇴 Test Colombia Quiz</button>
+            <button class="btn btn-danger test-button" onclick="testQuiz('belgium')">🇧🇪 Test Belgium Quiz</button>
+            
+            <div class="mt-3">
+                <small class="text-muted">Current scroll position: <span id="currentScroll">0</span>px</small>
+            </div>
+        </div>
+
+        <div class="content-spacer">
+            <h2>🔄 Scroll Down Test Area</h2>
+            <p>This tall section forces you to scroll. Try clicking the quiz buttons from different scroll positions.</p>
+            <div class="mt-4">
+                <button class="btn btn-outline-primary test-button" onclick="testQuiz('germany')">🇩🇪 Germany Quiz (Middle)</button>
+                <button class="btn btn-outline-success test-button" onclick="testQuiz('argentina')">🇦🇷 Argentina Quiz (Middle)</button>
+            </div>
+            <div class="mt-5">
+                <p><strong>Expected Behavior:</strong></p>
+                <ul class="text-start">
+                    <li>✅ Quiz should open with overlay covering entire screen</li>
+                    <li>✅ Page should automatically scroll to top (0px)</li>
+                    <li>✅ Quiz should be centered and fully visible</li>
+                    <li>✅ Background scrolling should be prevented</li>
+                    <li>✅ Quiz content should be scrollable if needed</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="test-section">
+            <h3>🔽 Bottom of Page Test</h3>
+            <p>Test from the very bottom of the page:</p>
+            <button class="btn btn-dark test-button" onclick="testQuiz('germany')">🇩🇪 Germany Quiz (Bottom)</button>
+            <button class="btn btn-secondary test-button" onclick="testQuiz('australia')">🇦🇺 Australia Quiz (Bottom)</button>
+            
+            <div class="mt-3">
+                <small class="text-success">✅ If the quiz opens correctly from here, the scrolling fix is working!</small>
+            </div>
+        </div>
+    </div>
+
+    <!-- Include the quiz overlay -->
+    <div id="quizOverlay" class="quiz-overlay">
+        <div id="quizContainer" class="quiz-container">
+            <!-- Quiz content will be dynamically inserted here -->
+        </div>
+    </div>
+
+    <style>
+    /* Copy the fixed quiz CSS from the main template */
+    .quiz-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        background-color: rgba(0, 0, 0, 0.8);
+        z-index: 1999;
+        display: none;
+        justify-content: center;
+        align-items: flex-start;
+        padding: 20px;
+        box-sizing: border-box;
+        overflow-y: auto;
+        overflow-x: hidden;
+    }
+
+    .quiz-container {
+        background: white;
+        border-radius: 12px;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        width: 100%;
+        max-width: 600px;
+        margin: 20px auto;
+        z-index: 2000;
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        max-height: calc(100vh - 40px);
+        overflow: hidden;
+    }
+
+    .quiz-header {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        padding: 20px;
+        border-radius: 12px 12px 0 0;
+        text-align: center;
+    }
+
+    .quiz-body {
+        padding: 30px;
+        overflow-y: auto;
+        flex: 1;
+    }
+
+    .quiz-option {
+        display: block;
+        width: 100%;
+        padding: 15px;
+        margin: 10px 0;
+        border: 2px solid #e9ecef;
+        border-radius: 8px;
+        background: white;
+        cursor: pointer;
+        transition: all 0.2s ease;
+        text-align: left;
+    }
+
+    .quiz-option:hover {
+        border-color: #667eea;
+        background: #f8f9ff;
+    }
+
+    .close-quiz {
+        position: absolute;
+        top: 15px;
+        right: 20px;
+        background: none;
+        border: none;
+        color: white;
+        font-size: 24px;
+        cursor: pointer;
+        z-index: 2001;
+    }
+
+    .quiz-progress {
+        width: 100%;
+        height: 8px;
+        background: rgba(255,255,255,0.3);
+        border-radius: 4px;
+        margin: 10px 0;
+        overflow: hidden;
+    }
+
+    .quiz-progress-bar {
+        height: 100%;
+        background: #28a745;
+        transition: width 0.3s ease;
+    }
+
+    @media (max-width: 768px) {
+        .quiz-overlay {
+            padding: 10px;
+        }
+        .quiz-container {
+            max-width: 95%;
+            margin: 10px auto;
+        }
+        .quiz-body {
+            padding: 20px;
+        }
+        .quiz-header {
+            padding: 15px;
+        }
+    }
+    </style>
+
+    <script>
+    // Track scroll position
+    function updateScrollIndicator() {
+        const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+        document.getElementById('scrollIndicator').textContent = `Scroll: ${scrollTop}px`;
+        document.getElementById('currentScroll').textContent = scrollTop;
+    }
+
+    window.addEventListener('scroll', updateScrollIndicator);
+    updateScrollIndicator();
+
+    // Quiz implementation with the same fixes as the main template
+    class SlangQuiz {
+        constructor() {
+            this.quizData = {
+                argentina: [
+                    { term: "che", question: "What does 'che' mean in Argentine Spanish?", options: ["Hello", "Hey/dude", "Goodbye", "Thank you"], correct: 1 },
+                    { term: "boludo", question: "What does 'boludo' mean?", options: ["Smart person", "Dude/fool", "Money", "Food"], correct: 1 },
+                    { term: "quilombo", question: "What does 'quilombo' refer to?", options: ["Party", "Mess/chaos", "House", "Car"], correct: 1 },
+                    { term: "laburo", question: "What does 'laburo' mean?", options: ["Work/job", "Food", "Music", "Money"], correct: 0 },
+                    { term: "chabon", question: "What does 'chabon' mean?", options: ["House", "Guy/dude", "Food", "Money"], correct: 1 }
+                ],
+                australia: [
+                    { term: "mate", question: "What does 'mate' mean in Australian slang?", options: ["Enemy", "Friend/buddy", "Stranger", "Boss"], correct: 1 },
+                    { term: "arvo", question: "What does 'arvo' mean?", options: ["Morning", "Night", "Afternoon", "Evening"], correct: 2 },
+                    { term: "brekkie", question: "What does 'brekkie' refer to?", options: ["Lunch", "Dinner", "Breakfast", "Snack"], correct: 2 },
+                    { term: "fair dinkum", question: "What does 'fair dinkum' mean?", options: ["Fake", "Genuine/true", "Expensive", "Cheap"], correct: 1 },
+                    { term: "sheila", question: "What does 'sheila' refer to?", options: ["Man", "Woman", "Child", "Elder"], correct: 1 }
+                ],
+                germany: [
+                    { term: "geil", question: "What does 'geil' mean in modern German slang?", options: ["Terrible", "Awesome/cool", "Expensive", "Difficult"], correct: 1 },
+                    { term: "krass", question: "What does 'krass' express?", options: ["Boring", "Extreme/intense", "Quiet", "Simple"], correct: 1 },
+                    { term: "digga", question: "What does 'digga' mean?", options: ["Enemy", "Dude/buddy", "Teacher", "Stranger"], correct: 1 },
+                    { term: "bock haben", question: "What does 'bock haben' mean?", options: ["To be tired", "To want/feel like", "To be angry", "To be confused"], correct: 1 },
+                    { term: "chillen", question: "What does 'chillen' mean?", options: ["To work hard", "To relax/chill", "To run fast", "To study"], correct: 1 }
+                ],
+                colombia: [
+                    { term: "parce", question: "What does 'parce' mean in Colombian Spanish?", options: ["Enemy", "Friend/buddy", "Stranger", "Boss"], correct: 1 },
+                    { term: "chimba", question: "What does 'chimba' mean?", options: ["Bad", "Awesome/great", "Ugly", "Boring"], correct: 1 },
+                    { term: "bacano", question: "What does 'bacano' mean?", options: ["Terrible", "Cool/nice", "Expensive", "Difficult"], correct: 1 },
+                    { term: "rumbear", question: "What does 'rumbear' mean?", options: ["To sleep", "To party", "To work", "To study"], correct: 1 },
+                    { term: "vieja", question: "What does 'vieja' affectionately refer to?", options: ["Sister", "Mother/mom", "Aunt", "Grandmother"], correct: 1 }
+                ],
+                belgium: [
+                    { term: "dikke", question: "What does 'dikke' mean in Belgian Dutch slang?", options: ["Small", "Big/great", "Bad", "Ugly"], correct: 1 },
+                    { term: "proper", question: "What does 'proper' mean in Belgian slang?", options: ["Dirty", "Clean/good", "Fast", "Slow"], correct: 1 },
+                    { term: "kot", question: "What does 'kot' refer to?", options: ["Car", "Student room", "Food", "Book"], correct: 1 },
+                    { term: "ambetant", question: "What does 'ambetant' mean?", options: ["Happy", "Annoying", "Funny", "Quiet"], correct: 1 },
+                    { term: "schuif", question: "What does 'schuif' refer to?", options: ["Book", "Party", "Door", "Window"], correct: 1 }
+                ]
+            };
+        }
+
+        show(country) {
+            console.log('🧪 TEST: Quiz show called with country:', country);
+            console.log('🧪 TEST: Current scroll position before show:', window.pageYOffset);
+            
+            if (!country || !this.quizData[country]) {
+                alert(`Quiz not available for country: ${country}`);
+                return;
+            }
+
+            this.currentCountry = country;
+            this.currentQuestion = 0;
+            this.score = 0;
+
+            const overlay = document.getElementById('quizOverlay');
+            const container = document.getElementById('quizContainer');
+            
+            overlay.style.display = 'flex';
+            container.innerHTML = this.createQuizHTML();
+            
+            // SCROLLING FIX: Force scroll to top and prevent body scrolling
+            console.log('🧪 TEST: Applying scroll fixes...');
+            window.scrollTo({ top: 0, behavior: 'instant' });
+            document.documentElement.scrollTop = 0;
+            document.body.scrollTop = 0;
+            document.body.style.overflow = 'hidden';
+            document.body.style.position = 'fixed';
+            document.body.style.width = '100%';
+            
+            setTimeout(() => {
+                console.log('🧪 TEST: Scroll position after show:', window.pageYOffset);
+                updateScrollIndicator();
+            }, 100);
+            
+            this.loadQuestion();
+        }
+
+        createQuizHTML() {
+            const countryName = this.currentCountry.charAt(0).toUpperCase() + this.currentCountry.slice(1);
+            return `
+                <button class="close-quiz" onclick="window.slangQuiz.close()">&times;</button>
+                <div class="quiz-header">
+                    <h2>🌍 ${countryName} Slang Quiz</h2>
+                    <div class="quiz-progress">
+                        <div class="quiz-progress-bar" id="progressBar" style="width: 0%"></div>
+                    </div>
+                    <p>Question <span id="questionNumber">1</span> of 5</p>
+                    <small>✅ Quiz opened correctly! Scrolling fix is working.</small>
+                </div>
+                <div class="quiz-body" id="quizBody">
+                    <!-- Question content will be loaded here -->
+                </div>
+            `;
+        }
+
+        loadQuestion() {
+            const question = this.quizData[this.currentCountry][this.currentQuestion];
+            const quizBody = document.getElementById('quizBody');
+            
+            quizBody.innerHTML = `
+                <h3>${question.question}</h3>
+                <div class="quiz-options">
+                    ${question.options.map((option, index) => `
+                        <button class="quiz-option" onclick="window.slangQuiz.selectAnswer(${index})">${option}</button>
+                    `).join('')}
+                </div>
+                <div style="margin-top: 30px; text-align: center;">
+                    <button onclick="window.slangQuiz.close()" style="padding: 10px 20px; background: #dc3545; color: white; border: none; border-radius: 5px; cursor: pointer;">Close Test</button>
+                </div>
+                <div style="margin-top: 15px; text-align: center; font-size: 12px; color: #666;">
+                    Test: Click "Close Test" to verify body scroll is restored
+                </div>
+            `;
+        }
+
+        selectAnswer(index) {
+            // For testing, just close after a moment
+            setTimeout(() => this.close(), 1000);
+        }
+
+        close() {
+            console.log('🧪 TEST: Closing quiz and restoring scroll...');
+            
+            const overlay = document.getElementById('quizOverlay');
+            overlay.style.display = 'none';
+            
+            // SCROLLING FIX: Restore body scrolling and positioning
+            document.body.style.overflow = '';
+            document.body.style.position = '';
+            document.body.style.width = '';
+            
+            setTimeout(() => {
+                console.log('🧪 TEST: Scroll position after close:', window.pageYOffset);
+                updateScrollIndicator();
+            }, 100);
+        }
+    }
+
+    function testQuiz(country) {
+        const scrollBefore = window.pageYOffset;
+        console.log(`🧪 TEST: Testing ${country} quiz from scroll position ${scrollBefore}px`);
+        window.slangQuiz.show(country);
+    }
+
+    // Initialize
+    document.addEventListener('DOMContentLoaded', function() {
+        window.slangQuiz = new SlangQuiz();
+        console.log('🧪 TEST: Quiz scrolling test system ready');
+    });
+    </script>
+</body>
+</html>

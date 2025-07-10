@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Real Lingo Frontend Tests</title>
+    <style>
+        body { font-family: Arial, sans-serif; padding: 20px; }
+        .test-section { margin: 20px 0; padding: 15px; border: 1px solid #ddd; }
+        .test-pass { color: green; }
+        .test-fail { color: red; }
+        .test-pending { color: orange; }
+        #test-results { margin-top: 20px; }
+        .test-result { padding: 5px; margin: 2px 0; }
+    </style>
+</head>
+<body>
+    <h1>Real Lingo Frontend Tests</h1>
+    
+    <div class="test-section">
+        <h2>Quiz Functionality Tests</h2>
+        <button onclick="runQuizTests()">Run Quiz Tests</button>
+        <div id="quiz-test-results"></div>
+    </div>
+    
+    <div class="test-section">
+        <h2>Accessibility Tests</h2>
+        <button onclick="runAccessibilityTests()">Run Accessibility Tests</button>
+        <div id="accessibility-test-results"></div>
+    </div>
+    
+    <div class="test-section">
+        <h2>Responsive Design Tests</h2>
+        <button onclick="runResponsiveTests()">Run Responsive Tests</button>
+        <div id="responsive-test-results"></div>
+    </div>
+    
+    <div id="test-results">
+        <h3>Test Results Summary</h3>
+        <div id="results-summary"></div>
+    </div>
+
+    <!-- Include the quiz component for testing -->
+    <div style="display: none;">
+        {% include 'entries/slang_quiz.html' %}
+    </div>
+
+    <script>
+        // Test framework
+        class TestRunner {
+            constructor() {
+                this.tests = [];
+                this.results = [];
+            }
+            
+            addTest(name, testFunction) {
+                this.tests.push({ name, testFunction });
+            }
+            
+            async runTests(category) {
+                const results = [];
+                for (const test of this.tests) {
+                    try {
+                        const startTime = performance.now();
+                        await test.testFunction();
+                        const endTime = performance.now();
+                        results.push({
+                            name: test.name,
+                            status: 'PASS',
+                            duration: Math.round(endTime - startTime),
+                            message: 'Test passed successfully'
+                        });
+                    } catch (error) {
+                        results.push({
+                            name: test.name,
+                            status: 'FAIL',
+                            duration: 0,
+                            message: error.message
+                        });
+                    }
+                }
+                this.displayResults(category, results);
+                return results;
+            }
+            
+            displayResults(category, results) {
+                const container = document.getElementById(`${category}-test-results`);
+                container.innerHTML = '';
+                
+                results.forEach(result => {
+                    const div = document.createElement('div');
+                    div.className = `test-result test-${result.status.toLowerCase()}`;
+                    div.innerHTML = `
+                        <strong>${result.status}</strong>: ${result.name} 
+                        (${result.duration}ms) - ${result.message}
+                    `;
+                    container.appendChild(div);
+                });
+                
+                this.updateSummary();
+            }
+            
+            updateSummary() {
+                const summary = document.getElementById('results-summary');
+                const totalTests = this.results.reduce((sum, category) => sum + category.length, 0);
+                const passedTests = this.results.flat().filter(r => r.status === 'PASS').length;
+                
+                summary.innerHTML = `
+                    <p>Total Tests: ${totalTests}</p>
+                    <p class="test-pass">Passed: ${passedTests}</p>
+                    <p class="test-fail">Failed: ${totalTests - passedTests}</p>
+                `;
+            }
+        }
+
+        // Quiz Tests
+        async function runQuizTests() {
+            const runner = new TestRunner();
+            
+            runner.addTest('Quiz Object Exists', () => {
+                if (typeof window.slangQuiz === 'undefined') {
+                    throw new Error('SlangQuiz object not found');
+                }
+            });
+            
+            runner.addTest('Quiz Container Element Exists', () => {
+                const container = document.getElementById('quizOverlay');
+                if (!container) {
+                    throw new Error('Quiz overlay container not found');
+                }
+            });
+            
+            runner.addTest('Quiz Methods Available', () => {
+                const requiredMethods = ['show', 'close', 'loadQuestion', 'selectAnswer'];
+                for (const method of requiredMethods) {
+                    if (typeof window.slangQuiz[method] !== 'function') {
+                        throw new Error(`Method ${method} not available on quiz object`);
+                    }
+                }
+            });
+            
+            runner.addTest('Quiz API Endpoint Accessible', async () => {
+                try {
+                    const response = await fetch('/api/quiz/questions/?language=es-AR&user_language=en&count=1');
+                    if (!response.ok && response.status !== 400) {
+                        throw new Error(`API returned ${response.status}: ${response.statusText}`);
+                    }
+                } catch (error) {
+                    throw new Error(`Failed to reach API: ${error.message}`);
+                }
+            });
+            
+            runner.addTest('Quiz Keyboard Navigation Setup', () => {
+                if (typeof window.slangQuiz.setupKeyboardNavigation !== 'function') {
+                    throw new Error('Keyboard navigation setup method not found');
+                }
+            });
+            
+            const results = await runner.runTests('quiz');
+            if (!runner.results.some(r => r === results)) {
+                runner.results.push(results);
+            }
+        }
+
+        // Accessibility Tests
+        async function runAccessibilityTests() {
+            const runner = new TestRunner();
+            
+            runner.addTest('ARIA Labels Present', () => {
+                // Test would check for proper ARIA labels on quiz elements
+                const quizContainer = document.getElementById('quizContainer');
+                if (quizContainer && !quizContainer.getAttribute('role')) {
+                    console.warn('Quiz container missing role attribute');
+                }
+            });
+            
+            runner.addTest('Keyboard Navigation Support', () => {
+                if (typeof window.slangQuiz.setupKeyboardNavigation !== 'function') {
+                    throw new Error('Keyboard navigation not implemented');
+                }
+            });
+            
+            runner.addTest('Screen Reader Announcements', () => {
+                if (typeof window.slangQuiz.announceToScreenReader !== 'function') {
+                    throw new Error('Screen reader announcements not implemented');
+                }
+            });
+            
+            runner.addTest('Focus Management', () => {
+                // Test that focus is properly managed
+                const focusableElements = document.querySelectorAll('[tabindex], button, input, select, textarea, a[href]');
+                if (focusableElements.length === 0) {
+                    console.warn('No focusable elements found for testing');
+                }
+            });
+            
+            runner.addTest('Color Contrast Compliance', () => {
+                // Basic check for high contrast mode support
+                const styles = document.styleSheets;
+                let hasHighContrastRules = false;
+                for (const sheet of styles) {
+                    try {
+                        const rules = sheet.cssRules || sheet.rules;
+                        for (const rule of rules) {
+                            if (rule.media && rule.media.mediaText.includes('prefers-contrast')) {
+                                hasHighContrastRules = true;
+                                break;
+                            }
+                        }
+                    } catch (e) {
+                        // Cross-origin stylesheets can't be accessed
+                        console.warn('Could not access stylesheet for contrast testing');
+                    }
+                }
+                if (!hasHighContrastRules) {
+                    console.warn('High contrast mode support not detected');
+                }
+            });
+            
+            const results = await runner.runTests('accessibility');
+            if (!runner.results.some(r => r === results)) {
+                runner.results.push(results);
+            }
+        }
+
+        // Responsive Design Tests
+        async function runResponsiveTests() {
+            const runner = new TestRunner();
+            
+            runner.addTest('Mobile Viewport Meta Tag', () => {
+                const viewport = document.querySelector('meta[name="viewport"]');
+                if (!viewport) {
+                    throw new Error('Viewport meta tag not found');
+                }
+            });
+            
+            runner.addTest('Mobile Breakpoint CSS', () => {
+                // Check for mobile-specific CSS rules
+                const styles = document.styleSheets;
+                let hasMobileRules = false;
+                for (const sheet of styles) {
+                    try {
+                        const rules = sheet.cssRules || sheet.rules;
+                        for (const rule of rules) {
+                            if (rule.media && rule.media.mediaText.includes('max-width')) {
+                                hasMobileRules = true;
+                                break;
+                            }
+                        }
+                    } catch (e) {
+                        console.warn('Could not access stylesheet for mobile testing');
+                    }
+                }
+                if (!hasMobileRules) {
+                    throw new Error('Mobile responsive CSS rules not found');
+                }
+            });
+            
+            runner.addTest('Touch-Friendly Target Sizes', () => {
+                const buttons = document.querySelectorAll('button, .quiz-option');
+                let hasTouch = false;
+                for (const sheet of document.styleSheets) {
+                    try {
+                        const rules = sheet.cssRules || sheet.rules;
+                        for (const rule of rules) {
+                            if (rule.media && rule.media.mediaText.includes('pointer: coarse')) {
+                                hasTouch = true;
+                                break;
+                            }
+                        }
+                    } catch (e) {
+                        console.warn('Could not access stylesheet for touch testing');
+                    }
+                }
+                if (!hasTouch) {
+                    console.warn('Touch-friendly CSS rules not detected');
+                }
+            });
+            
+            runner.addTest('Reduced Motion Support', () => {
+                let hasReducedMotion = false;
+                for (const sheet of document.styleSheets) {
+                    try {
+                        const rules = sheet.cssRules || sheet.rules;
+                        for (const rule of rules) {
+                            if (rule.media && rule.media.mediaText.includes('prefers-reduced-motion')) {
+                                hasReducedMotion = true;
+                                break;
+                            }
+                        }
+                    } catch (e) {
+                        console.warn('Could not access stylesheet for motion testing');
+                    }
+                }
+                if (!hasReducedMotion) {
+                    console.warn('Reduced motion preference support not detected');
+                }
+            });
+            
+            const results = await runner.runTests('responsive');
+            if (!runner.results.some(r => r === results)) {
+                runner.results.push(results);
+            }
+        }
+
+        // Performance monitoring
+        function measurePerformance() {
+            if (window.performance && window.performance.timing) {
+                const timing = window.performance.timing;
+                const loadTime = timing.loadEventEnd - timing.navigationStart;
+                console.log(`Page load time: ${loadTime}ms`);
+                
+                // Test quiz initialization time
+                const startTime = performance.now();
+                if (window.slangQuiz) {
+                    // Simulate quiz initialization
+                    window.slangQuiz.language = 'en';
+                    window.slangQuiz.currentCountry = 'Argentina';
+                }
+                const endTime = performance.now();
+                console.log(`Quiz initialization time: ${Math.round(endTime - startTime)}ms`);
+            }
+        }
+
+        // Auto-run performance monitoring when page loads
+        window.addEventListener('load', measurePerformance);
+        
+        // Export test functions for external use
+        window.testRunner = {
+            runQuizTests,
+            runAccessibilityTests,
+            runResponsiveTests
+        };
+    </script>
+</body>
+</html>

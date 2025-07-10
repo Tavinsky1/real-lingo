@@ -1,0 +1,380 @@
+{% load i18n %}
+{% extends "entries/base.html" %}
+
+{% block title %}
+    {{ entry.term }} - REAL LINGO
+{% endblock title %}
+
+{% block content %}
+    <div class="container">
+        <!-- Navigation Breadcrumb -->
+        <nav aria-label="breadcrumb" class="mb-4">
+            <ol class="breadcrumb bg-transparent p-0">
+                <li class="breadcrumb-item">
+                    <a href="{% url 'home' %}" class="text-decoration-none">
+                        <i class="bi bi-house me-1"></i>Inicio
+                    </a>
+                </li>
+                <li class="breadcrumb-item">
+                    <a href="{% url 'entry-list' %}" class="text-decoration-none">Términos</a>
+                </li>
+                <li class="breadcrumb-item active" aria-current="page">{{ entry.term }}</li>
+            </ol>
+        </nav>
+
+        <div class="row">
+            <!-- Main Content -->
+            <div class="col-lg-8">
+                <!-- Entry Header -->
+                <div class="card border-0 shadow-lg mb-4 animate__animated animate__fadeInUp">
+                    <div class="card-header bg-gradient text-white py-4">
+                        <div class="d-flex justify-content-between align-items-start">
+                            <div>
+                                <h1 class="h2 mb-2 fw-bold">{{ entry.term }}</h1>
+                                {% if entry.language_code %}
+                                    <div class="d-flex align-items-center">
+                                        <i class="bi bi-flag me-2"></i>
+                                        <span class="badge bg-white bg-opacity-20 fs-6">{{ entry.language_code }}</span>
+                                    </div>
+                                {% endif %}
+                            </div>
+                            <div class="text-end">
+                                <button class="favorite-btn btn btn-outline-light" onclick="toggleFavorite({{ entry.id }})" 
+                                        title="{% if entry.is_favorited %}Quitar de favoritos{% else %}Agregar a favoritos{% endif %}">
+                                    <i class="bi {% if entry.is_favorited %}bi-heart-fill{% else %}bi-heart{% endif %} me-2"></i>
+                                    <span class="d-none d-md-inline">
+                                        {% if entry.is_favorited %}En Favoritos{% else %}Agregar a Favoritos{% endif %}
+                                    </span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="card-body p-4" data-entry-id="{{ entry.id }}">
+                        <!-- Definition -->
+                        {% if entry.notes %}
+                            <div class="mb-4">
+                                <h5 class="text-primary mb-3">
+                                    <i class="bi bi-book me-2"></i>Definición
+                                </h5>
+                                <p class="fs-5 lh-lg text-dark">{{ entry.notes }}</p>
+                            </div>
+                        {% endif %}
+
+                        <!-- Translations -->
+                        {% if entry.translations.all %}
+                            <div class="mb-4">
+                                <h5 class="text-success mb-3">
+                                    <i class="bi bi-translate me-2"></i>Traducciones
+                                </h5>
+                                <div class="row g-2">
+                                    {% for translation in entry.translations.all %}
+                                        <div class="col-auto">
+                                            <span class="badge bg-success bg-opacity-10 text-success border border-success fs-6 px-3 py-2">
+                                                {{ translation.translation }}
+                                            </span>
+                                        </div>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                        {% endif %}
+
+                        <!-- Categories/Tags -->
+                        {% if entry.tags.all %}
+                            <div class="mb-4">
+                                <h5 class="text-warning mb-3">
+                                    <i class="bi bi-tags me-2"></i>Categorías
+                                </h5>
+                                <div class="d-flex flex-wrap gap-2">
+                                    {% for tag in entry.tags.all %}
+                                        <a href="{% url 'entry-list' %}?tags={{ tag.name }}" 
+                                           class="tag-badge text-decoration-none"
+                                           style="background: {{ tag.color|default:'#6c757d' }}; color: white;">
+                                            <i class="bi bi-tag me-1"></i>{{ tag.name }}
+                                        </a>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                        {% endif %}
+
+                        <!-- Action Buttons -->
+                        <div class="d-flex flex-wrap gap-3 mt-4 pt-4 border-top">
+                            <button class="btn btn-outline-primary" onclick="shareEntry()">
+                                <i class="bi bi-share me-2"></i>Compartir
+                            </button>
+                            <button class="btn btn-outline-success" onclick="markAsLearned({{ entry.id }})">
+                                <i class="bi bi-check-circle me-2"></i>Marcar como aprendido
+                            </button>
+                            <button class="btn btn-outline-info" onclick="pronounceWord('{{ entry.term }}')">
+                                <i class="bi bi-volume-up me-2"></i>Pronunciar
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Related Terms -->
+                <div class="card border-0 shadow-lg animate__animated animate__fadeInUp animate__delay-1s">
+                    <div class="card-header bg-light">
+                        <h5 class="mb-0">
+                            <i class="bi bi-collection me-2 text-primary"></i>Términos relacionados
+                        </h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="row g-3" id="relatedTermsContainer">
+                            <!-- Related terms will be loaded here -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Sidebar -->
+            <div class="col-lg-4">
+                <!-- Navigation -->
+                <div class="card border-0 shadow-sm mb-4 sticky-top animate__animated animate__fadeInRight" style="top: 100px;">
+                    <div class="card-header bg-light">
+                        <h6 class="mb-0">
+                            <i class="bi bi-arrow-left-right me-2"></i>Navegación
+                        </h6>
+                    </div>
+                    <div class="card-body">
+                        <div class="d-grid gap-2">
+                            {% if previous_entry %}
+                                <a href="{% url 'entry-detail' previous_entry.pk %}" class="btn btn-outline-secondary">
+                                    <i class="bi bi-chevron-left me-2"></i>{{ previous_entry.term }}
+                                </a>
+                            {% endif %}
+                            
+                            <a href="{% url 'entry-list' %}?random=true" class="btn btn-primary">
+                                <i class="bi bi-shuffle me-2"></i>Término aleatorio
+                            </a>
+                            
+                            {% if next_entry %}
+                                <a href="{% url 'entry-detail' next_entry.pk %}" class="btn btn-outline-secondary">
+                                    {{ next_entry.term }}<i class="bi bi-chevron-right ms-2"></i>
+                                </a>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Quick Stats -->
+                {% if user.is_authenticated %}
+                    <div class="card border-0 shadow-sm mb-4 animate__animated animate__fadeInRight animate__delay-1s">
+                        <div class="card-header bg-light">
+                            <h6 class="mb-0">
+                                <i class="bi bi-graph-up me-2"></i>Tu progreso
+                            </h6>
+                        </div>
+                        <div class="card-body">
+                            <div class="row text-center">
+                                <div class="col-6">
+                                    <div class="border-end">
+                                        <h4 class="text-primary mb-0" id="favoritesCount">-</h4>
+                                        <small class="text-muted">Favoritos</small>
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <h4 class="text-success mb-0" id="viewedCount">-</h4>
+                                    <small class="text-muted">Vistos</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {% endif %}
+
+                <!-- Quick Actions -->
+                <div class="card border-0 shadow-sm animate__animated animate__fadeInRight animate__delay-2s">
+                    <div class="card-header bg-light">
+                        <h6 class="mb-0">
+                            <i class="bi bi-lightning me-2"></i>Acciones rápidas
+                        </h6>
+                    </div>
+                    <div class="card-body">
+                        <div class="d-grid gap-2">
+                            <a href="{% url 'entry-list' %}" class="btn btn-outline-secondary btn-sm">
+                                <i class="bi bi-arrow-left me-2"></i>Volver a la lista
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock content %}
+
+{% block extra_js %}
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Mark entry as viewed
+        markAsViewed({{ entry.id }});
+        
+        // Load related terms
+        loadRelatedTerms();
+        
+        // Update user stats if authenticated
+        {% if user.is_authenticated %}
+            updateUserStats();
+        {% endif %}
+    });
+    
+    function loadRelatedTerms() {
+        fetch('/api/entries/random/?count=4')
+            .then(response => response.json())
+            .then(data => displayRelatedTerms(data.results || data))
+            .catch(error => console.error('Error loading related terms:', error));
+    }
+    
+    function displayRelatedTerms(terms) {
+        const container = document.getElementById('relatedTermsContainer');
+        let html = '';
+        
+        if (terms.length === 0) {
+            html = '<div class="col-12 text-center text-muted"><p>No hay términos relacionados disponibles.</p></div>';
+        } else {
+            terms.forEach(term => {
+                html += `
+                    <div class="col-md-6">
+                        <div class="card h-100 border-0 bg-light hover-shadow">
+                            <div class="card-body p-3">
+                                <h6 class="card-title mb-1">
+                                    <a href="/entries/${term.id}/" class="text-decoration-none">
+                                        ${term.term}
+                                    </a>
+                                </h6>
+                                ${term.notes ? `<p class="card-text small text-muted">${term.notes.substring(0, 60)}...</p>` : ''}
+                            </div>
+                        </div>
+                    </div>
+                `;
+            });
+        }
+        
+        container.innerHTML = html;
+    }
+    
+    function updateUserStats() {
+        fetch('/api/user-stats/')
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('favoritesCount').textContent = data.favorites_count || 0;
+                document.getElementById('viewedCount').textContent = data.viewed_count || 0;
+            })
+            .catch(error => console.error('Error updating user stats:', error));
+    }
+    
+    function shareEntry() {
+        if (navigator.share) {
+            navigator.share({
+                title: '{{ entry.term }} - REAL LINGO',
+                text: '{{ entry.notes|truncatewords:20 }}',
+                url: window.location.href
+            });
+        } else {
+            // Fallback - copy to clipboard
+            navigator.clipboard.writeText(window.location.href).then(() => {
+                alert('¡Enlace copiado al portapapeles!');
+            });
+        }
+    }
+    
+    function markAsLearned(entryId) {
+        {% if user.is_authenticated %}
+            fetch('/api/progress/mark_learned/', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': getCookie('csrftoken')
+                },
+                body: JSON.stringify({entry_id: entryId})
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    const btn = event.target.closest('button');
+                    btn.innerHTML = '<i class="bi bi-check-circle-fill me-2"></i>¡Aprendido!';
+                    btn.classList.remove('btn-outline-success');
+                    btn.classList.add('btn-success');
+                    btn.disabled = true;
+                    
+                    // Show success message
+                    showSuccessMessage('¡Término marcado como aprendido!');
+                }
+            })
+            .catch(error => console.error('Error marking as learned:', error));
+        {% else %}
+            alert('Por favor inicia sesión para marcar términos como aprendidos.');
+        {% endif %}
+    }
+    
+    function pronounceWord(word) {
+        if ('speechSynthesis' in window) {
+            const utterance = new SpeechSynthesisUtterance(word);
+            utterance.lang = 'es-AR'; // Argentine Spanish
+            utterance.rate = 0.8; // Slightly slower
+            speechSynthesis.speak(utterance);
+        } else {
+            alert('Lo sentimos, tu navegador no soporta síntesis de voz.');
+        }
+    }
+    
+    function showSuccessMessage(message) {
+        // Create and show a toast notification
+        const toast = document.createElement('div');
+        toast.className = 'toast position-fixed top-0 end-0 m-3';
+        toast.style.zIndex = '1080';
+        toast.innerHTML = `
+            <div class="toast-header bg-success text-white">
+                <i class="bi bi-check-circle me-2"></i>
+                <strong class="me-auto">¡Éxito!</strong>
+                <button type="button" class="btn-close btn-close-white" onclick="this.closest('.toast').remove()"></button>
+            </div>
+            <div class="toast-body">${message}</div>
+        `;
+        document.body.appendChild(toast);
+        
+        setTimeout(() => {
+            toast.remove();
+        }, 3000);
+    }
+</script>
+
+<style>
+    .hover-shadow {
+        transition: box-shadow 0.3s ease;
+    }
+    
+    .hover-shadow:hover {
+        box-shadow: 0 4px 12px rgba(0,0,0,0.15) !important;
+    }
+    
+    .tag-badge {
+        display: inline-block;
+        padding: 0.5rem 1rem;
+        margin: 0.25rem;
+        font-size: 0.85rem;
+        font-weight: 500;
+        border-radius: 50px;
+        transition: all 0.3s ease;
+        box-shadow: var(--shadow-sm);
+    }
+    
+    .tag-badge:hover {
+        transform: translateY(-2px) scale(1.05);
+        box-shadow: var(--shadow-md);
+    }
+    
+    .bg-gradient {
+        background: var(--gradient-argentina) !important;
+    }
+    
+    .breadcrumb-item + .breadcrumb-item::before {
+        color: var(--primary-color);
+    }
+    
+    .favorite-btn.favorited {
+        background-color: var(--accent-color) !important;
+        border-color: var(--accent-color) !important;
+        color: white !important;
+    }
+</style>
+{% endblock extra_js %}

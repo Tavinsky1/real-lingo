@@ -1,0 +1,43 @@
+<!-- Word of the Day Widget -->
+<div class="word-of-day-widget animate__animated animate__bounceIn">
+    <div class="card border-0 shadow-lg">
+        <div class="card-header bg-gradient text-white text-center">
+            <h5 class="mb-0">
+                <i class="bi bi-star-fill me-2"></i>
+                Word of the Day
+            </h5>
+        </div>
+        <div class="card-body text-center p-4">
+            <h3 class="text-primary mb-2">{{ word_of_day.term }}</h3>
+            <p class="text-muted mb-3">{{ word_of_day.notes|truncatewords:20 }}</p>
+            <a href="{% url 'entry-detail' word_of_day.id %}" class="btn btn-primary btn-sm">
+                Learn More
+            </a>
+        </div>
+    </div>
+</div>
+
+<style>
+.word-of-day-widget {
+    position: fixed;
+    bottom: 80px;
+    right: 20px;
+    width: 280px;
+    z-index: 1000;
+    animation-delay: 2s;
+}
+
+.word-of-day-widget .card-header {
+    background: linear-gradient(45deg, #667eea, #764ba2);
+}
+
+@media (max-width: 768px) {
+    .word-of-day-widget {
+        position: relative;
+        bottom: auto;
+        right: auto;
+        width: 100%;
+        margin: 20px 0;
+    }
+}
+</style>

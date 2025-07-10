@@ -1,0 +1,393 @@
+{% extends "entries/base.html" %}
+{% load static %}
+{% load i18n %}
+
+{% block title %}
+    REAL LINGO - Diccionario de Lunfardo Argentino
+{% endblock title %}
+
+{% block content %}
+<style>
+.search-suggestions-hidden {
+    display: none;
+}
+
+.feature-icon-circle {
+    width: 80px;
+    height: 80px;
+}
+
+.entry-card-delayed-1 {
+    animation-delay: 0.1s;
+}
+
+.entry-card-delayed-2 {
+    animation-delay: 0.2s;
+}
+
+.entry-card-delayed-3 {
+    animation-delay: 0.3s;
+}
+
+.entry-card-delayed-4 {
+    animation-delay: 0.4s;
+}
+
+.entry-card-delayed-5 {
+    animation-delay: 0.5s;
+}
+
+.entry-card-delayed-6 {
+    animation-delay: 0.6s;
+}
+
+.category-card-delayed-1 {
+    animation-delay: 0.7s;
+}
+
+.category-card-delayed-2 {
+    animation-delay: 0.8s;
+}
+
+.category-card-delayed-3 {
+    animation-delay: 0.9s;
+}
+</style>
+    <!-- Hero Section -->
+    <div class="home-hero-section d-flex align-items-center justify-content-center flex-column text-center animate__animated animate__fadeIn" style="min-height: 80vh; background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%); position: relative;">
+        <div class="container py-5">
+            <div class="mb-4">
+                <img src="{% static 'entries/img/logo.png' %}" alt="REAL LINGO Logo" style="width: 100px; height: 100px; border-radius: 50px; box-shadow: 0 4px 24px rgba(0,0,0,0.1); background: white;">
+            </div>
+            <h1 class="display-2 fw-bold mb-3 animate__animated animate__fadeInDown" style="letter-spacing: 2px;">
+                🌍 REAL LINGO
+                </h1>
+            <p class="lead text-white mb-4 animate__animated animate__fadeInUp animate__delay-1s">Talk like a local. Not like a textbook.</p>
+            <div class="d-flex justify-content-center gap-3 mb-4 animate__animated animate__fadeInUp animate__delay-2s">
+                <a href="/signup/" class="btn btn-lg btn-primary rounded-pill px-5 shadow"><i class="bi bi-person-plus me-2"></i>Sign Up</a>
+                <a href="/login/" class="btn btn-lg btn-outline-light rounded-pill px-5 shadow"><i class="bi bi-box-arrow-in-right me-2"></i>Log In</a>
+                    </div>
+            <div class="text-white-50 mt-3 animate__animated animate__fadeIn animate__delay-3s">
+                <i class="bi bi-people me-2"></i>Join <strong>10,000+</strong> learners worldwide!
+            </div>
+        </div>
+        <div class="animated-bg" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 0;"></div>
+    </div>
+
+    <div class="container py-5">
+        <!-- Featured Terms -->
+        <section class="mb-5">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <h2 class="h3 mb-0">
+                    <i class="bi bi-star me-2 text-warning"></i>
+                    Términos Destacados
+                </h2>
+                <button class="btn btn-outline-primary" onclick="loadFeaturedTerms()">
+                    <i class="bi bi-arrow-repeat me-1"></i>Más términos
+                </button>
+            </div>
+            
+            <div class="row g-4" id="featuredTermsContainer">
+                {% for entry in featured_entries %}
+                    <div class="col-lg-4 col-md-6">
+                        <div class="entry-card animate__animated animate__fadeInUp entry-card-delayed-{{ forloop.counter }}">
+                            <div class="d-flex justify-content-between align-items-start mb-3">
+                                <h5 class="entry-term mb-0">
+                                    <a href="{% url 'entry-detail' entry.pk %}" class="text-decoration-none">
+                                        {{ entry.term }}
+                                    </a>
+                                </h5>
+                                <button class="favorite-btn" onclick="toggleFavorite({{ entry.id }})" title="Agregar a favoritos">
+                                    <i class="bi bi-heart"></i>
+                                </button>
+                            </div>
+                            
+                            {% if entry.notes %}
+                                <p class="entry-definition">{{ entry.notes|truncatewords:15 }}</p>
+                            {% endif %}
+                            
+                            {% if entry.translations.all %}
+                                <div class="mb-3">
+                                    <small class="text-muted d-block mb-1">
+                                        <i class="bi bi-translate me-1"></i>Traducción:
+                                    </small>
+                                    <span class="badge bg-light text-dark">{{ entry.translations.first.translation }}</span>
+                                </div>
+                            {% endif %}
+                            
+                            <div class="entry-tags">
+                                {% for tag in entry.tags.all|slice:":3" %}
+                                    <a href="{% url 'entry-list' %}?tags={{ tag.name }}" class="tag-badge me-1 mb-1">
+                                        {{ tag.name }}
+                                    </a>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </section>
+
+        <!-- Popular Categories -->
+        <section class="mb-5">
+            <h2 class="h3 mb-4">
+                <i class="bi bi-tags me-2 text-info"></i>
+                Categorías Populares
+            </h2>
+            
+            <div class="row g-3">
+                {% for tag in popular_tags %}
+                    <div class="col-lg-3 col-md-4 col-sm-6">
+                        <a href="{% url 'entry-list' %}?tags={{ tag.name }}" class="text-decoration-none">
+                            <div class="card h-100 border-0 shadow-sm hover-lift animate__animated animate__fadeInUp category-card-delayed-{{ forloop.counter }}">
+                                <div class="card-body text-center">
+                                    <i class="bi bi-tag-fill fs-1 text-primary mb-3"></i>
+                                    <h6 class="card-title">{{ tag.name }}</h6>
+                                    <span class="badge bg-primary">{{ tag.entries_count }} término{{ tag.entries_count|pluralize:"s" }}</span>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                {% endfor %}
+            </div>
+        </section>
+
+        <!-- Why LingoWorld Section -->
+        <section class="container py-5 animate__animated animate__fadeInUp animate__delay-2s">
+            <h2 class="text-center mb-5 fw-bold">Why LingoWorld?</h2>
+            <div class="row g-4 justify-content-center">
+                <div class="col-md-4 text-center">
+                    <div class="feature-icon mb-3"><i class="bi bi-globe2 fs-1 text-primary"></i></div>
+                    <h5>Global Slang</h5>
+                    <p class="text-muted">Explore authentic slang and phrases from Argentina, Australia, Germany, Colombia, Belgium, and more.</p>
+                </div>
+                <div class="col-md-4 text-center">
+                    <div class="feature-icon mb-3"><i class="bi bi-lightbulb fs-1 text-warning"></i></div>
+                    <h5>Learn & Practice</h5>
+                    <p class="text-muted">Take fun quizzes, save your favorites, and track your progress as you master new lingo.</p>
+                </div>
+                <div class="col-md-4 text-center">
+                    <div class="feature-icon mb-3"><i class="bi bi-people fs-1 text-success"></i></div>
+                    <h5>Community Driven</h5>
+                    <p class="text-muted">Share your own slang, vote on new terms, and connect with language lovers worldwide.</p>
+                </div>
+            </div>
+        </section>
+            
+        <!-- Testimonials Section -->
+        <section class="container py-5 animate__animated animate__fadeInUp animate__delay-3s">
+            <h2 class="text-center mb-5 fw-bold">What Our Users Say</h2>
+            <div class="row g-4 justify-content-center">
+                <div class="col-md-4">
+                    <div class="card border-0 shadow-lg h-100">
+                        <div class="card-body">
+                            <blockquote class="blockquote mb-0">
+                                <p>"LingoWorld made learning slang fun and easy. I love the quizzes!"</p>
+                                <footer class="blockquote-footer">Sofia, Argentina</footer>
+                            </blockquote>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card border-0 shadow-lg h-100">
+                        <div class="card-body">
+                            <blockquote class="blockquote mb-0">
+                                <p>"I discovered so many new words from other countries. Highly recommended!"</p>
+                                <footer class="blockquote-footer">Liam, Australia</footer>
+                            </blockquote>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card border-0 shadow-lg h-100">
+                        <div class="card-body">
+                            <blockquote class="blockquote mb-0">
+                                <p>"The community is amazing and the design is beautiful."</p>
+                                <footer class="blockquote-footer">Mia, Germany</footer>
+                            </blockquote>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Call to Action -->
+        <section class="text-center py-5 animate__animated animate__fadeInUp animate__delay-4s">
+            <div class="card border-0 bg-gradient text-white mx-auto" style="max-width: 600px;">
+                <div class="card-body py-5">
+                    <h2 class="card-title mb-3">Ready to start your language adventure?</h2>
+                    <p class="card-text lead mb-4">Join LingoWorld and unlock the world of slang!</p>
+                    <a href="/signup/" class="btn btn-lg btn-warning rounded-pill px-5 shadow"><i class="bi bi-person-plus me-2"></i>Get Started</a>
+                </div>
+            </div>
+        </section>
+    </div>
+{% endblock content %}
+
+{% block extra_js %}
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Add staggered animations to featured terms
+        const featuredCards = document.querySelectorAll('#featuredTermsContainer .entry-card');
+        featuredCards.forEach((card, index) => {
+            card.style.animationDelay = `${index * 0.1}s`;
+        });
+    });
+    
+    function loadFeaturedTerms() {
+        fetch('/api/entries/random/?count=6')
+            .then(response => response.json())
+            .then(data => {
+                displayFeaturedTerms(data.results || data);
+            })
+            .catch(error => console.error('Error loading featured terms:', error));
+    }
+    
+    function displayFeaturedTerms(entries) {
+        const container = document.getElementById('featuredTermsContainer');
+        let html = '';
+        
+        entries.forEach((entry, index) => {
+            const tags = entry.tags ? entry.tags.slice(0, 3).map(tag => 
+                `<a href="/entries/?tags=${encodeURIComponent(tag.name)}" class="tag-badge me-1 mb-1">${tag.name}</a>`
+            ).join('') : '';
+            
+            const translation = entry.translations && entry.translations.length > 0 ? 
+                `<div class="mb-3">
+                    <small class="text-muted d-block mb-1">
+                        <i class="bi bi-translate me-1"></i>Traducción:
+                    </small>
+                    <span class="badge bg-light text-dark">${entry.translations[0].translation}</span>
+                </div>` : '';
+            
+            html += `
+                <div class="col-lg-4 col-md-6">
+                    <div class="entry-card animate__animated animate__fadeInUp entry-card-delayed-${Math.min(index + 1, 6)}">
+                        <div class="d-flex justify-content-between align-items-start mb-3">
+                            <h5 class="entry-term mb-0">
+                                <a href="/entries/${entry.id}/" class="text-decoration-none">
+                                    ${entry.term}
+                                </a>
+                            </h5>
+                            <button class="favorite-btn" onclick="toggleFavorite(${entry.id})" title="Agregar a favoritos">
+                                <i class="bi bi-heart"></i>
+                            </button>
+                        </div>
+                        
+                        ${entry.notes ? `<p class="entry-definition">${entry.notes.substring(0, 100)}${entry.notes.length > 100 ? '...' : ''}</p>` : ''}
+                        
+                        ${translation}
+                        
+                        <div class="entry-tags">
+                            ${tags}
+                        </div>
+                    </div>
+                </div>
+            `;
+        });
+        
+        container.innerHTML = html;
+    }
+    
+    // Search suggestions with popular terms
+    function displaySuggestions(suggestions) {
+        const container = document.getElementById('searchSuggestions');
+        if (!container) return;
+        
+        let html = '';
+        
+        // Add popular suggestions if no user input
+        if (!suggestions || (!suggestions.terms && !suggestions.tags)) {
+            const popularTerms = ['che', 'bondi', 'laburo', 'pibe', 'mina', 'guita'];
+            html += '<div class="p-2 fw-bold text-muted border-bottom">Términos populares</div>';
+            popularTerms.forEach(term => {
+                html += `<div class="search-suggestion-item" onclick="selectSuggestion('${term}')">
+                    <i class="bi bi-fire me-2 text-danger"></i>${term}
+                </div>`;
+            });
+        } else {
+            if (suggestions.terms && suggestions.terms.length > 0) {
+                html += '<div class="p-2 fw-bold text-muted border-bottom">Términos</div>';
+                suggestions.terms.forEach(term => {
+                    html += `<div class="search-suggestion-item" onclick="selectSuggestion('${term}')">
+                        <i class="bi bi-search me-2"></i>${term}
+                    </div>`;
+                });
+            }
+            
+            if (suggestions.tags && suggestions.tags.length > 0) {
+                html += '<div class="p-2 fw-bold text-muted border-bottom">Categorías</div>';
+                suggestions.tags.forEach(tag => {
+                    html += `<div class="search-suggestion-item" onclick="searchByTag('${tag}')">
+                        <i class="bi bi-tag me-2"></i>${tag}
+                    </div>`;
+                });
+            }
+        }
+        
+        if (html) {
+            container.innerHTML = html;
+            container.style.display = 'block';
+        } else {
+            container.style.display = 'none';
+        }
+    }
+    
+    // Show popular suggestions on focus
+    document.getElementById('searchInput').addEventListener('focus', function() {
+        if (!this.value.trim()) {
+            displaySuggestions(null);
+        }
+    });
+</script>
+
+<style>
+    .hover-lift {
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    
+    .hover-lift:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+    }
+    
+    .entry-card {
+        background: white;
+        border-radius: var(--border-radius);
+        padding: 1.5rem;
+        box-shadow: var(--shadow-md);
+        transition: all 0.3s ease;
+        border-left: 4px solid var(--primary-color);
+        height: 100%;
+    }
+    
+    .entry-card:hover {
+        transform: translateY(-5px);
+        box-shadow: var(--shadow-lg);
+    }
+    
+    .entry-term a {
+        color: var(--primary-color);
+        font-weight: 600;
+    }
+    
+    .entry-definition {
+        color: var(--gray-700);
+        line-height: 1.6;
+        margin-bottom: 1rem;
+    }
+    
+    .bg-gradient {
+        background: var(--gradient-argentina) !important;
+    }
+
+    .animated-bg {
+        background: repeating-linear-gradient(135deg, rgba(255,255,255,0.05) 0 20px, transparent 20px 40px);
+        animation: bgmove 10s linear infinite;
+    }
+    @keyframes bgmove {
+        0% { background-position: 0 0; }
+        100% { background-position: 200px 200px; }
+    }
+</style>
+{% endblock extra_js %}

@@ -1,0 +1,67 @@
+TECH RIDER: CON CLAVE SHOW
+Date: June 21, 2025
+1. General Information & Contacts
+Band Name: Con Clave
+Genre: Latin Music
+Band Members: 8
+Technical Contact:
+Name: [Adrian congero]
+Management Contact (if applicable):
+Name: [Franco ]
+2. Stage Plot
+A clear, accessible stage with a minimum dimension of 8m (width) x 5m (depth) is required. Please refer to the visual stage plot diagram below for preferred instrument and musician placement.
+                   <--- STAGE FRONT --->
+
+                 [Vocals 1]      [Vocals 2]
+                     (Mic)           (Mic)
+                         |             |
+                         |             |
+      ----------------------------------------------------
+      |                                                  |
+      |   [Percussion 1]   [Percussion 2]   [Percussion 3]  [Trombone]
+      |   (3 Congas)       (Minor Perc)     (Bongos)        (Mic)
+      |    (3 Mics)        (1 Mic)          (1-2 Mics)
+      |                                                  |
+      |                                                  |
+      |   [Bass Player]                   [Keyboard Player]
+      |    (Amp / DI)                       (Stereo DI)
+      |                                                  |
+      |                                                  |
+      |             [Guitar Player]
+      |              (Amp / Mic)
+      |
+      ----------------------------------------------------
+
+Key:
+[ ]: Musician / Instrument Position
+(Mic) / (DI): Input requirement
+Arrows indicate stage direction.
+Notes:
+Congas require a sturdy rug or mat underneath.
+Percussion 2 (minor percussion) requires a small table or stand for instruments.
+Sufficient power outlets (Schuko or equivalent) are needed at each backline position.
+3. Input List & Microphone/DI Requirements
+A minimum of 16 channels on the mixing console (FOH) is required.
+4. Backline Requirements
+The band carries personal instruments (guitars, basses, keyboards, trombones, congas, bongos, minor percussion). However, the following backline equipment is requested from the venue:
+Percussion:
+1 x Heavy-duty rug or mat (approx. 2m x 2.5m) for the percussion area.
+1 x Small sturdy table (approx. 1m x 0.5m) for minor percussion instruments.
+General:
+All necessary power extensions and power strips.
+8 x Professional-grade XLR cables for mic inputs.
+2 x Professional-grade DI Boxes (active preferred for keyboard and bass if not using personal DIs).
+8 x Standard Boom Mic Stands.
+3 x Short Boom Mic Stands (for congas, bongos, guitar amp).
+Music stands (optional, please check with band technical contact).
+5. Monitor Requirements
+A minimum of 6 independent monitor mixes is required. More mixes are preferred if available.
+Mix 1: Vocal 1 (Lead Vocals, Bass, Congas, Bongos)
+Mix 2: Vocal 2 (Lead Vocals, Backing Vocals, Keyboard, Minor Percussion)
+Mix 3: Guitar (Guitar, Bass, Vocals)
+Mix 4: Bass (Bass, Guitar, Keyboard, Vocals)
+Mix 5: Keyboard (Keyboard, Vocals, Bass, Minor Percussion, Trombone)
+Mix 6: Percussion Collective (Congas, Bongos, Minor Percussion, Bass, Vocals)
+Mix 7: Trombone (Trombone, Bass, Vocals, Keyboard)
+
+Thank you for reviewing our technical rider. We look forward to a fantastic performance! Please contact our technical manager if you have any questions or require further clarification.

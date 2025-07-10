@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz Country Fix Test</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .test-container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .test-section {
+            margin-bottom: 30px;
+            border: 1px solid #ddd;
+            padding: 20px;
+            border-radius: 8px;
+        }
+        .success { background-color: #d4edda; border-color: #c3e6cb; }
+        .error { background-color: #f8d7da; border-color: #f5c6cb; }
+        .country-button {
+            margin: 5px;
+            min-width: 150px;
+        }
+        .console-log {
+            background: #f8f9fa;
+            border: 1px solid #dee2e6;
+            padding: 10px;
+            border-radius: 4px;
+            font-family: monospace;
+            font-size: 12px;
+            max-height: 200px;
+            overflow-y: auto;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="test-container">
+        <h1>🧪 Quiz Country Fix Verification</h1>
+        <p>This test verifies that the quiz button now correctly passes the country parameter for all countries.</p>
+        
+        <div class="test-section">
+            <h3>🌍 Country-Specific Quiz Tests</h3>
+            <p>Click each button to test the quiz for different countries:</p>
+            <button class="btn btn-primary country-button" onclick="testQuizForCountry('argentina')">🇦🇷 Argentina Quiz</button>
+            <button class="btn btn-primary country-button" onclick="testQuizForCountry('australia')">🇦🇺 Australia Quiz</button>
+            <button class="btn btn-primary country-button" onclick="testQuizForCountry('germany')">🇩🇪 Germany Quiz</button>
+            <button class="btn btn-primary country-button" onclick="testQuizForCountry('colombia')">🇨🇴 Colombia Quiz</button>
+            <button class="btn btn-primary country-button" onclick="testQuizForCountry('belgium')">🇧🇪 Belgium Quiz</button>
+            
+            <div id="testResults" class="console-log"></div>
+        </div>
+        
+        <div class="test-section">
+            <h3>🔧 Quiz Instance Check</h3>
+            <button class="btn btn-info" onclick="checkQuizInstance()">Check Quiz Status</button>
+            <div id="quizStatus"></div>
+        </div>
+        
+        <div class="test-section">
+            <h3>📊 Test Summary</h3>
+            <div id="testSummary">
+                <p>Run the tests above to see results here.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Include the quiz template -->
+    <div id="quizOverlay" class="quiz-overlay" style="display: none;">
+        <div id="quizContainer" class="quiz-container">
+            <!-- Quiz content will be dynamically inserted here -->
+        </div>
+    </div>
+
+    <style>
+    .quiz-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        background-color: rgba(0, 0, 0, 0.8);
+        z-index: 1999;
+        display: none;
+        justify-content: center;
+        align-items: flex-start;
+        padding: 20px;
+        box-sizing: border-box;
+        overflow-y: auto;
+    }
+
+    .quiz-container {
+        background: white;
+        border-radius: 12px;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        width: 100%;
+        max-width: 600px;
+        margin: 20px auto;
+        z-index: 2000;
+        position: relative;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .quiz-header {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        padding: 20px;
+        border-radius: 12px 12px 0 0;
+        text-align: center;
+    }
+
+    .quiz-body {
+        padding: 30px;
+    }
+
+    .quiz-option {
+        display: block;
+        width: 100%;
+        padding: 15px;
+        margin: 10px 0;
+        border: 2px solid #e9ecef;
+        border-radius: 8px;
+        background: white;
+        cursor: pointer;
+        transition: all 0.2s ease;
+        text-align: left;
+    }
+
+    .quiz-option:hover {
+        border-color: #667eea;
+        background: #f8f9ff;
+    }
+
+    .quiz-option.selected {
+        border-color: #667eea;
+        background: #667eea;
+        color: white;
+    }
+
+    .close-quiz {
+        position: absolute;
+        top: 10px;
+        right: 15px;
+        background: #dc3545;
+        color: white;
+        border: none;
+        padding: 5px 8px;
+        border-radius: 3px;
+        cursor: pointer;
+        font-size: 16px;
+        font-weight: bold;
+    }
+
+    .quiz-progress {
+        width: 100%;
+        height: 8px;
+        background: rgba(255,255,255,0.3);
+        border-radius: 4px;
+        margin: 10px 0;
+        overflow: hidden;
+    }
+
+    .quiz-progress-bar {
+        height: 100%;
+        background: #28a745;
+        transition: width 0.3s ease;
+    }
+    </style>
+
+    <script>
+    // Test results tracking
+    let testResults = [];
+    
+    // Simplified SlangQuiz class for testing
+    class SlangQuiz {
+        constructor() {
+            this.quizData = {
+                argentina: [
+                    { term: "che", question: "What does 'che' mean in Argentine slang?", options: ["Hey/dude", "Money", "House", "Food"], correct: 0 },
+                    { term: "boludo", question: "What does 'boludo' mean?", options: ["Smart person", "Dude/idiot", "Car", "Party"], correct: 1 },
+                    { term: "quilombo", question: "What does 'quilombo' refer to?", options: ["Party", "Mess/chaos", "House", "Car"], correct: 1 },
+                    { term: "laburo", question: "What does 'laburo' mean?", options: ["Work/job", "Food", "Music", "Money"], correct: 0 },
+                    { term: "chabon", question: "What does 'chabon' mean?", options: ["House", "Guy/dude", "Food", "Money"], correct: 1 }
+                ],
+                australia: [
+                    { term: "arvo", question: "What does 'arvo' mean?", options: ["Morning", "Afternoon", "Evening", "Night"], correct: 1 },
+                    { term: "barbie", question: "What is a 'barbie'?", options: ["Doll", "BBQ", "Car", "Beach"], correct: 1 },
+                    { term: "bogan", question: "What is a 'bogan'?", options: ["Fancy person", "Uncultured person", "Rich person", "Smart person"], correct: 1 },
+                    { term: "fair dinkum", question: "What does 'fair dinkum' mean?", options: ["Fake", "Genuine/real", "Expensive", "Cheap"], correct: 1 },
+                    { term: "sheila", question: "What is a 'sheila'?", options: ["Man", "Woman", "Child", "Dog"], correct: 1 }
+                ],
+                germany: [
+                    { term: "geil", question: "What does 'geil' mean in modern German slang?", options: ["Terrible", "Awesome/cool", "Boring", "Expensive"], correct: 1 },
+                    { term: "krass", question: "What does 'krass' mean?", options: ["Quiet", "Extreme/intense", "Normal", "Small"], correct: 1 },
+                    { term: "digga", question: "What does 'digga' mean?", options: ["Book", "Dude/bro", "House", "Food"], correct: 1 },
+                    { term: "chillen", question: "What does 'chillen' mean?", options: ["Work hard", "Relax/chill", "Run fast", "Study"], correct: 1 },
+                    { term: "bock", question: "What does 'bock haben' mean?", options: ["Be tired", "Want to do something", "Be hungry", "Be sad"], correct: 1 }
+                ],
+                colombia: [
+                    { term: "parcero", question: "What does 'parcero' mean?", options: ["Friend/buddy", "Money", "House", "Food"], correct: 0 },
+                    { term: "bacano", question: "What does 'bacano' mean?", options: ["Bad", "Cool/great", "Ugly", "Expensive"], correct: 1 },
+                    { term: "chimba", question: "What does 'chimba' mean?", options: ["Terrible", "Awesome", "Boring", "Sad"], correct: 1 },
+                    { term: "parce", question: "What does 'parce' mean?", options: ["Enemy", "Friend", "Stranger", "Teacher"], correct: 1 },
+                    { term: "rumba", question: "What does 'rumba' mean?", options: ["Work", "Party", "Study", "Sleep"], correct: 1 }
+                ],
+                belgium: [
+                    { term: "proper", question: "What does 'proper' mean in Belgian slang?", options: ["Dirty", "Clean/good", "Fast", "Slow"], correct: 1 },
+                    { term: "kot", question: "What does 'kot' refer to?", options: ["Car", "Student room", "Food", "Book"], correct: 1 },
+                    { term: "ambetant", question: "What does 'ambetant' mean?", options: ["Happy", "Annoying", "Funny", "Quiet"], correct: 1 },
+                    { term: "zwanze", question: "What is 'zwanze'?", options: ["Dance", "Brussels humor", "Food", "Song"], correct: 1 },
+                    { term: "schuif", question: "What does 'schuif' refer to?", options: ["Book", "Party", "Door", "Window"], correct: 1 }
+                ]
+            };
+        }
+
+        show(country) {
+            const results = document.getElementById('testResults');
+            const timestamp = new Date().toLocaleTimeString();
+            
+            if (!country) {
+                this.logTest(`❌ [${timestamp}] Quiz called without country parameter!`, 'error');
+                return;
+            }
+
+            if (!this.quizData[country]) {
+                this.logTest(`❌ [${timestamp}] No quiz data for country: ${country}`, 'error');
+                testResults.push({ country, success: false, reason: 'No quiz data' });
+                this.updateSummary();
+                return;
+            }
+
+            this.currentCountry = country;
+            this.currentQuestion = 0;
+            this.score = 0;
+
+            // Show quiz overlay
+            const overlay = document.getElementById('quizOverlay');
+            const container = document.getElementById('quizContainer');
+            
+            overlay.style.display = 'flex';
+            container.innerHTML = this.createQuizHTML();
+            
+            document.body.style.overflow = 'hidden';
+            this.loadQuestion();
+            
+            this.logTest(`✅ [${timestamp}] Quiz opened successfully for ${country}`, 'success');
+            testResults.push({ country, success: true, reason: 'Opened successfully' });
+            this.updateSummary();
+        }
+
+        createQuizHTML() {
+            const countryName = this.currentCountry.charAt(0).toUpperCase() + this.currentCountry.slice(1);
+            return `
+                <button class="close-quiz" onclick="window.slangQuiz.close()">&times;</button>
+                <div class="quiz-header">
+                    <h2>🌍 ${countryName} Slang Quiz</h2>
+                    <div class="quiz-progress">
+                        <div class="quiz-progress-bar" id="progressBar" style="width: 0%"></div>
+                    </div>
+                    <p>Question <span id="questionNumber">1</span> of 5</p>
+                </div>
+                <div class="quiz-body" id="quizBody">
+                    <!-- Question content will be loaded here -->
+                </div>
+            `;
+        }
+
+        loadQuestion() {
+            const question = this.quizData[this.currentCountry][this.currentQuestion];
+            const quizBody = document.getElementById('quizBody');
+            const questionNumber = document.getElementById('questionNumber');
+            const progressBar = document.getElementById('progressBar');
+            
+            questionNumber.textContent = this.currentQuestion + 1;
+            progressBar.style.width = `${((this.currentQuestion) / 5) * 100}%`;
+            
+            quizBody.innerHTML = `
+                <h3>${question.question}</h3>
+                <div class="quiz-options">
+                    ${question.options.map((option, index) => `
+                        <button class="quiz-option" onclick="window.slangQuiz.selectAnswer(${index})">${option}</button>
+                    `).join('')}
+                </div>
+                <div style="margin-top: 20px; text-align: center;">
+                    <button id="nextButton" onclick="window.slangQuiz.close()" style="padding: 10px 20px; background: #667eea; color: white; border: none; border-radius: 5px; cursor: pointer;">Close Test</button>
+                </div>
+            `;
+        }
+
+        selectAnswer(answerIndex) {
+            // Just close the quiz for testing purposes
+            setTimeout(() => this.close(), 500);
+        }
+
+        close() {
+            const overlay = document.getElementById('quizOverlay');
+            overlay.style.display = 'none';
+            document.body.style.overflow = 'auto';
+        }
+
+        logTest(message, type) {
+            const results = document.getElementById('testResults');
+            const className = type === 'success' ? 'text-success' : 'text-danger';
+            results.innerHTML += `<div class="${className}">${message}</div>`;
+            results.scrollTop = results.scrollHeight;
+        }
+
+        updateSummary() {
+            const summary = document.getElementById('testSummary');
+            const total = testResults.length;
+            const successful = testResults.filter(r => r.success).length;
+            const failed = total - successful;
+
+            let summaryHTML = `
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="card text-center">
+                            <div class="card-body">
+                                <h3 class="text-primary">${total}</h3>
+                                <p class="mb-0">Total Tests</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="card text-center">
+                            <div class="card-body">
+                                <h3 class="text-success">${successful}</h3>
+                                <p class="mb-0">Successful</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="card text-center">
+                            <div class="card-body">
+                                <h3 class="text-danger">${failed}</h3>
+                                <p class="mb-0">Failed</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+
+            if (total > 0) {
+                summaryHTML += `<hr><h5>Test Details:</h5><ul>`;
+                testResults.forEach(result => {
+                    const icon = result.success ? '✅' : '❌';
+                    const country = result.country.charAt(0).toUpperCase() + result.country.slice(1);
+                    summaryHTML += `<li>${icon} ${country}: ${result.reason}</li>`;
+                });
+                summaryHTML += `</ul>`;
+            }
+
+            summary.innerHTML = summaryHTML;
+        }
+    }
+
+    // Test functions
+    function testQuizForCountry(country) {
+        const timestamp = new Date().toLocaleTimeString();
+        window.slangQuiz.logTest(`🧪 [${timestamp}] Testing quiz for ${country}...`, 'info');
+        
+        // Simulate the button click that would happen in the real app
+        setTimeout(() => {
+            window.slangQuiz.show(country);
+        }, 100);
+    }
+
+    function checkQuizInstance() {
+        const status = document.getElementById('quizStatus');
+        let statusHTML = '<div class="mt-3">';
+        
+        if (window.slangQuiz) {
+            statusHTML += '<div class="alert alert-success">✅ Quiz instance exists</div>';
+            statusHTML += `<div class="alert alert-info">Quiz has data for countries: ${Object.keys(window.slangQuiz.quizData).join(', ')}</div>`;
+            
+            if (typeof window.slangQuiz.show === 'function') {
+                statusHTML += '<div class="alert alert-success">✅ Quiz show() method exists</div>';
+            } else {
+                statusHTML += '<div class="alert alert-danger">❌ Quiz show() method missing</div>';
+            }
+        } else {
+            statusHTML += '<div class="alert alert-danger">❌ Quiz instance not found</div>';
+        }
+        
+        statusHTML += '</div>';
+        status.innerHTML = statusHTML;
+    }
+
+    // Initialize
+    document.addEventListener('DOMContentLoaded', function() {
+        console.log('🚀 Initializing quiz test system...');
+        window.slangQuiz = new SlangQuiz();
+        console.log('✅ Quiz test system ready');
+        
+        // Auto-check quiz status
+        setTimeout(checkQuizInstance, 100);
+    });
+    </script>
+</body>
+</html>

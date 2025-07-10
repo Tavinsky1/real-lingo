@@ -1,0 +1,510 @@
+{% extends "entries/base.html" %}
+{% load lingo_tags %}
+{% load i18n %}
+
+{% block title %}
+    {% translate 'choose_your_country' %} - REAL LINGO
+{% endblock title %}
+
+{% block content %}
+    <div class="container-fluid">
+        <!-- Hero Section -->
+        <div class="hero-section enhanced-hero text-center py-5" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);">
+            <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col-lg-8">
+                        <div class="animate__animated animate__fadeInDown">
+                            <h1 class="display-3 fw-bold text-white mb-4" style="letter-spacing: 1px; text-shadow: 0 4px 24px rgba(0,0,0,0.15); text-transform: uppercase; font-family: 'Montserrat', 'Inter', system-ui, sans-serif; font-weight: 900;">
+                                🌍 REAL LINGO
+                            </h1>
+                            <p class="lead text-white mb-4" style="font-weight: 600; text-shadow: 0 2px 4px rgba(0,0,0,0.3); font-size: 1.2rem;">
+                                Talk like a local. Not like a textbook.
+                            </p>
+                            <div class="achievement-badges d-flex justify-content-center gap-2 flex-wrap mb-4">
+                                <span class="achievement-badge">
+                                    <i class="bi bi-translate"></i>
+                                    {% translate 'terms_count' %}
+                                </span>
+                                <span class="achievement-badge">
+                                    <i class="bi bi-flag"></i>
+                                    {% translate 'countries_count' %}
+                                </span>
+                                <span class="achievement-badge">
+                                    <i class="bi bi-heart"></i>
+                                    {% translate 'free_forever' %}
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Country Selection -->
+        <div class="py-5">
+            <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col-lg-10">
+                        <h2 class="text-center mb-5 animate__animated animate__fadeInUp">
+                            <i class="bi bi-flag me-2"></i>
+                            {% translate 'choose_your_country' %}
+                        </h2>
+                        
+                        <div class="row g-4">
+                            <!-- Argentina -->
+                            <div class="col-lg-4 col-md-6 animate__animated animate__fadeInLeft">
+                                <div class="country-card card country-card-enhanced h-100 border-0 shadow-lg hover-lift">
+                                    <div class="card-body text-center p-5">
+                                        <div class="country-flag mb-4">
+                                            <div class="flag-argentina floating-flag">
+                                                <div class="flag-stripe blue-light"></div>
+                                                <div class="flag-stripe white">
+                                                    <div class="sun-argentina">☀️</div>
+                                                </div>
+                                                <div class="flag-stripe blue-light"></div>
+                                            </div>
+                                        </div>
+                                        <h3 class="card-title mb-3">
+                                            <i class="bi bi-geo-alt me-2 text-primary"></i>
+                                            {% translate 'argentina' %}
+                                        </h3>
+                                        <p class="card-text text-muted mb-4">
+                                            {% blocktrans %}{{ country_descriptions.argentina }}{% endblocktrans %}
+                                        </p>
+                                        <div class="stats-row row text-center mb-4">
+                                            <div class="col">
+                                                <div class="stat-number">{{ argentina_count|default:0 }}</div>
+                                                <div class="stat-label">{% translate 'terms' %}</div>
+                                            </div>
+                                            <div class="col">
+                                                <div class="stat-number">🇦🇷</div>
+                                                <div class="stat-label">Español</div>
+                                            </div>
+                                        </div>
+                                        <a href="{% url 'country-home' 'argentina' %}" class="btn btn-primary btn-lg rounded-pill px-4">
+                                            <i class="bi bi-arrow-right me-2"></i>
+                                            {% translate 'explore_argentina' %}
+                                        </a>
+                                        <div class="popular-terms mt-3">
+                                            <small class="text-muted">{% translate 'popular_argentina' %}</small>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Australia -->
+                            <div class="col-lg-4 col-md-6 animate__animated animate__fadeInUp">
+                                <div class="country-card card country-card-enhanced h-100 border-0 shadow-lg hover-lift">
+                                    <div class="card-body text-center p-5">
+                                        <div class="country-flag mb-4">
+                                            <div class="flag-australia floating-flag">
+                                                <div class="flag-union-jack">🇬🇧</div>
+                                                <div class="flag-stars">
+                                                    <span class="star">⭐</span>
+                                                    <span class="star">⭐</span>
+                                                    <span class="star">⭐</span>
+                                                    <span class="star">⭐</span>
+                                                    <span class="star">⭐</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <h3 class="card-title mb-3">
+                                            <i class="bi bi-geo-alt me-2 text-success"></i>
+                                            {% translate 'australia' %}
+                                        </h3>
+                                        <p class="card-text text-muted mb-4">
+                                            {% blocktrans %}{{ country_descriptions.australia }}{% endblocktrans %}
+                                        </p>
+                                        <div class="stats-row row text-center mb-4">
+                                            <div class="col">
+                                                <div class="stat-number">{{ australia_count|default:0 }}</div>
+                                                <div class="stat-label">{% translate 'terms' %}</div>
+                                            </div>
+                                            <div class="col">
+                                                <div class="stat-number">🇦🇺</div>
+                                                <div class="stat-label">English</div>
+                                            </div>
+                                        </div>
+                                        <a href="{% url 'country-home' 'australia' %}" class="btn btn-success btn-lg rounded-pill px-4">
+                                            <i class="bi bi-arrow-right me-2"></i>
+                                            {% translate 'explore_australia' %}
+                                        </a>
+                                        <div class="popular-terms mt-3">
+                                            <small class="text-muted">{% translate 'popular_australia' %}</small>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Germany -->
+                            <div class="col-lg-4 col-md-6 animate__animated animate__fadeInRight">
+                                <div class="country-card card country-card-enhanced h-100 border-0 shadow-lg hover-lift">
+                                    <div class="card-body text-center p-5">
+                                        <div class="country-flag mb-4">
+                                            <div class="flag-germany floating-flag">
+                                                <div class="flag-stripe black-germany"></div>
+                                                <div class="flag-stripe red-germany"></div>
+                                                <div class="flag-stripe yellow-germany"></div>
+                                            </div>
+                                        </div>
+                                        <h3 class="card-title mb-3">
+                                            <i class="bi bi-geo-alt me-2 text-warning"></i>
+                                            {% translate 'germany' %}
+                                        </h3>
+                                        <p class="card-text text-muted mb-4">
+                                            {% blocktrans %}{{ country_descriptions.germany }}{% endblocktrans %}
+                                        </p>
+                                        <div class="stats-row row text-center mb-4">
+                                            <div class="col">
+                                                <div class="stat-number">{{ germany_count|default:0 }}</div>
+                                                <div class="stat-label">{% translate 'terms' %}</div>
+                                            </div>
+                                            <div class="col">
+                                                <div class="stat-number">🇩🇪</div>
+                                                <div class="stat-label">Deutsch</div>
+                                            </div>
+                                        </div>
+                                        <a href="{% url 'country-home' 'germany' %}" class="btn btn-warning btn-lg rounded-pill px-4">
+                                            <i class="bi bi-arrow-right me-2"></i>
+                                            {% translate 'explore_germany' %}
+                                        </a>
+                                        <div class="popular-terms mt-3">
+                                            <small class="text-muted">{% translate 'popular_germany' %}</small>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Colombia -->
+                            <div class="col-lg-4 col-md-6 animate__animated animate__fadeInLeft animate__delay-1s">
+                                <div class="country-card card country-card-enhanced h-100 border-0 shadow-lg hover-lift">
+                                    <div class="card-body text-center p-5">
+                                        <div class="country-flag mb-4">
+                                            <div class="flag-colombia floating-flag">
+                                                <div class="flag-stripe yellow-colombia"></div>
+                                                <div class="flag-stripe blue-colombia"></div>
+                                                <div class="flag-stripe red-colombia"></div>
+                                            </div>
+                                        </div>
+                                        <h3 class="card-title mb-3">
+                                            <i class="bi bi-geo-alt me-2 text-info"></i>
+                                            {% translate 'colombia' %}
+                                        </h3>
+                                        <p class="card-text text-muted mb-4">
+                                            {% blocktrans %}{{ country_descriptions.colombia }}{% endblocktrans %}
+                                        </p>
+                                        <div class="stats-row row text-center mb-4">
+                                            <div class="col">
+                                                <div class="stat-number">{{ colombia_count|default:0 }}</div>
+                                                <div class="stat-label">{% translate 'terms' %}</div>
+                                            </div>
+                                            <div class="col">
+                                                <div class="stat-number">🇨🇴</div>
+                                                <div class="stat-label">Español</div>
+                                            </div>
+                                        </div>
+                                        <a href="{% url 'country-home' 'colombia' %}" class="btn btn-info btn-lg rounded-pill px-4">
+                                            <i class="bi bi-arrow-right me-2"></i>
+                                            {% translate 'explore_colombia' %}
+                                        </a>
+                                        <div class="popular-terms mt-3">
+                                            <small class="text-muted">{% translate 'popular_colombia' %}</small>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Belgium -->
+                            <div class="col-lg-4 col-md-6 animate__animated animate__fadeInUp animate__delay-1s">
+                                <div class="country-card card country-card-enhanced h-100 border-0 shadow-lg hover-lift">
+                                    <div class="card-body text-center p-5">
+                                        <div class="country-flag mb-4">
+                                            <div class="flag-belgium floating-flag">
+                                                <div class="flag-stripe black-belgium"></div>
+                                                <div class="flag-stripe yellow-belgium"></div>
+                                                <div class="flag-stripe red-belgium"></div>
+                                            </div>
+                                        </div>
+                                        <h3 class="card-title mb-3">
+                                            <i class="bi bi-geo-alt me-2 text-warning"></i>
+                                            {% translate 'belgium' %}
+                                        </h3>
+                                        <p class="card-text text-muted mb-4">
+                                            {% blocktrans %}{{ country_descriptions.belgium }}{% endblocktrans %}
+                                        </p>
+                                        <div class="stats-row row text-center mb-4">
+                                            <div class="col">
+                                                <div class="stat-number">{{ belgium_count|default:0 }}</div>
+                                                <div class="stat-label">{% translate 'terms' %}</div>
+                                            </div>
+                                            <div class="col">
+                                                <div class="stat-number">🇧🇪</div>
+                                                <div class="stat-label">Multi-lingual</div>
+                                            </div>
+                                        </div>
+                                        <a href="{% url 'country-home' 'belgium' %}" class="btn btn-warning btn-lg rounded-pill px-4">
+                                            <i class="bi bi-arrow-right me-2"></i>
+                                            {% translate 'explore_belgium' %}
+                                        </a>
+                                        <div class="popular-terms mt-3">
+                                            <small class="text-muted">{% translate 'popular_belgium' %}</small>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Coming Soon -->
+                        <div class="text-center mt-5 animate__animated animate__fadeInUp animate__delay-2s">
+                            <h4 class="text-muted mb-3">
+                                <i class="bi bi-plus-circle me-2"></i>
+                                {% translate 'more_countries_coming_soon' %}
+                            </h4>
+                            <div class="row justify-content-center">
+                                <div class="col-auto">
+                                    <div class="coming-soon-flag">🇲🇽 Mexico</div>
+                                </div>
+                                <div class="col-auto">
+                                    <div class="coming-soon-flag">🇬🇧 UK</div>
+                                </div>
+                                <div class="col-auto">
+                                    <div class="coming-soon-flag">🇺🇸 USA</div>
+                                </div>
+                                <div class="col-auto">
+                                    <div class="coming-soon-flag">🇧🇷 Brazil</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <style>
+        .hero-section {
+            background: var(--gradient-argentina);
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.1);
+            z-index: 1;
+        }
+
+        .hero-section .container {
+            position: relative;
+            z-index: 2;
+        }
+
+        .text-gradient {
+            background: linear-gradient(45deg, #fff, #f8f9fa);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .country-card {
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .country-card:hover {
+            transform: translateY(-10px);
+            box-shadow: var(--shadow-xl) !important;
+        }
+
+        .hover-lift {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .country-flag {
+            width: 120px;
+            height: 80px;
+            margin: 0 auto;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: var(--shadow-md);
+            position: relative;
+        }
+
+        /* Argentina Flag */
+        .flag-argentina {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .flag-stripe {
+            flex: 1;
+            position: relative;
+        }
+
+        .flag-stripe.blue-light {
+            background: #74b9ff;
+        }
+
+        .flag-stripe.white {
+            background: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .sun-argentina {
+            font-size: 24px;
+            color: #f39c12;
+            text-shadow: 0 0 10px rgba(243, 156, 18, 0.5);
+        }
+
+        /* Australia Flag */
+        .flag-australia {
+            width: 100%;
+            height: 100%;
+            background: #012169;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .flag-union-jack {
+            position: absolute;
+            top: 5px;
+            left: 5px;
+            font-size: 20px;
+        }
+
+        .flag-stars {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .star {
+            color: white;
+            font-size: 8px;
+            margin: 1px;
+        }
+
+        /* Germany Flag */
+        .flag-germany {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .flag-stripe.black-germany {
+            background: #000000;
+        }
+
+        .flag-stripe.red-germany {
+            background: #DD0000;
+        }
+
+        .flag-stripe.yellow-germany {
+            background: #FFCE00;
+        }
+
+        /* Colombia Flag */
+        .flag-colombia {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .flag-stripe.yellow-colombia {
+            background: #FDE047;
+            flex: 2;
+        }
+
+        .flag-stripe.blue-colombia {
+            background: #3B82F6;
+            flex: 1;
+        }
+
+        .flag-stripe.red-colombia {
+            background: #EF4444;
+            flex: 1;
+        }
+
+        /* Belgium Flag */
+        .flag-belgium {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: row;
+        }
+
+        .flag-stripe.black-belgium {
+            background: #000000;
+            flex: 1;
+        }
+
+        .flag-stripe.yellow-belgium {
+            background: #FFD700;
+            flex: 1;
+        }
+
+        .flag-stripe.red-belgium {
+            background: #ED2939;
+            flex: 1;
+        }
+
+        .stat-number {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary-color);
+        }
+
+        .stat-label {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--gray-600);
+        }
+
+        .popular-terms {
+            padding: 10px 15px;
+            background: var(--gray-100);
+            border-radius: 20px;
+            margin-top: 15px;
+        }
+
+        .coming-soon-flag {
+            padding: 10px 15px;
+            background: var(--gray-100);
+            border-radius: 15px;
+            margin: 5px;
+            font-size: 0.9rem;
+            color: var(--gray-600);
+            opacity: 0.7;
+        }
+
+        @media (max-width: 768px) {
+            .country-flag {
+                width: 100px;
+                height: 67px;
+            }
+            
+            .sun-argentina {
+                font-size: 20px;
+            }
+            
+            .flag-union-jack {
+                font-size: 16px;
+            }
+        }
+    </style>
+{% endblock content %}

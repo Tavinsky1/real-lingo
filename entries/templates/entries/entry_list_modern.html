@@ -1,0 +1,396 @@
+{% load i18n %}
+{% extends "entries/base.html" %}
+
+{% block title %}
+    REAL LINGO - Modern Lingo Explorer
+{% endblock title %}
+
+{% block content %}
+<style>
+.hidden {
+    display: none;
+}
+</style>
+    <!-- Modern Hero Section -->
+    <div class="modern-hero">
+        <div class="hero-content container py-5">
+            <div class="text-center">
+                <h1 class="display-4 fw-bold mb-3 animate__animated animate__fadeInDown">
+                    <i class="bi bi-globe-americas me-3"></i>
+                    Descubrí el Lunfardo
+                </h1>
+                <p class="lead mb-4 animate__animated animate__fadeInUp">
+                    Explorá el rico mundo del español argentino con nuestro diccionario completo de lunfardo y jerga porteña
+                </p>
+                
+                <!-- Enhanced Search -->
+                <div class="search-container position-relative mb-4 animate__animated animate__fadeInUp animate__delay-1s">
+                    <div class="search-input-group d-flex">
+                        <input type="text" 
+                               class="form-control search-input flex-grow-1" 
+                               id="searchInput"
+                               placeholder="Buscá términos, definiciones o categorías..."
+                               onkeypress="if(event.key==='Enter') performSearch()"
+                               value="{{ request.GET.search|default:'' }}">
+                        <button class="btn search-btn" type="button" onclick="performSearch()">
+                            <i class="bi bi-search me-2"></i>Buscar
+                        </button>
+                    </div>
+                    <div class="search-suggestions hidden" id="searchSuggestions"></div>
+                </div>
+
+                <!-- Quick Stats -->
+                <div class="row g-4 mt-4">
+                    <div class="col-md-3 col-6">
+                        <div class="stats-card animate__animated animate__fadeInUp animate__delay-2s">
+                            <span class="stats-number">{{ total_entries|default:"2800+" }}</span>
+                            <div class="stats-label">Términos</div>
+                        </div>
+                    </div>
+                    <div class="col-md-3 col-6">
+                        <div class="stats-card animate__animated animate__fadeInUp animate__delay-2s">
+                            <span class="stats-number">{{ total_tags|default:"1200+" }}</span>
+                            <div class="stats-label">Categorías</div>
+                        </div>
+                    </div>
+                    <div class="col-md-3 col-6">
+                        <div class="stats-card animate__animated animate__fadeInUp animate__delay-3s">
+                            <span class="stats-number">{{ user_favorites_count|default:"0" }}</span>
+                            <div class="stats-label">Favoritos</div>
+                        </div>
+                    </div>
+                    <div class="col-md-3 col-6">
+                        <div class="stats-card animate__animated animate__fadeInUp animate__delay-3s">
+                            <span class="stats-number">{{ user_progress_count|default:"0" }}</span>
+                            <div class="stats-label">Vistos</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Filters and Actions -->
+    <div class="container">
+        <div class="row mb-4">
+            <div class="col-md-8">
+                <div class="d-flex flex-wrap gap-2 align-items-center">
+                    <span class="fw-bold me-3">Filtros:</span>
+                    <div class="btn-group" role="group">
+                        <a href="{% url 'entry-list' %}" class="btn btn-outline-primary btn-sm {% if not request.GET.search and not request.GET.tags %}active{% endif %}">
+                            <i class="bi bi-list me-1"></i>Todos
+                        </a>
+                        <a href="{% url 'entry-list' %}?random=true" class="btn btn-outline-primary btn-sm">
+                            <i class="bi bi-shuffle me-1"></i>Aleatorio
+                        </a>
+                        {% if user.is_authenticated %}
+                            <a href="{% url 'entry-list' %}?favorites=true" class="btn btn-outline-primary btn-sm">
+                                <i class="bi bi-heart me-1"></i>Favoritos
+                            </a>
+                        {% endif %}
+                    </div>
+                    
+                    {% if selected_tags %}
+                        <div class="ms-3">
+                            <span class="small text-muted me-2">Categorías activas:</span>
+                            {% for tag in selected_tags %}
+                                <span class="badge bg-primary me-1">
+                                    {{ tag }}
+                                    <a href="?{% for key, value in request.GET.items %}{% if key != 'tags' %}{{ key }}={{ value }}&{% endif %}{% endfor %}" class="text-white ms-1">×</a>
+                                </span>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+            <div class="col-md-4 text-md-end">
+                <div class="d-flex justify-content-md-end justify-content-start gap-2 mt-3 mt-md-0">
+                    <button class="btn btn-outline-secondary btn-sm" onclick="getRandomEntries()">
+                        <i class="bi bi-arrow-repeat me-1"></i>Sorprender
+                    </button>
+                    <div class="btn-group" role="group">
+                        <button class="btn btn-outline-secondary btn-sm dropdown-toggle" data-bs-toggle="dropdown">
+                            <i class="bi bi-sort-down me-1"></i>Ordenar
+                        </button>
+                        <ul class="dropdown-menu dropdown-menu-end">
+                            <li><a class="dropdown-item" href="?order=term">A-Z</a></li>
+                            <li><a class="dropdown-item" href="?order=-term">Z-A</a></li>
+                            <li><a class="dropdown-item" href="?order=random">Aleatorio</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Search Results Info -->
+        {% if request.GET.search %}
+            <div class="alert alert-info d-flex align-items-center mb-4">
+                <i class="bi bi-search me-2"></i>
+                <div>
+                    Resultados para: <strong>"{{ request.GET.search }}"</strong>
+                    {% if entries %}
+                        ({{ entries|length }} encontrado{{ entries|length|pluralize:"s" }})
+                    {% endif %}
+                </div>
+                <a href="{% url 'entry-list' %}" class="btn btn-sm btn-outline-secondary ms-auto">
+                    <i class="bi bi-x me-1"></i>Limpiar
+                </a>
+            </div>
+        {% endif %}
+
+        <!-- Entries Grid -->
+        {% if entries %}
+            <div class="row g-4" id="entriesContainer">
+                {% for entry in entries %}
+                    <div class="col-lg-6 col-xl-4" data-entry-id="{{ entry.id }}">
+                        <div class="card h-100 fade-in">
+                            <div class="card-body d-flex flex-column">
+                                <div class="d-flex justify-content-between align-items-start mb-3">
+                                    <h5 class="card-title mb-0 flex-grow-1">
+                                        <a href="{% url 'entry-detail' entry.pk %}" class="text-decoration-none text-primary fw-bold">
+                                            {{ entry.term }}
+                                        </a>
+                                    </h5>
+                                    <button class="favorite-btn ms-2" onclick="toggleFavorite({{ entry.id }})" 
+                                            title="{% if entry.is_favorited %}Quitar de favoritos{% else %}Agregar a favoritos{% endif %}">
+                                        <i class="bi {% if entry.is_favorited %}bi-heart-fill{% else %}bi-heart{% endif %}"></i>
+                                    </button>
+                                </div>
+                                
+                                {% if entry.language_code %}
+                                    <h6 class="card-subtitle mb-2 text-muted">
+                                        <i class="bi bi-flag me-1"></i>{{ entry.language_code }}
+                                    </h6>
+                                {% endif %}
+                                
+                                {% if entry.notes %}
+                                    <p class="card-text flex-grow-1">{{ entry.notes|truncatewords:20 }}</p>
+                                {% endif %}
+                                
+                                {% if entry.translations.all %}
+                                    <div class="mb-3">
+                                        <small class="text-muted d-block mb-1">
+                                            <i class="bi bi-translate me-1"></i>Traducciones:
+                                        </small>
+                                        <div class="small">
+                                            {% for translation in entry.translations.all|slice:":3" %}
+                                                <span class="badge bg-light text-dark me-1">{{ translation.translation }}</span>
+                                            {% endfor %}
+                                            {% if entry.translations.all|length > 3 %}
+                                                <span class="text-muted">+{{ entry.translations.all|length|add:"-3" }} más</span>
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                {% endif %}
+                                
+                                <div class="mt-auto">
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <a href="{% url 'entry-detail' entry.pk %}" class="btn btn-primary btn-sm">
+                                            <i class="bi bi-arrow-right me-1"></i>Ver detalles
+                                        </a>
+                                        {% if entry.tags.all %}
+                                            <span class="text-muted small">{{ entry.tags.all|length }} categoría{{ entry.tags.all|length|pluralize:"s" }}</span>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            {% if entry.tags.all %}
+                                <div class="card-footer bg-transparent border-top-0">
+                                    {% for tag in entry.tags.all|slice:":4" %}
+                                        <a href="?tags={{ tag.name }}" class="tag-badge me-1 mb-1">
+                                            {{ tag.name }}
+                                        </a>
+                                    {% endfor %}
+                                    {% if entry.tags.all|length > 4 %}
+                                        <span class="small text-muted">+{{ entry.tags.all|length|add:"-4" }}</span>
+                                    {% endif %}
+                                </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+
+            <!-- Pagination -->
+            {% if is_paginated %}
+                <nav aria-label="Page navigation" class="mt-5">
+                    <ul class="pagination justify-content-center">{% if page_obj.has_previous %}<li class="page-item"><a class="page-link" href="?page=1{% if request.GET.search %}&search={{ request.GET.search }}{% endif %}{% if request.GET.tags %}&tags={{ request.GET.tags }}{% endif %}" title="First page" aria-label="Go to first page"><i class="bi bi-chevron-double-left"></i></a></li><li class="page-item"><a class="page-link" href="?page={{ page_obj.previous_page_number }}{% if request.GET.search %}&search={{ request.GET.search }}{% endif %}{% if request.GET.tags %}&tags={{ request.GET.tags }}{% endif %}" title="Previous page" aria-label="Go to previous page"><i class="bi bi-chevron-left"></i></a></li>{% endif %}{% for num in page_obj.paginator.page_range %}{% if page_obj.number == num %}<li class="page-item active"><span class="page-link">{{ num }}</span></li>{% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %}<li class="page-item"><a class="page-link" href="?page={{ num }}{% if request.GET.search %}&search={{ request.GET.search }}{% endif %}{% if request.GET.tags %}&tags={{ request.GET.tags }}{% endif %}" title="Page {{ num }}" aria-label="Go to page {{ num }}">{{ num }}</a></li>{% endif %}{% endfor %}{% if page_obj.has_next %}<li class="page-item"><a class="page-link" href="?page={{ page_obj.next_page_number }}{% if request.GET.search %}&search={{ request.GET.search }}{% endif %}{% if request.GET.tags %}&tags={{ request.GET.tags }}{% endif %}" title="Next page" aria-label="Go to next page"><i class="bi bi-chevron-right"></i></a></li><li class="page-item"><a class="page-link" href="?page={{ page_obj.paginator.num_pages }}{% if request.GET.search %}&search={{ request.GET.search }}{% endif %}{% if request.GET.tags %}&tags={{ request.GET.tags }}{% endif %}" title="Last page" aria-label="Go to last page"><i class="bi bi-chevron-double-right"></i></a></li>{% endif %}
+                                </a>
+                            </li>
+                        {% endif %}
+                    </ul>
+                </nav>
+            {% endif %}
+
+        {% else %}
+            <!-- Empty State -->
+            <div class="text-center py-5">
+                <div class="mb-4">
+                    <i class="bi bi-search display-1 text-muted"></i>
+                </div>
+                <h3 class="text-muted">No se encontraron resultados</h3>
+                <p class="text-muted mb-4">
+                    {% if request.GET.search %}
+                        No encontramos ningún término que coincida con "{{ request.GET.search }}"
+                    {% else %}
+                        No hay entradas disponibles en este momento
+                    {% endif %}
+                </p>
+                <div class="d-flex justify-content-center gap-3">
+                    {% if request.GET.search %}
+                        <a href="{% url 'entry-list' %}" class="btn btn-primary">
+                            <i class="bi bi-arrow-left me-2"></i>Ver todos los términos
+                        </a>
+                    {% endif %}
+                    <button class="btn btn-outline-primary" onclick="getRandomEntries()">
+                        <i class="bi bi-shuffle me-2"></i>Términos aleatorios
+                    </button>
+                </div>
+            </div>
+        {% endif %}
+
+        <!-- Random Entries Section -->
+        <div class="mt-5 hidden" id="randomSection">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <h4 class="mb-0">
+                    <i class="bi bi-shuffle me-2"></i>Términos Aleatorios
+                </h4>
+                <button class="btn btn-outline-primary btn-sm" onclick="getRandomEntries()">
+                    <i class="bi bi-arrow-repeat me-1"></i>Más términos
+                </button>
+            </div>
+            <div class="row g-4" id="randomEntriesContainer">
+                <!-- Random entries will be loaded here -->
+            </div>
+        </div>
+    </div>
+
+    <div class="loading-spinner hidden" id="loadingSpinner"></div>
+{% endblock content %}
+
+{% block extra_js %}
+<script>
+    // Random entries functionality
+    function getRandomEntries() {
+        document.getElementById('loadingSpinner').style.display = 'inline-block';
+        document.getElementById('randomSection').style.display = 'block';
+        
+        fetch('/api/entries/random/?count=6')
+            .then(response => response.json())
+            .then(data => {
+                displayRandomEntries(data.results || data);
+                document.getElementById('loadingSpinner').style.display = 'none';
+            })
+            .catch(error => {
+                console.error('Error fetching random entries:', error);
+                document.getElementById('loadingSpinner').style.display = 'none';
+            });
+    }
+    
+    function displayRandomEntries(entries) {
+        const container = document.getElementById('randomEntriesContainer');
+        if (!container) return;
+        
+        let html = '';
+        entries.forEach(entry => {
+            html += createEntryCard(entry);
+        });
+        container.innerHTML = html;
+        
+        // Add animations to new cards
+        const newCards = container.querySelectorAll('.card');
+        newCards.forEach((card, index) => {
+            card.style.animationDelay = `${index * 0.1}s`;
+            card.classList.add('animate__animated', 'animate__fadeInUp');
+        });
+    }
+    
+    function createEntryCard(entry) {
+        const tags = entry.tags ? entry.tags.map(tag => 
+            `<a href="?tags=${encodeURIComponent(tag.name)}" class="tag-badge me-1 mb-1">${tag.name}</a>`
+        ).join('') : '';
+        
+        const translations = entry.translations && entry.translations.length > 0 ? 
+            `<div class="mb-3">
+                <small class="text-muted d-block mb-1">
+                    <i class="bi bi-translate me-1"></i>Traducciones:
+                </small>
+                <div class="small">
+                    ${entry.translations.slice(0, 3).map(t => 
+                        `<span class="badge bg-light text-dark me-1">${t.translation}</span>`
+                    ).join('')}
+                    ${entry.translations.length > 3 ? 
+                        `<span class="text-muted">+${entry.translations.length - 3} más</span>` : ''
+                    }
+                </div>
+            </div>` : '';
+        
+        return `
+            <div class="col-lg-6 col-xl-4" data-entry-id="${entry.id}">
+                <div class="card h-100">
+                    <div class="card-body d-flex flex-column">
+                        <div class="d-flex justify-content-between align-items-start mb-3">
+                            <h5 class="card-title mb-0 flex-grow-1">
+                                <a href="/entries/${entry.id}/" class="text-decoration-none text-primary fw-bold">
+                                    ${entry.term}
+                                </a>
+                            </h5>
+                            <button class="favorite-btn ms-2" onclick="toggleFavorite(${entry.id})" title="Agregar a favoritos">
+                                <i class="bi bi-heart"></i>
+                            </button>
+                        </div>
+                        
+                        ${entry.language_code ? 
+                            `<h6 class="card-subtitle mb-2 text-muted">
+                                <i class="bi bi-flag me-1"></i>${entry.language_code}
+                            </h6>` : ''
+                        }
+                        
+                        ${entry.notes ? 
+                            `<p class="card-text flex-grow-1">${entry.notes.substring(0, 120)}${entry.notes.length > 120 ? '...' : ''}</p>` : ''
+                        }
+                        
+                        ${translations}
+                        
+                        <div class="mt-auto">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <a href="/entries/${entry.id}/" class="btn btn-primary btn-sm">
+                                    <i class="bi bi-arrow-right me-1"></i>Ver detalles
+                                </a>
+                                ${entry.tags && entry.tags.length > 0 ? 
+                                    `<span class="text-muted small">${entry.tags.length} categoría${entry.tags.length !== 1 ? 's' : ''}</span>` : ''
+                                }
+                            </div>
+                        </div>
+                    </div>
+                    
+                    ${tags ? `<div class="card-footer bg-transparent border-top-0">${tags}</div>` : ''}
+                </div>
+            </div>
+        `;
+    }
+    
+    // Initialize page
+    document.addEventListener('DOMContentLoaded', function() {
+        // Auto-load random entries if no search results
+        {% if not entries and not request.GET.search %}
+            getRandomEntries();
+        {% endif %}
+        
+        // Smooth scroll for pagination
+        document.querySelectorAll('.pagination a').forEach(link => {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                window.location.href = this.href;
+                setTimeout(() => {
+                    document.querySelector('#entriesContainer').scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }, 100);
+            });
+        });
+    });
+</script>
+{% endblock extra_js %}

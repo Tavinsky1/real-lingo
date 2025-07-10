@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Quiz Test</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container mt-5">
+        <h1>Quiz Test Page</h1>
+        <p>This is a simplified test to check if the quiz works.</p>
+        
+        <!-- Include the quiz widget -->
+        <div class="slang-quiz-widget" id="slangQuiz" style="display: none;">
+            <div class="card border-0 shadow-lg">
+                <div class="card-header bg-gradient text-white text-center">
+                    <h5 class="mb-0">
+                        <i class="bi bi-question-circle me-2"></i>
+                        <span id="quizTitle">Argentine Slang Quiz</span>
+                    </h5>
+                </div>
+                <div class="card-body">
+                    <div class="quiz-content" id="quizContent">
+                        <div class="question-container text-center">
+                            <div class="question-number mb-2">
+                                <span class="badge bg-primary">Question <span id="currentQuestion">1</span> of <span id="totalQuestions">5</span></span>
+                            </div>
+                            <h4 class="question-text mb-4" id="questionText">Loading question...</h4>
+                            <div class="options-container" id="optionsContainer">
+                                <!-- Options will be dynamically generated -->
+                            </div>
+                        </div>
+                    </div>
+                    <div class="quiz-controls mt-3">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div class="quiz-score">
+                                Score: <span id="currentScore">0</span>/<span id="maxScore">5</span>
+                            </div>
+                            <div class="quiz-buttons">
+                                <button class="btn btn-outline-secondary btn-sm" id="skipBtn">Skip</button>
+                                <button class="btn btn-primary btn-sm" id="nextBtn" style="display: none;">Next</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+    // Simple quiz translations
+    const QUIZ_TRANSLATIONS = {
+        correct: '¡Correcto! +1',
+        incorrect: '¡Incorrecto!',
+        skipped: 'Saltado',
+        quiz_complete: '¡Quiz Completado!',
+        slang_master: '🏆 ¡Maestro de la Jerga!',
+        good_job: '⭐ ¡Buen Trabajo!',
+        keep_learning: '📚 ¡Sigue Aprendiendo!',
+        try_again: '💪 ¡Inténtalo de Nuevo!',
+        try_again_button: 'Intentar de Nuevo',
+        close: 'Cerrar',
+        percent_correct: '% Correcto',
+        take_quiz: 'Hacer Quiz',
+        argentine_slang_quiz: 'Quiz de Jerga Argentina'
+    };
+
+    class SlangQuiz {
+        constructor() {
+            console.log('🏗️ SlangQuiz constructor starting...');
+            
+            this.currentCountry = 'argentina';
+            this.questions = this.getTestQuestions();
+            this.currentQuestionIndex = 0;
+            this.score = 0;
+            this.selectedAnswer = null;
+            
+            console.log('✅ Loaded', this.questions.length, 'test questions');
+            
+            this.init();
+        }
+
+        getTestQuestions() {
+            return [
+                {
+                    term: "che",
+                    question: "¿Qué significa 'che' en la jerga argentina?",
+                    options: ["Ey/che", "Dinero", "Casa", "Comida"],
+                    correct: 0,
+                    explanation: "'Che' es una interjección común argentina"
+                },
+                {
+                    term: "boludo",
+                    question: "¿Qué significa 'boludo'?",
+                    options: ["Persona inteligente", "Che/idiota", "Auto", "Fiesta"],
+                    correct: 1,
+                    explanation: "'Boludo' significa 'che' o puede ser 'idiota'"
+                }
+            ];
+        }
+
+        init() {
+            console.log('🔧 Initializing quiz...');
+            const quizElement = document.getElementById('slangQuiz');
+            if (!quizElement) {
+                console.error('❌ Quiz element not found');
+                return false;
+            }
+
+            this.createQuizHTML();
+            this.updateQuizTitle();
+            this.showQuestion();
+            this.attachEventListeners();
+            return true;
+        }
+
+        createQuizHTML() {
+            document.getElementById('totalQuestions').textContent = this.questions.length;
+            document.getElementById('maxScore').textContent = this.questions.length;
+        }
+
+        updateQuizTitle() {
+            const titleElement = document.getElementById('quizTitle');
+            if (titleElement) {
+                titleElement.textContent = QUIZ_TRANSLATIONS.argentine_slang_quiz;
+            }
+        }
+
+        showQuestion() {
+            const question = this.questions[this.currentQuestionIndex];
+            if (!question) return;
+
+            document.getElementById('currentQuestion').textContent = this.currentQuestionIndex + 1;
+            document.getElementById('questionText').textContent = question.question;
+            
+            const optionsContainer = document.getElementById('optionsContainer');
+            optionsContainer.innerHTML = '';
+            
+            question.options.forEach((option, index) => {
+                const optionButton = document.createElement('button');
+                optionButton.className = 'btn btn-outline-primary d-block w-100 mb-2';
+                optionButton.textContent = option;
+                optionButton.addEventListener('click', () => this.selectAnswer(index));
+                optionsContainer.appendChild(optionButton);
+            });
+        }
+
+        selectAnswer(answerIndex) {
+            this.selectedAnswer = answerIndex;
+            const question = this.questions[this.currentQuestionIndex];
+            
+            // Update UI
+            const options = document.querySelectorAll('#optionsContainer button');
+            options.forEach((btn, idx) => {
+                btn.disabled = true;
+                if (idx === question.correct) {
+                    btn.className = 'btn btn-success d-block w-100 mb-2';
+                } else if (idx === answerIndex && idx !== question.correct) {
+                    btn.className = 'btn btn-danger d-block w-100 mb-2';
+                }
+            });
+
+            if (answerIndex === question.correct) {
+                this.score++;
+                document.getElementById('currentScore').textContent = this.score;
+            }
+
+            // Show next button
+            document.getElementById('skipBtn').style.display = 'none';
+            document.getElementById('nextBtn').style.display = 'inline-block';
+        }
+
+        nextQuestion() {
+            this.currentQuestionIndex++;
+            
+            if (this.currentQuestionIndex >= this.questions.length) {
+                this.showResults();
+            } else {
+                this.showQuestion();
+                document.getElementById('skipBtn').style.display = 'inline-block';
+                document.getElementById('nextBtn').style.display = 'none';
+            }
+        }
+
+        showResults() {
+            const percentage = Math.round((this.score / this.questions.length) * 100);
+            document.getElementById('quizContent').innerHTML = `
+                <div class="text-center">
+                    <h3>${QUIZ_TRANSLATIONS.quiz_complete}</h3>
+                    <div class="display-4 text-success">${this.score}/${this.questions.length}</div>
+                    <p>${percentage}${QUIZ_TRANSLATIONS.percent_correct}</p>
+                    <button class="btn btn-primary" onclick="location.reload()">
+                        ${QUIZ_TRANSLATIONS.try_again_button}
+                    </button>
+                </div>
+            `;
+        }
+
+        attachEventListeners() {
+            const nextBtn = document.getElementById('nextBtn');
+            const skipBtn = document.getElementById('skipBtn');
+            
+            if (nextBtn) {
+                nextBtn.addEventListener('click', () => this.nextQuestion());
+            }
+            
+            if (skipBtn) {
+                skipBtn.addEventListener('click', () => this.nextQuestion());
+            }
+        }
+
+        show() {
+            console.log('📱 Showing quiz...');
+            const quizElement = document.getElementById('slangQuiz');
+            if (quizElement) {
+                // Create overlay
+                const overlay = document.createElement('div');
+                overlay.style.cssText = `
+                    position: fixed;
+                    top: 0;
+                    left: 0;
+                    width: 100%;
+                    height: 100%;
+                    background: rgba(0, 0, 0, 0.8);
+                    z-index: 1999;
+                `;
+                overlay.addEventListener('click', () => this.close());
+                document.body.appendChild(overlay);
+
+                // Show quiz
+                quizElement.style.display = 'block';
+                quizElement.style.position = 'fixed';
+                quizElement.style.top = '50%';
+                quizElement.style.left = '50%';
+                quizElement.style.transform = 'translate(-50%, -50%)';
+                quizElement.style.zIndex = '2000';
+                quizElement.style.width = '90%';
+                quizElement.style.maxWidth = '500px';
+            }
+        }
+
+        close() {
+            const overlay = document.querySelector('div[style*="rgba(0, 0, 0, 0.8)"]');
+            if (overlay) overlay.remove();
+            
+            const quizElement = document.getElementById('slangQuiz');
+            if (quizElement) {
+                quizElement.style.display = 'none';
+            }
+        }
+    }
+
+    // Initialize when page loads
+    document.addEventListener('DOMContentLoaded', function() {
+        console.log('🚀 Initializing test quiz...');
+        window.slangQuiz = new SlangQuiz();
+        
+        // Add test button
+        const testBtn = document.createElement('button');
+        testBtn.className = 'btn btn-info btn-lg';
+        testBtn.innerHTML = '<i class="bi bi-question-circle me-2"></i>Test Quiz';
+        testBtn.style.cssText = `
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 1000;
+        `;
+        testBtn.addEventListener('click', () => {
+            console.log('🎯 Test button clicked!');
+            if (window.slangQuiz) {
+                window.slangQuiz.show();
+            } else {
+                alert('Quiz not initialized!');
+            }
+        });
+        document.body.appendChild(testBtn);
+        
+        console.log('✅ Test setup complete');
+    });
+    </script>
+</body>
+</html>

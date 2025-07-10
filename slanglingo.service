@@ -1,0 +1,17 @@
+[Unit]
+Description=LingoWorld Gunicorn daemon
+After=network.target
+
+[Service]
+User=www-data
+Group=www-data
+WorkingDirectory=/var/www/lingo_project
+Environment="PATH=/var/www/lingo_project/lingo_env/bin"
+Environment="DJANGO_SETTINGS_MODULE=lingo_project.settings_production"
+ExecStart=/var/www/lingo_project/lingo_env/bin/gunicorn --config /var/www/lingo_project/gunicorn.conf.py lingo_project.wsgi:application
+ExecReload=/bin/kill -s HUP $MAINPID
+Restart=on-failure
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target

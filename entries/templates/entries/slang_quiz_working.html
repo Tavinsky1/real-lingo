@@ -1,0 +1,342 @@
+{% load i18n %}
+<!-- MINIMAL WORKING SLANG QUIZ -->
+<div id="quizOverlay" class="quiz-overlay" style="display: none;">
+    <div id="quizContainer" class="quiz-container">
+        <!-- Quiz content will be inserted here -->
+    </div>
+</div>
+
+<style>
+.quiz-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.8);
+    z-index: 9999;
+    display: none;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}
+
+.quiz-container {
+    background: white;
+    border-radius: 12px;
+    padding: 0;
+    width: 100%;
+    max-width: 600px;
+    max-height: 90vh;
+    overflow-y: auto;
+    position: relative;
+}
+
+.quiz-header {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    padding: 20px;
+    border-radius: 12px 12px 0 0;
+    text-align: center;
+}
+
+.quiz-body {
+    padding: 30px;
+}
+
+.quiz-option {
+    display: block;
+    width: 100%;
+    padding: 15px;
+    margin: 10px 0;
+    border: 2px solid #e9ecef;
+    border-radius: 8px;
+    background: white;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    text-align: left;
+    font-size: 16px;
+}
+
+.quiz-option:hover {
+    border-color: #667eea;
+    background: #f8f9ff;
+}
+
+.quiz-option.correct {
+    border-color: #28a745;
+    background: #28a745;
+    color: white;
+}
+
+.quiz-option.incorrect {
+    border-color: #dc3545;
+    background: #dc3545;
+    color: white;
+}
+
+.quiz-progress {
+    width: 100%;
+    height: 20px;
+    background: #e9ecef;
+    border-radius: 10px;
+    margin: 20px 0;
+}
+
+.quiz-progress-bar {
+    height: 100%;
+    background: linear-gradient(90deg, #667eea, #764ba2);
+    border-radius: 10px;
+    transition: width 0.3s ease;
+}
+
+.close-quiz {
+    position: absolute;
+    top: 15px;
+    right: 20px;
+    background: none;
+    border: none;
+    color: white;
+    font-size: 24px;
+    cursor: pointer;
+}
+
+@media (max-width: 768px) {
+    .quiz-overlay { padding: 10px; }
+    .quiz-body { padding: 20px; }
+}
+</style>
+
+<script>
+class SlangQuiz {
+    constructor() {
+        this.currentCountry = null;
+        this.currentQuestion = 0;
+        this.score = 0;
+        this.selectedAnswer = null;
+        
+        this.quizData = {
+            argentina: [
+                { question: "What does 'che' mean in Argentine Spanish?", options: ["Hello", "Hey/dude", "Goodbye", "Thank you"], correct: 1 },
+                { question: "What does 'boludo' mean?", options: ["Smart person", "Dude/fool", "Money", "Food"], correct: 1 },
+                { question: "What does 'quilombo' refer to?", options: ["Party", "Mess/chaos", "House", "Car"], correct: 1 },
+                { question: "What does 'laburo' mean?", options: ["Work/job", "Food", "Music", "Money"], correct: 0 },
+                { question: "What does 'chabon' mean?", options: ["House", "Guy/dude", "Food", "Money"], correct: 1 }
+            ],
+            australia: [
+                { question: "What does 'mate' mean in Australian slang?", options: ["Enemy", "Friend/buddy", "Stranger", "Boss"], correct: 1 },
+                { question: "What does 'arvo' mean?", options: ["Morning", "Night", "Afternoon", "Evening"], correct: 2 },
+                { question: "What does 'brekkie' refer to?", options: ["Lunch", "Dinner", "Breakfast", "Snack"], correct: 2 },
+                { question: "What does 'fair dinkum' mean?", options: ["Fake", "Genuine/true", "Expensive", "Cheap"], correct: 1 },
+                { question: "What does 'sheila' refer to?", options: ["Man", "Woman", "Child", "Elder"], correct: 1 }
+            ],
+            germany: [
+                { question: "What does 'geil' mean in modern German slang?", options: ["Terrible", "Awesome/cool", "Expensive", "Difficult"], correct: 1 },
+                { question: "What does 'krass' express?", options: ["Boring", "Extreme/intense", "Quiet", "Simple"], correct: 1 },
+                { question: "What does 'digga' mean?", options: ["Enemy", "Dude/buddy", "Teacher", "Stranger"], correct: 1 },
+                { question: "What does 'bock haben' mean?", options: ["To be tired", "To want/feel like", "To be angry", "To be confused"], correct: 1 },
+                { question: "What does 'chillen' mean?", options: ["To work hard", "To relax/chill", "To run fast", "To study"], correct: 1 }
+            ],
+            colombia: [
+                { question: "What does 'parce' mean in Colombian Spanish?", options: ["Enemy", "Friend/buddy", "Stranger", "Boss"], correct: 1 },
+                { question: "What does 'chimba' mean?", options: ["Bad", "Awesome/great", "Ugly", "Boring"], correct: 1 },
+                { question: "What does 'bacano' mean?", options: ["Terrible", "Cool/nice", "Expensive", "Difficult"], correct: 1 },
+                { question: "What does 'rumbear' mean?", options: ["To sleep", "To party", "To work", "To study"], correct: 1 },
+                { question: "What does 'vieja' affectionately refer to?", options: ["Sister", "Mother/mom", "Aunt", "Grandmother"], correct: 1 }
+            ],
+            belgium: [
+                { question: "What does 'dikke' mean in Belgian Dutch slang?", options: ["Small", "Big/great", "Bad", "Ugly"], correct: 1 },
+                { question: "What does 'proper' mean in Belgian slang?", options: ["Dirty", "Clean/good", "Fast", "Slow"], correct: 1 },
+                { question: "What does 'kot' refer to?", options: ["Car", "Student room", "Food", "Book"], correct: 1 },
+                { question: "What does 'ambetant' mean?", options: ["Happy", "Annoying", "Funny", "Quiet"], correct: 1 },
+                { question: "What does 'schuif' refer to?", options: ["Book", "Party", "Door", "Window"], correct: 1 }
+            ]
+        };
+    }
+
+    detectCountry() {
+        const path = window.location.pathname.toLowerCase();
+        if (path.includes('argentina')) return 'argentina';
+        if (path.includes('australia')) return 'australia';
+        if (path.includes('germany')) return 'germany';
+        if (path.includes('colombia')) return 'colombia';
+        if (path.includes('belgium')) return 'belgium';
+        return 'argentina'; // default
+    }
+
+    show(country = null) {
+        this.currentCountry = country || this.detectCountry();
+        this.currentQuestion = 0;
+        this.score = 0;
+        this.selectedAnswer = null;
+        
+        const overlay = document.getElementById('quizOverlay');
+        const container = document.getElementById('quizContainer');
+        
+        if (!overlay || !container) {
+            console.error('Quiz overlay or container not found');
+            return;
+        }
+        
+        overlay.style.display = 'flex';
+        container.innerHTML = this.createQuizHTML();
+        
+        window.scrollTo(0, 0);
+        document.body.style.overflow = 'hidden';
+        
+        this.loadQuestion();
+    }
+
+    createQuizHTML() {
+        return `
+            <button class="close-quiz" onclick="window.slangQuiz.close()">&times;</button>
+            <div class="quiz-header">
+                <h2>🌍 ${this.currentCountry.charAt(0).toUpperCase() + this.currentCountry.slice(1)} Slang Quiz</h2>
+                <div class="quiz-progress">
+                    <div class="quiz-progress-bar" id="progressBar" style="width: 0%"></div>
+                </div>
+                <p>Question <span id="questionNumber">1</span> of 5</p>
+            </div>
+            <div class="quiz-body" id="quizBody">
+                <!-- Question content will be loaded here -->
+            </div>
+        `;
+    }
+
+    loadQuestion() {
+        const questions = this.quizData[this.currentCountry];
+        if (!questions || !questions[this.currentQuestion]) {
+            console.error('No questions available');
+            return;
+        }
+
+        const question = questions[this.currentQuestion];
+        const quizBody = document.getElementById('quizBody');
+        const questionNumber = document.getElementById('questionNumber');
+        const progressBar = document.getElementById('progressBar');
+        
+        if (questionNumber) questionNumber.textContent = this.currentQuestion + 1;
+        if (progressBar) progressBar.style.width = `${(this.currentQuestion / 5) * 100}%`;
+        
+        if (quizBody) {
+            quizBody.innerHTML = `
+                <h3>${question.question}</h3>
+                <div class="quiz-options">
+                    ${question.options.map((option, index) => `
+                        <button class="quiz-option" onclick="window.slangQuiz.selectAnswer(${index})">${option}</button>
+                    `).join('')}
+                </div>
+                <div style="margin-top: 20px; text-align: center;">
+                    <button id="nextButton" onclick="window.slangQuiz.nextQuestion()" style="display: none; padding: 10px 20px; background: #667eea; color: white; border: none; border-radius: 5px; cursor: pointer;">Next Question</button>
+                </div>
+            `;
+        }
+        
+        this.selectedAnswer = null;
+    }
+
+    selectAnswer(answerIndex) {
+        if (this.selectedAnswer !== null) return;
+        
+        this.selectedAnswer = answerIndex;
+        const questions = this.quizData[this.currentCountry];
+        const question = questions[this.currentQuestion];
+        const options = document.querySelectorAll('.quiz-option');
+        const nextButton = document.getElementById('nextButton');
+        
+        setTimeout(() => {
+            if (options[question.correct]) options[question.correct].classList.add('correct');
+            if (answerIndex !== question.correct && options[answerIndex]) {
+                options[answerIndex].classList.add('incorrect');
+            } else {
+                this.score++;
+            }
+            
+            if (nextButton) nextButton.style.display = 'inline-block';
+        }, 500);
+    }
+
+    nextQuestion() {
+        this.currentQuestion++;
+        if (this.currentQuestion < 5) {
+            this.loadQuestion();
+        } else {
+            this.showResults();
+        }
+    }
+
+    showResults() {
+        const quizBody = document.getElementById('quizBody');
+        const progressBar = document.getElementById('progressBar');
+        const percentage = Math.round((this.score / 5) * 100);
+        
+        if (progressBar) progressBar.style.width = '100%';
+        
+        let achievement = '';
+        if (percentage >= 80) achievement = '🏆 Slang Master!';
+        else if (percentage >= 60) achievement = '🎯 Good Knowledge!';
+        else if (percentage >= 40) achievement = '📚 Keep Learning!';
+        else achievement = '🌱 Just Getting Started!';
+        
+        if (quizBody) {
+            quizBody.innerHTML = `
+                <div style="text-align: center; padding: 30px;">
+                    <h2>Quiz Complete!</h2>
+                    <div style="font-size: 48px; margin: 20px 0;">${achievement}</div>
+                    <p style="font-size: 24px;">You scored ${this.score} out of 5 (${percentage}%)</p>
+                    <div style="margin-top: 30px;">
+                        <button onclick="window.slangQuiz.show('${this.currentCountry}')" style="padding: 10px 20px; background: #667eea; color: white; border: none; border-radius: 5px; cursor: pointer; margin: 5px;">Try Again</button>
+                        <button onclick="window.slangQuiz.close()" style="padding: 10px 20px; background: #6c757d; color: white; border: none; border-radius: 5px; cursor: pointer; margin: 5px;">Close</button>
+                    </div>
+                </div>
+            `;
+        }
+    }
+
+    close() {
+        const overlay = document.getElementById('quizOverlay');
+        if (overlay) overlay.style.display = 'none';
+        document.body.style.overflow = 'auto';
+    }
+}
+
+// Initialize when page loads
+document.addEventListener('DOMContentLoaded', function() {
+    console.log('🚀 Initializing minimal quiz system...');
+    
+    // Create quiz instance
+    window.slangQuiz = new SlangQuiz();
+    console.log('✅ Quiz instance created:', window.slangQuiz);
+    
+    // Add take quiz button
+    const takeQuizButton = document.createElement('button');
+    takeQuizButton.textContent = '🧠 Take Quiz';
+    takeQuizButton.style.cssText = `
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        z-index: 1000;
+        background: #667eea;
+        color: white;
+        border: none;
+        padding: 15px 20px;
+        border-radius: 25px;
+        font-size: 16px;
+        font-weight: bold;
+        cursor: pointer;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+    `;
+    
+    takeQuizButton.addEventListener('click', function() {
+        console.log('🎯 Take Quiz button clicked');
+        if (window.slangQuiz && typeof window.slangQuiz.show === 'function') {
+            window.slangQuiz.show();
+        } else {
+            alert('Quiz system not ready. Please refresh the page.');
+        }
+    });
+    
+    document.body.appendChild(takeQuizButton);
+    console.log('✅ Take Quiz button added');
+});
+</script>

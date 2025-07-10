@@ -1,0 +1,862 @@
+{% extends "entries/base.html" %}
+{% load lingo_tags %}
+{% load i18n %}
+
+{% block title %}
+    {{ country_info.name }} Slang - REAL LINGO
+{% endblock title %}
+
+{% block content %}
+    <style>
+        .country-header-argentina {
+            background: var(--gradient-argentina);
+            color: white;
+        }
+        
+        .country-header-australia {
+            background: linear-gradient(135deg, #FF6B6B 0%, #4ECDC4 50%, #45B7D1 100%);
+            color: white;
+        }
+        
+        .country-header-germany {
+            background: linear-gradient(135deg, #000000 0%, #DD0000 50%, #FFCE00 100%);
+            color: white;
+        }
+        
+        .country-header-colombia {
+            background: linear-gradient(135deg, #FDE047 0%, #3B82F6 50%, #EF4444 100%);
+            color: white;
+        }
+
+        .country-header-belgium {
+            background: linear-gradient(135deg, #000000 0%, #FFD700 50%, #ED2939 100%);
+            color: white;
+        }
+
+        .country-flag-large {
+            font-size: 4rem;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .stat-card:hover {
+            transform: translateY(-2px);
+            transition: transform 0.3s ease;
+        }
+
+        .search-card {
+            background: white;
+            border-radius: 15px;
+        }
+
+        .term-card:hover,
+        .category-card:hover {
+            transform: translateY(-5px);
+            transition: transform 0.3s ease;
+        }
+
+        .hover-lift {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .category-link:hover .category-card {
+            background: var(--primary-color);
+            color: white;
+        }
+
+        .category-link:hover .text-muted {
+            color: rgba(255,255,255,0.8) !important;
+        }
+
+        .category-link:hover .badge {
+            background: rgba(255,255,255,0.2) !important;
+            color: white !important;
+        }
+
+        .category-card {
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+
+        .category-card:hover {
+            border-color: var(--primary-color);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15) !important;
+        }
+
+        /* Category-specific colors and styling */
+        .category-link[href*="slang"] .category-card:hover {
+            border-color: var(--primary-color);
+            background: linear-gradient(135deg, rgba(46, 134, 193, 0.1), rgba(46, 134, 193, 0.05));
+        }
+
+        .category-link[href*="insults"] .category-card:hover {
+            border-color: #dc3545;
+            background: linear-gradient(135deg, rgba(220, 53, 69, 0.1), rgba(220, 53, 69, 0.05));
+        }
+
+        .category-link[href*="tongue_twisters"] .category-card:hover {
+            border-color: #17a2b8;
+            background: linear-gradient(135deg, rgba(23, 162, 184, 0.1), rgba(23, 162, 184, 0.05));
+        }
+
+        .category-link[href*="colloquial_phrases"] .category-card:hover {
+            border-color: #ffc107;
+            background: linear-gradient(135deg, rgba(255, 193, 7, 0.1), rgba(255, 193, 7, 0.05));
+        }
+
+        .category-link[href*="jokes"] .category-card:hover {
+            border-color: #28a745;
+            background: linear-gradient(135deg, rgba(40, 167, 69, 0.1), rgba(40, 167, 69, 0.05));
+        }
+
+        .category-link[href*="unique_concepts"] .category-card:hover {
+            border-color: #9c27b0;
+            background: linear-gradient(135deg, rgba(156, 39, 176, 0.1), rgba(156, 39, 176, 0.05));
+        }
+
+        .category-icon {
+            position: relative;
+        }
+
+        .category-icon i {
+            text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .category-count .badge {
+            font-weight: 600;
+            letter-spacing: 0.5px;
+        }
+
+        /* Popular categories section enhancement */
+        .categories-section {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .categories-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, rgba(255,255,255,0.1) 0%, rgba(0,0,0,0.02) 100%);
+            pointer-events: none;
+        }
+
+        @media (max-width: 768px) {
+            .country-flag-large {
+                font-size: 3rem;
+            }
+            
+            .display-4 {
+                font-size: 2rem;
+            }
+
+            .category-card {
+                margin-bottom: 1rem;
+            }
+        }
+
+        /* Animation for category cards */
+        .category-card {
+            animation: fadeInUp 0.6s ease-out forwards;
+            opacity: 0;
+            transform: translateY(20px);
+        }
+
+        .category-card:nth-child(1) { animation-delay: 0.1s; }
+        .category-card:nth-child(2) { animation-delay: 0.2s; }
+        .category-card:nth-child(3) { animation-delay: 0.3s; }
+        .category-card:nth-child(4) { animation-delay: 0.4s; }
+        .category-card:nth-child(5) { animation-delay: 0.5s; }
+        .category-card:nth-child(6) { animation-delay: 0.6s; }
+
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+
+    <div class="container-fluid" data-country="{{ country }}">
+        <!-- Country Header -->
+        <div class="country-header{% if country == 'argentina' %}-argentina{% elif country == 'australia' %}-australia{% elif country == 'germany' %}-germany{% elif country == 'colombia' %}-colombia{% elif country == 'belgium' %}-belgium{% endif %} text-center py-4">
+            <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col-lg-8">
+                        <div class="animate__animated animate__fadeInDown">
+                            <div class="country-flag-large mb-3">{{ country_info.flag }}</div>
+                            <h1 class="display-4 fw-bold mb-3">
+                                {{ country_info.name }} Slang Dictionary
+                            </h1>
+                            <p class="lead text-light-emphasis">
+                                {% country_description country %}
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Stats Section -->
+        <div class="stats-section py-4">
+            <div class="container">
+                <div class="row g-4">
+                    <div class="col-md-3">
+                        <div class="stat-card stat-card-enhanced card border-0 shadow-sm h-100">
+                            <div class="card-body text-center">
+                                <i class="bi bi-book-half display-4 text-primary mb-2"></i>
+                                <h3 class="stat-number-enhanced mb-1">{{ total_entries|default:0 }}</h3>
+                                <p class="text-muted mb-0">{% translate 'total_terms' %}</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="stat-card stat-card-enhanced card border-0 shadow-sm h-100">
+                            <div class="card-body text-center">
+                                <i class="bi bi-tags-fill display-4 text-success mb-2"></i>
+                                <h3 class="stat-number-enhanced mb-1">{{ total_tags|default:0 }}</h3>
+                                <p class="text-muted mb-0">Categories</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="stat-card stat-card-enhanced card border-0 shadow-sm h-100">
+                            <div class="card-body text-center">
+                                <i class="bi bi-globe2 display-4 text-warning mb-2"></i>
+                                <h3 class="mb-1">{{ country_info.flag }}</h3>
+                                <p class="text-muted mb-0">Language</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="stat-card stat-card-enhanced card border-0 shadow-sm h-100">
+                            <div class="card-body text-center">
+                                <i class="bi bi-heart-fill display-4 text-danger mb-2"></i>
+                                <h3 class="mb-1">Live</h3>
+                                <p class="text-muted mb-0">Updates</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Search Section -->
+        <div class="search-section py-5">
+            <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col-lg-8">
+                        <div class="search-card card border-0 shadow-lg">
+                            <div class="card-body p-4">
+                                <h3 class="text-center mb-4">
+                                    <i class="bi bi-search me-2"></i>
+                                    {% blocktrans %}Search {{ country_info.name }} Slang{% endblocktrans %}
+                                </h3>
+                                <form method="get" action="{% url 'country-entries' country %}">
+                                    <div class="search-container-enhanced">
+                                        <div class="input-group input-group-lg">
+                                            <span class="input-group-text">
+                                                <i class="bi bi-search"></i>
+                                            </span>
+                                            <input type="text" 
+                                                   name="search" 
+                                                   class="form-control search-input-enhanced" 
+                                                   placeholder="{% if country == 'argentina' %}{% translate 'search_placeholder_argentina' %}{% elif country == 'australia' %}{% translate 'search_placeholder_australia' %}{% elif country == 'germany' %}{% translate 'search_placeholder_germany' %}{% elif country == 'colombia' %}{% translate 'search_placeholder_colombia' %}{% elif country == 'belgium' %}{% translate 'search_placeholder_belgium' %}{% endif %}"
+                                                   autocomplete="off"
+                                                   title="Press Ctrl+K to focus">
+                                            <button class="btn btn-primary" type="submit" title="{% translate 'search_terms_title' %}" aria-label="{% translate 'search_terms_aria' %}">
+                                                {% translate 'search_button' %}
+                                            </button>
+                                        </div>
+                                    </div>
+                                </form>
+                                <div class="text-center mt-3">
+                                    <a href="{% url 'country-entries' country %}?random=true" class="btn btn-outline-secondary me-2">
+                                        <i class="bi bi-shuffle me-1"></i>{% translate 'random_terms' %}
+                                    </a>
+                                    <a href="{% url 'country-entries' country %}" class="btn btn-outline-primary">
+                                        <i class="bi bi-grid me-1"></i>{% translate 'browse_all' %}
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Featured Terms -->
+        {% if featured_entries %}
+        <div class="featured-section py-5 bg-light">
+            <div class="container">
+                <h2 class="text-center mb-5">
+                    <i class="bi bi-star-fill me-2 text-warning"></i>
+                    {% translate 'featured_terms' %}
+                </h2>
+                <div class="row g-4">
+                    {% for entry in featured_entries %}
+                    <div class="col-md-6 col-lg-4">
+                        <div class="term-card card entry-card-enhanced border-0 shadow-sm h-100 hover-lift" data-entry-id="{{ entry.id }}">
+                            <div class="card-body">
+                                <h5 class="card-title text-primary">
+                                    <a href="{% url 'entry-detail' entry.id %}" class="text-decoration-none">
+                                        {{ entry.term }}
+                                    </a>
+                                </h5>
+                                <p class="card-text">
+                                    {{ entry.notes|truncatewords:15 }}
+                                </p>
+                                <div class="d-flex justify-content-between align-items-center">
+                                    {% if entry.category %}
+                                    <span class="category-pill">{{ entry.category }}</span>
+                                    {% endif %}
+                                    {% if request.user.is_authenticated %}
+                                    <button class="btn btn-sm favorite-btn-enhanced" data-entry-id="{{ entry.id }}" title="Add to favorites" aria-label="Add to favorites">
+                                        <i class="bi bi-heart"></i>
+                                    </button>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+        {% endif %}
+
+        <!-- Popular Categories (Always show fallback categories if no data) -->
+        <div class="categories-section py-5">
+            <div class="container">
+                <div class="text-center mb-5">
+                    <h2 class="mb-3">
+                        <i class="bi bi-grid-3x3-gap-fill me-2"></i>
+                        Popular Categories
+                    </h2>
+                    <p class="text-muted lead">
+                        Discover the most popular types of {% if country == 'argentina' %}Lunfardo{% elif country == 'australia' %}Aussie slang{% elif country == 'germany' %}German slang{% endif %} 
+                        - from everyday slang to tongue twisters and jokes
+                    </p>
+                </div>
+                <div class="row g-4">
+                    {% if popular_categories %}
+                        {% for category in popular_categories %}
+                        <div class="col-md-6 col-lg-4">
+                            <a href="{% url 'country-entries' country %}?category={{ category.category }}" 
+                               class="category-link text-decoration-none">
+                                <div class="category-card card border-0 shadow-lg hover-lift">
+                                    <div class="card-body text-center p-4">
+                                        <div class="category-icon mb-3">
+                                            {% if category.category == 'slang' %}
+                                                <i class="bi bi-chat-quote-fill display-4 text-primary"></i>
+                                            {% elif category.category == 'insults' %}
+                                                <i class="bi bi-exclamation-triangle-fill display-4 text-danger"></i>
+                                            {% elif category.category == 'tongue_twisters' %}
+                                                <i class="bi bi-mic-fill display-4 text-info"></i>
+                                            {% elif category.category == 'colloquial_phrases' %}
+                                                <i class="bi bi-lightbulb-fill display-4 text-warning"></i>
+                                            {% elif category.category == 'jokes' %}
+                                                <i class="bi bi-emoji-laughing-fill display-4 text-success"></i>
+                                            {% elif category.category == 'unique_concepts' %}
+                                                <i class="bi bi-globe-americas display-4 text-primary"></i>
+                                            {% else %}
+                                                <i class="bi bi-tag-fill display-4 text-muted"></i>
+                                            {% endif %}
+                                        </div>
+                                        <h5 class="card-title mb-2">
+                                            {% if category.category == 'slang' %}Slang
+                                            {% elif category.category == 'insults' %}Insults
+                                            {% elif category.category == 'tongue_twisters' %}Tongue Twisters
+                                            {% elif category.category == 'colloquial_phrases' %}Colloquial Phrases
+                                            {% elif category.category == 'jokes' %}Jokes
+                                            {% elif category.category == 'unique_concepts' %}Unique Concepts
+                                            {% else %}{{ category.category|title }}{% endif %}
+                                        </h5>
+                                        <div class="category-count">
+                                            {% if category.count > 0 %}
+                                                <span class="badge bg-primary fs-6 px-3 py-2">{{ category.count }} terms</span>
+                                            {% else %}
+                                                <span class="badge bg-secondary fs-6 px-3 py-2">Coming Soon</span>
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                        {% endfor %}
+                    {% else %}
+                        <!-- Fallback categories when no data -->
+                        <div class="col-md-6 col-lg-4">
+                            <a href="{% url 'country-entries' country %}?category=slang" class="category-link text-decoration-none">
+                                <div class="category-card card border-0 shadow-lg hover-lift">
+                                    <div class="card-body text-center p-4">
+                                        <div class="category-icon mb-3">
+                                            <i class="bi bi-chat-quote-fill display-4 text-primary"></i>
+                                        </div>
+                                        <h5 class="card-title mb-2">Slang</h5>
+                                        <div class="category-count">
+                                            <span class="badge bg-primary fs-6 px-3 py-2">Browse</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="col-md-6 col-lg-4">
+                            <a href="{% url 'country-entries' country %}?category=colloquial_phrases" class="category-link text-decoration-none">
+                                <div class="category-card card border-0 shadow-lg hover-lift">
+                                    <div class="card-body text-center p-4">
+                                        <div class="category-icon mb-3">
+                                            <i class="bi bi-lightbulb-fill display-4 text-warning"></i>
+                                        </div>
+                                        <h5 class="card-title mb-2">Colloquial Phrases</h5>
+                                        <div class="category-count">
+                                            <span class="badge bg-primary fs-6 px-3 py-2">Browse</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="col-md-6 col-lg-4">
+                            <a href="{% url 'country-entries' country %}?category=jokes" class="category-link text-decoration-none">
+                                <div class="category-card card border-0 shadow-lg hover-lift">
+                                    <div class="card-body text-center p-4">
+                                        <div class="category-icon mb-3">
+                                            <i class="bi bi-emoji-laughing-fill display-4 text-success"></i>
+                                        </div>
+                                        <h5 class="card-title mb-2">Jokes</h5>
+                                        <div class="category-count">
+                                            <span class="badge bg-primary fs-6 px-3 py-2">Browse</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="col-md-6 col-lg-4">
+                            <a href="{% url 'country-entries' country %}?category=tongue_twisters" class="category-link text-decoration-none">
+                                <div class="category-card card border-0 shadow-lg hover-lift">
+                                    <div class="card-body text-center p-4">
+                                        <div class="category-icon mb-3">
+                                            <i class="bi bi-mic-fill display-4 text-info"></i>
+                                        </div>
+                                        <h5 class="card-title mb-2">Tongue Twisters</h5>
+                                        <div class="category-count">
+                                            <span class="badge bg-primary fs-6 px-3 py-2">Browse</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="col-md-6 col-lg-4">
+                            <a href="{% url 'country-entries' country %}?category=insults" class="category-link text-decoration-none">
+                                <div class="category-card card border-0 shadow-lg hover-lift">
+                                    <div class="card-body text-center p-4">
+                                        <div class="category-icon mb-3">
+                                            <i class="bi bi-exclamation-triangle-fill display-4 text-danger"></i>
+                                        </div>
+                                        <h5 class="card-title mb-2">Insults</h5>
+                                        <div class="category-count">
+                                            <span class="badge bg-primary fs-6 px-3 py-2">Browse</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="col-md-6 col-lg-4">
+                            <a href="{% url 'country-entries' country %}?category=unique_concepts" class="category-link text-decoration-none">
+                                <div class="category-card card border-0 shadow-lg hover-lift">
+                                    <div class="card-body text-center p-4">
+                                        <div class="category-icon mb-3">
+                                            <i class="bi bi-globe-americas display-4 text-primary"></i>
+                                        </div>
+                                        <h5 class="card-title mb-2">Unique Concepts</h5>
+                                        <div class="category-count">
+                                            <span class="badge bg-primary fs-6 px-3 py-2">Browse</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                    {% endif %}
+                </div>
+                
+                <!-- Categories Summary -->
+                <div class="text-center mt-4">
+                    <p class="text-muted">
+                        <i class="bi bi-info-circle me-1"></i>
+                        {% if popular_categories %}
+                            Showing top {{ popular_categories|length }} categories • 
+                        {% endif %}
+                        <a href="{% url 'country-entries' country %}" class="text-decoration-none">Browse all terms</a>
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Quick Actions -->
+        <div class="actions-section py-5 bg-light">
+            <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col-lg-8">
+                        <div class="text-center">
+                            <h3 class="mb-4">Ready to explore?</h3>
+                            
+                            <!-- Ultra Engaging Quiz Button Section -->
+                            <div class="quiz-mega-section mb-4 p-5" style="background: linear-gradient(135deg, {% if country == 'argentina' %}#667eea, #764ba2{% elif country == 'australia' %}#FF6B6B, #4ECDC4{% elif country == 'germany' %}#2C3E50, #FD79A8{% elif country == 'colombia' %}#FDCB6E, #E17055{% elif country == 'belgium' %}#A29BFE, #6C5CE7{% else %}#667eea, #764ba2{% endif %}); position: relative; overflow: hidden; border-radius: 25px; box-shadow: 0 15px 50px rgba(0,0,0,0.2);">
+                                <!-- Animated Background -->
+                                <div class="quiz-bg-animation"></div>
+                                
+                                <!-- Floating Icons -->
+                                <div class="floating-icons">
+                                    <div class="floating-icon" style="top: 10%; left: 10%;"><i class="bi bi-lightning-charge-fill"></i></div>
+                                    <div class="floating-icon" style="top: 20%; right: 15%;"><i class="bi bi-trophy-fill"></i></div>
+                                    <div class="floating-icon" style="bottom: 15%; left: 15%;"><i class="bi bi-star-fill"></i></div>
+                                    <div class="floating-icon" style="bottom: 25%; right: 10%;"><i class="bi bi-fire"></i></div>
+                                </div>
+                                
+                                <div class="quiz-content text-center position-relative" style="z-index: 2;">
+                                    <div class="quiz-header-mega mb-4">
+                                        <h2 class="text-white fw-bold mb-2" style="font-size: 2.5rem; text-shadow: 0 4px 8px rgba(0,0,0,0.3); animation: titlePulse 3s ease-in-out infinite;">
+                                            🎯 QUIZ CHALLENGE
+                                        </h2>
+                                        <h4 class="text-white fw-bold mb-3" style="opacity: 0.95; text-shadow: 0 2px 4px rgba(0,0,0,0.2);">
+                                            Master {{ country_info.name }} Slang Like a Local!
+                                        </h4>
+                                    </div>
+                                    
+                                    <div class="quiz-stats-mega mb-4">
+                                        <div class="row text-center">
+                                            <div class="col-4">
+                                                <div class="stat-bubble">
+                                                    <i class="bi bi-clock-fill"></i>
+                                                    <span>2 Min</span>
+                                                </div>
+                                            </div>
+                                            <div class="col-4">
+                                                <div class="stat-bubble">
+                                                    <i class="bi bi-question-circle-fill"></i>
+                                                    <span>5 Questions</span>
+                                                </div>
+                                            </div>
+                                            <div class="col-4">
+                                                <div class="stat-bubble">
+                                                    <i class="bi bi-trophy-fill"></i>
+                                                    <span>Win Prizes</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <!-- Clean Quiz Button -->
+                                    <button id="startQuizBtn" class="quiz-btn-clean" onclick="startCountryQuiz('{{ country }}')">
+                                        <i class="bi bi-play-circle-fill me-2"></i>
+                                        <span>Take Quiz (UPDATED)</span>
+                                        <i class="bi bi-arrow-right ms-2"></i>
+                                    </button>
+                                    <!-- TEST MARKER -->
+                                    <div style="background: green; color: white; padding: 5px; margin: 10px;">COUNTRY HOME UPDATED</div>
+                                    
+                                    <div class="quiz-benefits mt-4">
+                                        <div class="d-flex justify-content-center flex-wrap gap-3">
+                                            <div class="benefit-tag">
+                                                <i class="bi bi-check-circle-fill me-1"></i>
+                                                Test Your Knowledge
+                                            </div>
+                                            <div class="benefit-tag">
+                                                <i class="bi bi-graph-up me-1"></i>
+                                                Track Progress
+                                            </div>
+                                            <div class="benefit-tag">
+                                                <i class="bi bi-award-fill me-1"></i>
+                                                Earn Achievements
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="d-flex flex-wrap justify-content-center gap-3">
+                                <a href="{% url 'country-entries' country %}" class="btn btn-primary btn-lg">
+                                    <i class="bi bi-book me-2"></i>
+                                    Browse All Terms
+                                </a>
+                                <a href="{% url 'country-entries' country %}?random=true" class="btn btn-outline-primary btn-lg">
+                                    <i class="bi bi-shuffle me-2"></i>
+                                    Random Learning
+                                </a>
+                                {% if request.user.is_authenticated %}
+                                <a href="{% url 'user-dashboard' %}" class="btn btn-outline-secondary btn-lg">
+                                    <i class="bi bi-person-circle me-2"></i>
+                                    {% translate 'my_dashboard' %}
+                                </a>
+                                {% else %}
+                                <a href="{% url 'login' %}" class="btn btn-outline-secondary btn-lg">
+                                    <i class="bi bi-person-plus me-2"></i>
+                                    {% translate 'create_account' %}
+                                </a>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Country Switch -->
+        <div class="country-switch py-3 border-top">
+            <div class="container">
+                <div class="text-center">
+                    <p class="mb-2 text-muted">{% translate 'want_to_explore_another_country' %}</p>
+                    <a href="{% url 'country-selection' %}" class="btn btn-sm btn-outline-secondary">
+                        <i class="bi bi-arrow-left me-1"></i>
+                        {% translate 'choose_another_country' %}
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Ultra Engaging Quiz Button Styling -->
+    <style>
+        /* Mega Quiz Section */
+        .quiz-mega-section {
+            transform: perspective(1000px) rotateX(2deg);
+            transition: all 0.6s ease;
+        }
+
+        .quiz-mega-section:hover {
+            transform: perspective(1000px) rotateX(0deg) translateY(-5px);
+            box-shadow: 0 25px 60px rgba(0,0,0,0.3) !important;
+        }
+
+        /* Animated Background */
+        .quiz-bg-animation {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at 20% 50%, rgba(255,255,255,0.1) 0%, transparent 50%),
+                        radial-gradient(circle at 80% 20%, rgba(255,255,255,0.1) 0%, transparent 50%),
+                        radial-gradient(circle at 40% 80%, rgba(255,255,255,0.1) 0%, transparent 50%);
+            animation: bgMove 20s ease-in-out infinite;
+        }
+
+        @keyframes bgMove {
+            0%, 100% { transform: translateX(0) translateY(0) scale(1); }
+            33% { transform: translateX(-20px) translateY(-10px) scale(1.1); }
+            66% { transform: translateX(20px) translateY(10px) scale(0.9); }
+        }
+
+        /* Floating Icons */
+        .floating-icons {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            pointer-events: none;
+        }
+
+        .floating-icon {
+            position: absolute;
+            color: rgba(255,255,255,0.3);
+            font-size: 1.5rem;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        .floating-icon:nth-child(1) { animation-delay: 0s; }
+        .floating-icon:nth-child(2) { animation-delay: 1.5s; }
+        .floating-icon:nth-child(3) { animation-delay: 3s; }
+        .floating-icon:nth-child(4) { animation-delay: 4.5s; }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0) rotate(0deg); opacity: 0.3; }
+            50% { transform: translateY(-20px) rotate(180deg); opacity: 0.7; }
+        }
+
+        /* Title Animation */
+        @keyframes titlePulse {
+            0%, 100% { transform: scale(1); text-shadow: 0 4px 8px rgba(0,0,0,0.3); }
+            50% { transform: scale(1.05); text-shadow: 0 6px 12px rgba(0,0,0,0.4); }
+        }
+
+        /* Stat Bubbles */
+        .stat-bubble {
+            background: rgba(255,255,255,0.2);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 15px 10px;
+            border: 1px solid rgba(255,255,255,0.3);
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .stat-bubble:hover {
+            background: rgba(255,255,255,0.3);
+            transform: translateY(-5px) scale(1.05);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+        }
+
+        .stat-bubble i {
+            display: block;
+            font-size: 1.5rem;
+            color: #FFD700;
+            margin-bottom: 5px;
+            animation: iconBounce 2s ease-in-out infinite;
+        }
+
+        .stat-bubble span {
+            color: white;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        @keyframes iconBounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-5px); }
+        }
+
+        /* CLEAN QUIZ BUTTON */
+        .quiz-btn-clean {
+            background: linear-gradient(135deg, #007bff 0%, #0056b3 100%);
+            border: none;
+            border-radius: 12px;
+            padding: 18px 36px;
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0, 123, 255, 0.3);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .quiz-btn-clean:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0, 123, 255, 0.5);
+            background: linear-gradient(135deg, #0056b3 0%, #004085 100%);
+        }
+
+        .quiz-btn-clean:active {
+            transform: translateY(0);
+            box-shadow: 0 4px 15px rgba(0, 123, 255, 0.3);
+        }
+
+        .quiz-btn-clean i.bi-arrow-right {
+            transition: transform 0.3s ease;
+        }
+
+        .quiz-btn-clean:hover i.bi-arrow-right {
+            transform: translateX(5px);
+        }
+
+        /* Benefit Tags */
+        .benefit-tag {
+            background: rgba(255,255,255,0.2);
+            color: white;
+            padding: 8px 16px;
+            border-radius: 25px;
+            border: 1px solid rgba(255,255,255,0.3);
+            font-size: 0.9rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+        }
+
+        .benefit-tag:hover {
+            background: rgba(255,255,255,0.3);
+            transform: translateY(-2px);
+        }
+
+        /* Mobile Responsive */
+        @media (max-width: 768px) {
+            .quiz-mega-section {
+                padding: 30px 20px !important;
+                transform: none;
+            }
+
+            .quiz-mega-section h2 {
+                font-size: 2rem !important;
+            }
+
+            .quiz-mega-section h4 {
+                font-size: 1.2rem !important;
+            }
+
+            .quiz-btn-mega {
+                padding: 15px 30px;
+                font-size: 1.1rem;
+            }
+
+            .stat-bubble {
+                padding: 10px 8px;
+            }
+
+            .stat-bubble i {
+                font-size: 1.2rem;
+            }
+
+            .stat-bubble span {
+                font-size: 0.8rem;
+            }
+
+            .benefit-tag {
+                font-size: 0.8rem;
+                padding: 6px 12px;
+            }
+
+            .floating-icon {
+                font-size: 1.2rem;
+            }
+        }
+
+        /* Loading Animation */
+        .loading-spin {
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+
+    <script>
+        // Quiz functionality
+        function startCountryQuiz(country) {
+            // Add loading animation to button
+            const btn = document.getElementById('startQuizBtn');
+            const originalContent = btn.innerHTML;
+            btn.innerHTML = '<i class="bi bi-hourglass-split me-2"></i>Loading...';
+            btn.disabled = true;
+            btn.style.opacity = '0.7';
+            
+            // Start the quiz if SlangQuiz is available
+            if (window.slangQuiz) {
+                setTimeout(() => {
+                    window.slangQuiz.show(country);
+                    // Restore button
+                    btn.innerHTML = originalContent;
+                    btn.disabled = false;
+                    btn.style.opacity = '1';
+                }, 500);
+            } else {
+                // Fallback if quiz not loaded
+                alert('Quiz is loading... Please try again in a moment.');
+                btn.innerHTML = originalContent;
+                btn.disabled = false;
+                btn.style.opacity = '1';
+            }
+        }
+    </script>
+
+    <!-- Insert the quiz overlay/modal at the end of the body block -->
+    {% include 'entries/slang_quiz_fixed.html' %}
+{% endblock content %}

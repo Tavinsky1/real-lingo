@@ -1,0 +1,358 @@
+{% load i18n %}
+<!-- Progress Tracker Component -->
+<div class="progress-tracker" id="progressTracker" style="display: none;">
+    <div class="tracker-container">
+        <div class="tracker-header">
+            <h6 class="mb-0">
+                <i class="bi bi-trophy me-2"></i>
+                REAL LINGO Progress
+            </h6>
+            <button class="btn btn-sm btn-outline-light" onclick="toggleProgressTracker()">
+                <i class="bi bi-x"></i>
+            </button>
+        </div>
+        <div class="tracker-content">
+            <div class="progress-ring">
+                <svg class="progress-circle" width="80" height="80">
+                    <circle class="progress-background" cx="40" cy="40" r="35" />
+                    <circle class="progress-bar" cx="40" cy="40" r="35" id="progressCircle" />
+                </svg>
+                <div class="progress-percentage" id="progressPercentage">0%</div>
+            </div>
+            <div class="progress-details">
+                <div class="progress-item">
+                    <span class="progress-icon">📚</span>
+                    <span class="progress-text">Terms: <span id="termsCount">0</span></span>
+                </div>
+                <div class="progress-item">
+                    <span class="progress-icon">❤️</span>
+                    <span class="progress-text">Favorites: <span id="favoritesCount">0</span></span>
+                </div>
+                <div class="progress-item">
+                    <span class="progress-icon">🔥</span>
+                    <span class="progress-text">Streak: <span id="streakCount">0</span> days</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+.progress-tracker {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    width: 250px;
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    border-radius: 15px;
+    padding: 20px;
+    color: white;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+    z-index: 1500;
+    animation: slideInRight 0.5s ease-out;
+}
+
+.tracker-header {
+    display: flex;
+    justify-content: between;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.tracker-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+}
+
+.progress-ring {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.progress-circle {
+    transform: rotate(-90deg);
+}
+
+.progress-background {
+    fill: none;
+    stroke: rgba(255, 255, 255, 0.2);
+    stroke-width: 4;
+}
+
+.progress-bar {
+    fill: none;
+    stroke: #FFD700;
+    stroke-width: 4;
+    stroke-linecap: round;
+    stroke-dasharray: 220;
+    stroke-dashoffset: 220;
+    transition: stroke-dashoffset 0.5s ease;
+}
+
+.progress-percentage {
+    position: absolute;
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: #FFD700;
+}
+
+.progress-details {
+    width: 100%;
+}
+
+.progress-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 8px;
+    font-size: 0.9rem;
+}
+
+.progress-icon {
+    font-size: 1.2rem;
+}
+
+@keyframes slideInRight {
+    from {
+        transform: translateX(300px);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+@media (max-width: 768px) {
+    .progress-tracker {
+        width: 200px;
+        padding: 15px;
+        top: 10px;
+        right: 10px;
+    }
+    
+    .progress-ring svg {
+        width: 60px;
+        height: 60px;
+    }
+    
+    .progress-percentage {
+        font-size: 1rem;
+    }
+}
+</style>
+
+<script>
+class ProgressTracker {
+    constructor() {
+        this.data = {
+            terms: 0,
+            favorites: 0,
+            streak: 0,
+            totalGoal: 100
+        };
+        this.isVisible = false;
+        this.init();
+    }
+
+    init() {
+        this.loadData();
+        this.updateDisplay();
+        this.setupAutoShow();
+    }
+
+    loadData() {
+        // Load from localStorage or API
+        const saved = localStorage.getItem('lingoProgress');
+        if (saved) {
+            this.data = { ...this.data, ...JSON.parse(saved) };
+        }
+    }
+
+    saveData() {
+        localStorage.setItem('lingoProgress', JSON.stringify(this.data));
+    }
+
+    updateProgress(type, value) {
+        this.data[type] = value;
+        this.saveData();
+        this.updateDisplay();
+        
+        // Show tracker briefly when progress updates
+        if (!this.isVisible) {
+            this.show();
+            setTimeout(() => this.hide(), 3000);
+        }
+    }
+
+    updateDisplay() {
+        const percentage = Math.min(100, Math.round((this.data.terms / this.data.totalGoal) * 100));
+        const circumference = 220;
+        const offset = circumference - (percentage / 100) * circumference;
+
+        // Update circle
+        const progressBar = document.getElementById('progressCircle');
+        if (progressBar) {
+            progressBar.style.strokeDashoffset = offset;
+        }
+
+        // Update percentage text
+        const percentageEl = document.getElementById('progressPercentage');
+        if (percentageEl) {
+            percentageEl.textContent = percentage + '%';
+        }
+
+        // Update counts
+        const elements = {
+            'termsCount': this.data.terms,
+            'favoritesCount': this.data.favorites,
+            'streakCount': this.data.streak
+        };
+
+        Object.entries(elements).forEach(([id, value]) => {
+            const el = document.getElementById(id);
+            if (el) {
+                el.textContent = value;
+            }
+        });
+
+        // Trigger achievements
+        this.checkAchievements();
+    }
+
+    checkAchievements() {
+        const achievements = [];
+        
+        if (this.data.terms >= 10 && !localStorage.getItem('achievement_first_10')) {
+            achievements.push({ title: 'First Steps!', desc: 'Learned 10 terms', icon: '🎯' });
+            localStorage.setItem('achievement_first_10', 'true');
+        }
+        
+        if (this.data.favorites >= 5 && !localStorage.getItem('achievement_favorite_5')) {
+            achievements.push({ title: 'Collector!', desc: '5 favorites saved', icon: '❤️' });
+            localStorage.setItem('achievement_favorite_5', 'true');
+        }
+        
+        if (this.data.streak >= 3 && !localStorage.getItem('achievement_streak_3')) {
+            achievements.push({ title: 'On Fire!', desc: '3 day streak', icon: '🔥' });
+            localStorage.setItem('achievement_streak_3', 'true');
+        }
+
+        achievements.forEach(achievement => {
+            setTimeout(() => {
+                if (window.LingoWorldEnhancer) {
+                    const enhancer = new window.LingoWorldEnhancer();
+                    enhancer.showAchievement(achievement.title, achievement.desc, achievement.icon);
+                }
+            }, 500);
+        });
+    }
+
+    show() {
+        const tracker = document.getElementById('progressTracker');
+        if (tracker) {
+            tracker.style.display = 'block';
+            this.isVisible = true;
+        }
+    }
+
+    hide() {
+        const tracker = document.getElementById('progressTracker');
+        if (tracker) {
+            tracker.style.display = 'none';
+            this.isVisible = false;
+        }
+    }
+
+    toggle() {
+        if (this.isVisible) {
+            this.hide();
+        } else {
+            this.show();
+        }
+    }
+
+    setupAutoShow() {
+        // Show tracker after user has been active for a while
+        let activityCount = 0;
+        document.addEventListener('click', () => {
+            activityCount++;
+            if (activityCount === 5 && !this.isVisible) {
+                this.show();
+                setTimeout(() => this.hide(), 4000);
+            }
+        });
+
+        // Show on page visibility change (when user comes back)
+        document.addEventListener('visibilitychange', () => {
+            if (!document.hidden && this.data.terms > 0) {
+                setTimeout(() => {
+                    if (!this.isVisible) {
+                        this.show();
+                        setTimeout(() => this.hide(), 3000);
+                    }
+                }, 1000);
+            }
+        });
+    }
+
+    // Public methods for integration
+    incrementTerms() {
+        this.updateProgress('terms', this.data.terms + 1);
+    }
+
+    incrementFavorites() {
+        this.updateProgress('favorites', this.data.favorites + 1);
+    }
+
+    incrementStreak() {
+        this.updateProgress('streak', this.data.streak + 1);
+    }
+
+    resetStreak() {
+        this.updateProgress('streak', 0);
+    }
+}
+
+// Global functions
+function toggleProgressTracker() {
+    if (window.progressTracker) {
+        window.progressTracker.toggle();
+    }
+}
+
+// Initialize when DOM is ready
+document.addEventListener('DOMContentLoaded', function() {
+    window.progressTracker = new ProgressTracker();
+    
+    // Add progress trigger button to navbar (optional)
+    const navbar = document.querySelector('.navbar-nav');
+    if (navbar) {
+        const progressBtn = document.createElement('li');
+        progressBtn.className = 'nav-item';
+        progressBtn.innerHTML = `
+            <a class="nav-link" href="#" onclick="toggleProgressTracker(); return false;" title="View Progress">
+                <i class="bi bi-graph-up"></i>
+            </a>
+        `;
+        navbar.appendChild(progressBtn);
+    }
+
+    // Simulate some progress updates for demo
+    setTimeout(() => {
+        if (window.progressTracker && !localStorage.getItem('demo_progress_shown')) {
+            window.progressTracker.updateProgress('terms', 15);
+            window.progressTracker.updateProgress('favorites', 3);
+            window.progressTracker.updateProgress('streak', 2);
+            localStorage.setItem('demo_progress_shown', 'true');
+        }
+    }, 2000);
+});
+
+// Export for use in other scripts
+window.ProgressTracker = ProgressTracker;
+</script>

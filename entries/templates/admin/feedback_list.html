@@ -1,0 +1,193 @@
+{% extends "admin/base_site.html" %}
+{% load static %}
+
+{% block title %}Feedback Management{% endblock %}
+
+{% block extrahead %}
+<style>
+    .filter-bar {
+        background: #f8f9fa;
+        padding: 15px;
+        border-radius: 8px;
+        margin-bottom: 20px;
+    }
+    .feedback-card {
+        background: white;
+        border-radius: 8px;
+        padding: 20px;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        margin-bottom: 15px;
+        border-left: 4px solid #007bff;
+    }
+    .status-badge {
+        padding: 4px 8px;
+        border-radius: 4px;
+        font-size: 0.8rem;
+        font-weight: bold;
+    }
+    .status-open { background: #fff3cd; color: #856404; }
+    .status-in-progress { background: #cce5ff; color: #0056b3; }
+    .status-resolved { background: #d4edda; color: #155724; }
+    .status-closed { background: #e2e3e5; color: #495057; }
+    
+    .priority-low { border-left-color: #28a745; }
+    .priority-medium { border-left-color: #ffc107; }
+    .priority-high { border-left-color: #fd7e14; }
+    .priority-critical { border-left-color: #dc3545; }
+    
+    .type-badge {
+        padding: 3px 6px;
+        border-radius: 3px;
+        font-size: 0.75rem;
+        font-weight: bold;
+    }
+    .type-bug { background: #f8d7da; color: #721c24; }
+    .type-feature { background: #d4edda; color: #155724; }
+    .type-improvement { background: #cce5ff; color: #0056b3; }
+    .type-content { background: #fff3cd; color: #856404; }
+    .type-other { background: #e2e3e5; color: #495057; }
+</style>
+{% endblock %}
+
+{% block content %}
+<h1>📝 Feedback Management</h1>
+
+<!-- Filter Bar -->
+<div class="filter-bar">
+    <form method="get" class="row g-3">
+        <div class="col-md-3">
+            <label for="status" class="form-label">Status:</label>
+            <select name="status" id="status" class="form-select">
+                <option value="">All Statuses</option>
+                {% for value, label in status_choices %}
+                <option value="{{ value }}" {% if value == status_filter %}selected{% endif %}>{{ label }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="col-md-3">
+            <label for="type" class="form-label">Type:</label>
+            <select name="type" id="type" class="form-select">
+                <option value="">All Types</option>
+                {% for value, label in feedback_types %}
+                <option value="{{ value }}" {% if value == type_filter %}selected{% endif %}>{{ label }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="col-md-3">
+            <label for="priority" class="form-label">Priority:</label>
+            <select name="priority" id="priority" class="form-select">
+                <option value="">All Priorities</option>
+                {% for value, label in priority_levels %}
+                <option value="{{ value }}" {% if value == priority_filter %}selected{% endif %}>{{ label }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="col-md-3 d-flex align-items-end">
+            <button type="submit" class="btn btn-primary">Filter</button>
+            <a href="{% url 'admin_feedback_list' %}" class="btn btn-outline-secondary ms-2">Clear</a>
+        </div>
+    </form>
+</div>
+
+<!-- Feedback List -->
+<div class="feedback-container">
+    {% for feedback in feedback_list %}
+    <div class="feedback-card priority-{{ feedback.priority }}">
+        <div class="d-flex justify-content-between align-items-start mb-3">
+            <div>
+                <h5 class="mb-1">
+                    <a href="{% url 'admin_feedback_detail' feedback.id %}" class="text-decoration-none">
+                        {{ feedback.title }}
+                    </a>
+                </h5>
+                <div class="d-flex gap-2 mb-2">
+                    <span class="type-badge type-{{ feedback.feedback_type }}">
+                        {{ feedback.get_feedback_type_display }}
+                    </span>
+                    <span class="status-badge status-{{ feedback.status }}">
+                        {{ feedback.get_status_display }}
+                    </span>
+                    {% if feedback.priority != 'medium' %}
+                    <span class="badge bg-secondary">{{ feedback.get_priority_display }} Priority</span>
+                    {% endif %}
+                </div>
+            </div>
+            <div class="text-end">
+                <small class="text-muted">{{ feedback.created_at|timesince }} ago</small>
+                <div>
+                    <small class="text-muted">by {{ feedback.user.username }}</small>
+                </div>
+            </div>
+        </div>
+        
+        <p class="mb-2">{{ feedback.description|truncatewords:30 }}</p>
+        
+        {% if feedback.country_context %}
+        <div class="mb-2">
+            <small class="text-muted">
+                <i class="fas fa-globe"></i> {{ feedback.country_context }}
+            </small>
+        </div>
+        {% endif %}
+        
+        {% if feedback.admin_notes %}
+        <div class="mt-2 p-2 bg-light rounded">
+            <small><strong>Admin Notes:</strong> {{ feedback.admin_notes|truncatewords:20 }}</small>
+        </div>
+        {% endif %}
+        
+        <div class="d-flex justify-content-between align-items-center mt-3">
+            <div>
+                {% if feedback.page_url %}
+                <a href="{{ feedback.page_url }}" target="_blank" class="btn btn-sm btn-outline-secondary">
+                    <i class="fas fa-external-link-alt"></i> View Page
+                </a>
+                {% endif %}
+            </div>
+            <div>
+                <a href="{% url 'admin_feedback_detail' feedback.id %}" class="btn btn-sm btn-primary">
+                    Manage
+                </a>
+            </div>
+        </div>
+    </div>
+    {% empty %}
+    <div class="text-center py-5">
+        <h4 class="text-muted">No feedback found</h4>
+        <p class="text-muted">No feedback matches your current filters.</p>
+    </div>
+    {% endfor %}
+</div>
+
+<!-- Pagination -->
+{% if feedback_list.has_other_pages %}
+<nav aria-label="Feedback pagination">
+    <ul class="pagination justify-content-center">
+        {% if feedback_list.has_previous %}
+        <li class="page-item">
+            <a class="page-link" href="?page={{ feedback_list.previous_page_number }}{% if status_filter %}&status={{ status_filter }}{% endif %}{% if type_filter %}&type={{ type_filter }}{% endif %}{% if priority_filter %}&priority={{ priority_filter }}{% endif %}">Previous</a>
+        </li>
+        {% endif %}
+        
+        {% for num in feedback_list.paginator.page_range %}
+        {% if feedback_list.number == num %}
+        <li class="page-item active">
+            <span class="page-link">{{ num }}</span>
+        </li>
+        {% elif num > feedback_list.number|add:'-3' and num < feedback_list.number|add:'3' %}
+        <li class="page-item">
+            <a class="page-link" href="?page={{ num }}{% if status_filter %}&status={{ status_filter }}{% endif %}{% if type_filter %}&type={{ type_filter }}{% endif %}{% if priority_filter %}&priority={{ priority_filter }}{% endif %}">{{ num }}</a>
+        </li>
+        {% endif %}
+        {% endfor %}
+        
+        {% if feedback_list.has_next %}
+        <li class="page-item">
+            <a class="page-link" href="?page={{ feedback_list.next_page_number }}{% if status_filter %}&status={{ status_filter }}{% endif %}{% if type_filter %}&type={{ type_filter }}{% endif %}{% if priority_filter %}&priority={{ priority_filter }}{% endif %}">Next</a>
+        </li>
+        {% endif %}
+    </ul>
+</nav>
+{% endif %}
+
+{% endblock %}

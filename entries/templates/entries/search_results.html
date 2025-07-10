@@ -1,0 +1,288 @@
+<!-- Enhanced Search Results Page -->
+{% extends "entries/base.html" %}
+
+{% block title %}
+    Search Results - LingoWorld
+{% endblock title %}
+
+{% block content %}
+<style>
+.relevance-bar {
+    width: 100%;
+    height: 4px;
+    background: #e9ecef;
+    border-radius: 2px;
+    overflow: hidden;
+}
+
+.relevance-fill-low {
+    width: 33%;
+    background: #ffc107;
+}
+
+.relevance-fill-medium {
+    width: 66%;
+    background: #fd7e14;
+}
+
+.relevance-fill-high {
+    width: 100%;
+    background: #198754;
+}
+
+.search-overlay {
+    background: rgba(255, 255, 255, 0.9);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+}
+
+.hidden {
+    display: none;
+}
+</style>
+    <div class="container-fluid">
+        <!-- Search Header -->
+        <div class="search-header py-4 bg-light">
+            <div class="container">
+                <div class="row align-items-center">
+                    <div class="col-md-6">
+                        <h1 class="h3 mb-0">
+                            <i class="bi bi-search me-2"></i>
+                            Search Results
+                        </h1>
+                        {% if search_query %}
+                        <p class="text-muted mb-0">Results for "{{ search_query }}"</p>
+                        {% endif %}
+                    </div>
+                    <div class="col-md-6">
+                        <form method="get" class="search-form-enhanced">
+                            <div class="search-container-enhanced">
+                                <div class="input-group">
+                                    <input type="text" 
+                                           name="search" 
+                                           class="form-control search-input-enhanced" 
+                                           value="{{ search_query }}"
+                                           placeholder="Search terms..."
+                                           autocomplete="off">
+                                    <button class="btn btn-primary" type="submit" title="Search" aria-label="Search entries">
+                                        <i class="bi bi-search"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Results Content -->
+        <div class="results-content py-4">
+            <div class="container">
+                {% if entries %}
+                    <!-- Results Stats -->
+                    <div class="results-stats mb-4">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <span class="text-muted">
+                                Found {{ entries.paginator.count }} result{{ entries.paginator.count|pluralize }}
+                                {% if search_time %}in {{ search_time }}ms{% endif %}
+                            </span>
+                            <div class="view-options">
+                                <div class="btn-group" role="group">
+                                    <button type="button" class="btn btn-outline-secondary btn-sm active" data-view="grid" title="Grid view" aria-label="Switch to grid view">
+                                        <i class="bi bi-grid-3x3"></i>
+                                    </button>
+                                    <button type="button" class="btn btn-outline-secondary btn-sm" data-view="list" title="List view" aria-label="Switch to list view">
+                                        <i class="bi bi-list"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Results Grid -->
+                    <div class="results-grid" id="resultsContainer">
+                        <div class="row g-4">
+                            {% for entry in entries %}
+                            <div class="col-md-6 col-lg-4 result-item">
+                                <div class="entry-card card entry-card-enhanced border-0 shadow-sm h-100" 
+                                     data-entry-id="{{ entry.id }}"
+                                     data-relevance="{{ entry.relevance|default:100 }}">
+                                    <div class="card-body">
+                                        <div class="d-flex justify-content-between align-items-start mb-2">
+                                            <h5 class="card-title mb-0">
+                                                <a href="{% url 'entry-detail' entry.id %}" class="text-decoration-none text-primary">
+                                                    <span style="color: #2d3a8c; background: #e0e7ff; border-radius: 8px; padding: 4px 12px; box-shadow: 0 2px 12px rgba(45,58,140,0.08); letter-spacing: 1px; font-weight: bold; font-size: 1.2rem;">{{ entry.term|highlight:search_query }}</span>
+                                                </a>
+                                            </h5>
+                                            <div class="entry-actions">
+                                                {% if request.user.is_authenticated %}
+                                                <button class="btn btn-sm favorite-btn-enhanced" 
+                                                        data-entry-id="{{ entry.id }}"
+                                                        title="Add to favorites">
+                                                    <i class="bi bi-heart"></i>
+                                                </button>
+                                                {% endif %}
+                                                <div class="relevance-indicator" title="Relevance: {{ entry.relevance|default:100 }}%">
+                                                    <div class="relevance-bar">
+                                                        <div class="relevance-fill {% if entry.relevance|default:100 >= 80 %}relevance-fill-high{% elif entry.relevance|default:100 >= 50 %}relevance-fill-medium{% else %}relevance-fill-low{% endif %}"></div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                                        <p class="card-text text-muted mb-3">
+                                            {{ entry.notes|highlight:search_query|truncatewords:15 }}
+                                        </p>
+                                        
+                                        <div class="d-flex justify-content-between align-items-center">
+                                            <div class="entry-meta">
+                                                {% if entry.category %}
+                                                <span class="category-pill small">{{ entry.category }}</span>
+                                                {% endif %}
+                                                {% if entry.language_code %}
+                                                <span class="language-badge ms-1">
+                                                    {% if entry.language_code == 'es-AR' %}🇦🇷
+                                                    {% elif entry.language_code == 'en-AU' %}🇦🇺
+                                                    {% elif entry.language_code == 'de-DE' %}🇩🇪
+                                                    {% endif %}
+                                                </span>
+                                                {% endif %}
+                                            </div>
+                                            
+                                            {% if entry.tags.all %}
+                                            <div class="entry-tags">
+                                                {% for tag in entry.tags.all|slice:":2" %}
+                                                <span class="category-pill extra-small me-1">{{ tag.name }}</span>
+                                                {% endfor %}
+                                            </div>
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+
+                    <!-- Pagination -->
+                    {% if entries.has_other_pages %}
+                    <div class="pagination-wrapper mt-5">
+                        <nav aria-label="Search results pagination">
+                            <ul class="pagination justify-content-center">
+                                {% if entries.has_previous %}
+                                    <li class="page-item">
+                                        <a class="page-link" href="?page=1{% if search_query %}&search={{ search_query }}{% endif %}" title="First page" aria-label="Go to first page">
+                                            <i class="bi bi-chevron-double-left"></i>
+                                        </a>
+                                    </li>
+                                    <li class="page-item">
+                                        <a class="page-link" href="?page={{ entries.previous_page_number }}{% if search_query %}&search={{ search_query }}{% endif %}" title="Previous page" aria-label="Go to previous page">
+                                            <i class="bi bi-chevron-left"></i>
+                                        </a>
+                                    </li>
+                                {% endif %}
+                                {% for num in entries.paginator.page_range %}
+                                    {% if num == entries.number %}
+                                        <li class="page-item active">
+                                            <span class="page-link">{{ num }}</span>
+                                        </li>
+                                    {% elif num > entries.number|add:'-3' and num < entries.number|add:'3' %}
+                                        <li class="page-item">
+                                            <a class="page-link" href="?page={{ num }}{% if search_query %}&search={{ search_query }}{% endif %}" title="Page {{ num }}" aria-label="Go to page {{ num }}">{{ num }}</a>
+                                        </li>
+                                    {% endif %}
+                                {% endfor %}
+                                {% if entries.has_next %}
+                                    <li class="page-item">
+                                        <a class="page-link" href="?page={{ entries.next_page_number }}{% if search_query %}&search={{ search_query }}{% endif %}" title="Next page" aria-label="Go to next page">
+                                            <i class="bi bi-chevron-right"></i>
+                                        </a>
+                                    </li>
+                                    <li class="page-item">
+                                        <a class="page-link" href="?page={{ entries.paginator.num_pages }}{% if search_query %}&search={{ search_query }}{% endif %}" title="Last page" aria-label="Go to last page">
+                                            <i class="bi bi-chevron-double-right"></i>
+                                        </a>
+                                    </li>
+                                {% endif %}
+                            </ul>
+                        </nav>
+                    </div>
+                    {% endif %}
+
+                {% else %}
+                    <!-- No Results -->
+                    <div class="no-results text-center py-5">
+                        <div class="mb-4">
+                            <i class="bi bi-search display-1 text-muted"></i>
+                        </div>
+                        <h3 class="text-muted mb-3">No results found</h3>
+                        {% if search_query %}
+                        <p class="text-muted mb-4">
+                            We couldn't find any entries matching "{{ search_query }}".
+                        </p>
+                        {% endif %}
+                        <div class="suggestions">
+                            <h5 class="mb-3">Try searching for:</h5>
+                            <div class="suggestion-pills">
+                                <a href="?search=che" class="category-pill me-2 mb-2">che</a>
+                                <a href="?search=boludo" class="category-pill me-2 mb-2">boludo</a>
+                                <a href="?search=mate" class="category-pill me-2 mb-2">mate</a>
+                                <a href="?search=pibe" class="category-pill me-2 mb-2">pibe</a>
+                            </div>
+                        </div>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+    {% block extra_js %}
+    <script>
+        // View toggle functionality
+        document.querySelectorAll('[data-view]').forEach(btn => {
+            btn.addEventListener('click', function() {
+                const view = this.dataset.view;
+                const container = document.getElementById('resultsContainer');
+                
+                // Update active button
+                document.querySelectorAll('[data-view]').forEach(b => b.classList.remove('active'));
+                this.classList.add('active');
+                
+                // Toggle view
+                if (view === 'list') {
+                    container.className = 'results-list';
+                    container.innerHTML = generateListView();
+                } else {
+                    container.className = 'results-grid';
+                    // Keep existing grid view
+                }
+            });
+        });
+
+        // Highlight search terms
+        function highlightSearchTerms() {
+            const searchQuery = '{{ search_query|escapejs }}';
+            if (searchQuery) {
+                const regex = new RegExp(`(${searchQuery})`, 'gi');
+                document.querySelectorAll('.entry-card .card-title a, .entry-card .card-text').forEach(el => {
+                    if (el.innerHTML && !el.querySelector('mark')) {
+                        el.innerHTML = el.innerHTML.replace(regex, '<mark class="bg-warning">$1</mark>');
+                    }
+                });
+            }
+        }
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            highlightSearchTerms();
+            
+            // Add loading state to search
+            document.querySelector('.search-form-enhanced').addEventListener('submit', function() {
+                const btn = this.querySelector('button[type="submit"]');
+                btn.innerHTML = '<span class="loading-wave"><span></span><span></span><span></span></span>';
+                btn.disabled = true;
+            });
+        });
+    </script>
+    {% endblock extra_js %}
+{% endblock content %}

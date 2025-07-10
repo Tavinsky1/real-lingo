@@ -1,0 +1,198 @@
+{% extends "entries/base.html" %}
+{% load lingo_tags %}
+{% load i18n %}
+
+{% block title %}
+    Email Verification - Real Lingo
+{% endblock title %}
+
+{% block content %}
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-6 col-lg-5">
+                <!-- Verification Card -->
+                <div class="card border-0 shadow-lg animate__animated animate__fadeInUp">
+                    <div class="card-header bg-gradient text-white text-center py-4">
+                        <div class="mb-3">
+                            <i class="bi bi-envelope-check display-4"></i>
+                        </div>
+                        <h3 class="mb-0">Email Verification</h3>
+                        <p class="mb-0 opacity-75">Verify your account to continue</p>
+                    </div>
+                    
+                    <div class="card-body p-5 text-center">
+                        <!-- Loading State -->
+                        <div id="loading-state">
+                            <div class="spinner-border text-primary mb-3" role="status">
+                                <span class="visually-hidden">Loading...</span>
+                            </div>
+                            <h5>Verifying your email...</h5>
+                            <p class="text-muted">Please wait while we verify your account.</p>
+                        </div>
+
+                        <!-- Success State -->
+                        <div id="success-state" class="d-none">
+                            <div class="text-success mb-3">
+                                <i class="bi bi-check-circle display-1"></i>
+                            </div>
+                            <h4 class="text-success">Email Verified!</h4>
+                            <p class="text-muted mb-4">Your account has been successfully verified. You can now access all features of Real Lingo.</p>
+                            <a href="/login-nodejs/" class="btn btn-primary rounded-pill">
+                                <i class="bi bi-box-arrow-in-right me-2"></i>Continue to Login
+                            </a>
+                        </div>
+
+                        <!-- Error State -->
+                        <div id="error-state" class="d-none">
+                            <div class="text-danger mb-3">
+                                <i class="bi bi-x-circle display-1"></i>
+                            </div>
+                            <h4 class="text-danger">Verification Failed</h4>
+                            <p id="error-message" class="text-muted mb-4">The verification link is invalid or has expired.</p>
+                            <div class="d-grid gap-2">
+                                <a href="/signup-nodejs/" class="btn btn-primary rounded-pill">
+                                    <i class="bi bi-person-plus me-2"></i>Create New Account
+                                </a>
+                                <button id="resend-btn" class="btn btn-outline-secondary rounded-pill">
+                                    <i class="bi bi-envelope-arrow-up me-2"></i>Resend Verification Email
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Help Card -->
+                <div class="text-center mt-4">
+                    <div class="card bg-light border-0">
+                        <div class="card-body py-3">
+                            <h6 class="text-primary mb-2">
+                                <i class="bi bi-question-circle me-2"></i>Need Help?
+                            </h6>
+                            <small class="text-muted">
+                                If you're having trouble, check your spam folder or contact support.
+                            </small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <style>
+        .bg-gradient {
+            background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+        }
+        
+        .card {
+            transition: all 0.3s ease;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border: none;
+            padding: 0.75rem 1.5rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 0.5rem 1rem rgba(102, 126, 234, 0.3);
+        }
+        
+        .animate__animated {
+            animation-duration: 0.8s;
+        }
+    </style>
+
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const loadingState = document.getElementById('loading-state');
+        const successState = document.getElementById('success-state');
+        const errorState = document.getElementById('error-state');
+        const errorMessage = document.getElementById('error-message');
+        const resendBtn = document.getElementById('resend-btn');
+
+        // Get token from URL
+        const urlParams = new URLSearchParams(window.location.search);
+        const token = urlParams.get('token');
+
+        if (!token) {
+            showError('No verification token provided.');
+            return;
+        }
+
+        // Verify email with backend
+        verifyEmail(token);
+
+        function showLoading() {
+            loadingState.classList.remove('d-none');
+            successState.classList.add('d-none');
+            errorState.classList.add('d-none');
+        }
+
+        function showSuccess() {
+            loadingState.classList.add('d-none');
+            successState.classList.remove('d-none');
+            errorState.classList.add('d-none');
+        }
+
+        function showError(message) {
+            loadingState.classList.add('d-none');
+            successState.classList.add('d-none');
+            errorState.classList.remove('d-none');
+            errorMessage.textContent = message;
+        }
+
+        async function verifyEmail(token) {
+            try {
+                const response = await fetch('http://localhost:3001/api/auth/verify-email', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ token })
+                });
+
+                const result = await response.json();
+
+                if (response.ok && result.success) {
+                    showSuccess();
+                } else {
+                    showError(result.message || 'Verification failed. Please try again.');
+                }
+            } catch (error) {
+                console.error('Verification error:', error);
+                showError('Network error. Please check your connection and try again.');
+            }
+        }
+
+        // Resend verification email
+        resendBtn.addEventListener('click', async function() {
+            const email = prompt('Please enter your email address:');
+            if (!email) return;
+
+            try {
+                const response = await fetch('http://localhost:3001/api/auth/resend-verification', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ email })
+                });
+
+                const result = await response.json();
+
+                if (response.ok && result.success) {
+                    alert('Verification email sent! Please check your inbox.');
+                } else {
+                    alert(result.message || 'Failed to send verification email.');
+                }
+            } catch (error) {
+                console.error('Resend error:', error);
+                alert('Network error. Please try again.');
+            }
+        });
+    });
+    </script>
+{% endblock content %}

@@ -1,0 +1,787 @@
+{% load i18n %}
+<!-- Advanced Search Results Template -->
+{% extends "entries/base.html" %}
+
+{% block title %}Search Results{% endblock %}
+
+{% block extra_css %}
+<style>
+.search-results-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.search-header {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    padding: 40px 20px;
+    border-radius: 16px;
+    margin-bottom: 30px;
+    text-align: center;
+}
+
+.search-input-advanced {
+    width: 100%;
+    max-width: 600px;
+    padding: 15px 20px;
+    border: none;
+    border-radius: 50px;
+    font-size: 16px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    transition: all 0.3s ease;
+}
+
+.search-input-advanced:focus {
+    outline: none;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+}
+
+.filters-container {
+    background: white;
+    border-radius: 16px;
+    padding: 20px;
+    margin-bottom: 30px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+}
+
+.filter-row {
+    display: flex;
+    gap: 15px;
+    flex-wrap: wrap;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.filter-select {
+    padding: 10px 15px;
+    border: 2px solid #e0e6ed;
+    border-radius: 8px;
+    background: white;
+    min-width: 150px;
+    transition: all 0.3s ease;
+}
+
+.filter-select:focus {
+    border-color: #667eea;
+    box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+}
+
+.filter-tags {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin-top: 10px;
+}
+
+.filter-tag {
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    color: white;
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 12px;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    animation: fadeInUp 0.3s ease;
+}
+
+.filter-tag .remove-tag {
+    background: rgba(255,255,255,0.3);
+    border: none;
+    color: white;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-size: 10px;
+}
+
+.hidden {
+    display: none;
+}
+
+.search-header-spacing {
+    margin-top: 20px;
+}
+
+.filters-title {
+    margin-bottom: 20px;
+    color: #1e293b;
+}
+
+.sort-label {
+    color: #64748b;
+    margin-right: 10px;
+}
+
+.results-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.results-count {
+    color: #64748b;
+    font-weight: 500;
+}
+
+.sort-controls {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+.sort-button {
+    padding: 8px 16px;
+    border: 2px solid #e0e6ed;
+    background: white;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.sort-button.active {
+    background: #667eea;
+    color: white;
+    border-color: #667eea;
+}
+
+.results-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+    gap: 20px;
+    margin-bottom: 40px;
+}
+
+.result-card {
+    background: white;
+    border-radius: 16px;
+    padding: 24px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.result-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, #667eea, #764ba2);
+}
+
+.result-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 35px rgba(0,0,0,0.15);
+}
+
+.result-term {
+    font-size: 20px;
+    font-weight: 700;
+    color: #1e293b;
+    margin-bottom: 8px;
+}
+
+.result-meta {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 12px;
+    flex-wrap: wrap;
+}
+
+.meta-badge {
+    padding: 4px 8px;
+    border-radius: 6px;
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+}
+
+.language-badge {
+    background: #dbeafe;
+    color: #1e40af;
+}
+
+.category-badge {
+    background: #fef3c7;
+    color: #92400e;
+}
+
+.result-translation {
+    color: #475569;
+    font-size: 16px;
+    margin-bottom: 12px;
+    font-style: italic;
+}
+
+.result-tags {
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+    margin-bottom: 16px;
+}
+
+.result-tag {
+    background: #f1f5f9;
+    color: #475569;
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 12px;
+}
+
+.result-actions {
+    display: flex;
+    gap: 10px;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.favorite-btn {
+    background: none;
+    border: none;
+    color: #e2e8f0;
+    font-size: 18px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.favorite-btn.favorited {
+    color: #ef4444;
+    transform: scale(1.1);
+}
+
+.view-btn {
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 12px;
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+
+.view-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+}
+
+.pagination-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 40px;
+}
+
+.pagination {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+}
+
+.page-btn {
+    padding: 10px 16px;
+    border: 2px solid #e0e6ed;
+    background: white;
+    color: #475569;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-weight: 500;
+}
+
+.page-btn.active {
+    background: #667eea;
+    color: white;
+    border-color: #667eea;
+}
+
+.page-btn:hover:not(.active) {
+    border-color: #667eea;
+    color: #667eea;
+}
+
+.no-results {
+    text-align: center;
+    padding: 60px 20px;
+    color: #64748b;
+}
+
+.no-results-icon {
+    font-size: 48px;
+    margin-bottom: 20px;
+}
+
+.loading-spinner {
+    display: none;
+    justify-content: center;
+    align-items: center;
+    padding: 40px;
+}
+
+.spinner {
+    width: 40px;
+    height: 40px;
+    border: 4px solid #f3f3f3;
+    border-top: 4px solid #667eea;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.result-card {
+    animation: fadeInUp 0.5s ease forwards;
+}
+
+.filter-row { gap: 15px; }
+
+@media (max-width: 768px) {
+    .search-results-container {
+        padding: 10px;
+    }
+    
+    .filter-row {
+        flex-direction: column;
+        align-items: stretch;
+    }
+    
+    .filter-select {
+        min-width: 100%;
+    }
+    
+    .results-grid {
+        grid-template-columns: 1fr;
+        gap: 15px;
+    }
+    
+    .results-header {
+        flex-direction: column;
+        gap: 15px;
+        align-items: stretch;
+    }
+}
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="search-results-container">
+    <!-- Search Header -->
+    <div class="search-header">
+        <h1>🔍 Advanced Search</h1>
+        <p>Discover the perfect terms with powerful filtering</p>
+        <div class="search-header-spacing">
+            <input 
+                type="text" 
+                id="searchInput" 
+                class="search-input-advanced" 
+                placeholder="Search terms, translations, or tags..."
+                value="{{ request.GET.q|default:'' }}"
+                title="Search for terms, translations, or tags"
+                aria-label="Search for terms, translations, or tags"
+            >
+        </div>
+    </div>
+
+    <!-- Advanced Filters -->
+    <div class="filters-container">
+        <h3 class="filters-title">🎛️ Filters</h3>
+        
+        <div class="filter-row">
+            <select id="languageFilter" class="filter-select" title="Filter by language" aria-label="Filter by language">
+                <option value="">All Languages</option>
+                <option value="en">English</option>
+                <option value="es">Spanish</option>
+                <option value="fr">French</option>
+                <option value="de">German</option>
+                <option value="it">Italian</option>
+                <option value="pt">Portuguese</option>
+                <option value="ru">Russian</option>
+                <option value="ja">Japanese</option>
+                <option value="ko">Korean</option>
+                <option value="zh">Chinese</option>
+            </select>
+            <select id="categoryFilter" class="filter-select" title="Filter by category" aria-label="Filter by category">
+                <option value="">All Categories</option>
+                <option value="slang">Slang</option>
+                <option value="colloquial_phrases">Colloquial Phrases</option>
+                <option value="unique_concepts">Unique Concepts</option>
+                <option value="insults">Insults</option>
+                <option value="jokes">Jokes</option>
+                <option value="tongue_twisters">Tongue Twisters</option>
+            </select>
+            <select id="difficultyFilter" class="filter-select" title="Filter by difficulty" aria-label="Filter by difficulty">
+                <option value="">All Difficulties</option>
+                <option value="EASY">Easy</option>
+                <option value="MEDIUM">Medium</option>
+                <option value="HARD">Hard</option>
+                <option value="MASTERED">Mastered</option>
+            </select>
+            <button id="clearFilters" class="sort-button">Clear All</button>
+        </div>
+
+        <div class="filter-tags" id="activeFilters">
+            <!-- Active filters will be displayed here -->
+        </div>
+    </div>
+
+    <!-- Results Header -->
+    <div class="results-header">
+        <div class="results-count" id="resultsCount">
+            Searching...
+        </div>
+        
+        <div class="sort-controls">
+            <span class="sort-label">Sort by:</span>
+            <button class="sort-button active" data-sort="relevance">Relevance</button>
+            <button class="sort-button" data-sort="term">Term A-Z</button>
+            <button class="sort-button" data-sort="created_at">Newest</button>
+            <button class="sort-button" data-sort="random">Random</button>
+        </div>
+    </div>
+
+    <!-- Loading Spinner -->
+    <div class="loading-spinner" id="loadingSpinner">
+        <div class="spinner"></div>
+    </div>
+
+    <!-- Results Grid -->
+    <div class="results-grid" id="resultsGrid">
+        <!-- Results will be populated here -->
+    </div>
+
+    <!-- No Results -->
+    <div class="no-results hidden" id="noResults">
+        <div class="no-results-icon">🔍</div>
+        <h3>No results found</h3>
+        <p>Try adjusting your search terms or filters</p>
+    </div>
+
+    <!-- Pagination -->
+    <div class="pagination-container hidden" id="paginationContainer">
+        <div class="pagination" id="pagination">
+            <!-- Pagination will be populated here -->
+        </div>
+    </div>
+</div>
+
+<script>
+class AdvancedSearch {
+    constructor() {
+        this.currentPage = 1;
+        this.currentSort = 'relevance';
+        this.currentFilters = {
+            search: '',
+            language: '',
+            category: '',
+            difficulty: ''
+        };
+        this.debounceTimer = null;
+        
+        this.init();
+    }
+    
+    init() {
+        this.bindEvents();
+        this.performSearch(); // Initial search
+    }
+    
+    bindEvents() {
+        // Search input with debouncing
+        const searchInput = document.getElementById('searchInput');
+        searchInput.addEventListener('input', (e) => {
+            clearTimeout(this.debounceTimer);
+            this.debounceTimer = setTimeout(() => {
+                this.currentFilters.search = e.target.value;
+                this.currentPage = 1;
+                this.performSearch();
+            }, 500);
+        });
+        
+        // Filter dropdowns
+        document.getElementById('languageFilter').addEventListener('change', (e) => {
+            this.currentFilters.language = e.target.value;
+            this.currentPage = 1;
+            this.updateFilterTags();
+            this.performSearch();
+        });
+        
+        document.getElementById('categoryFilter').addEventListener('change', (e) => {
+            this.currentFilters.category = e.target.value;
+            this.currentPage = 1;
+            this.updateFilterTags();
+            this.performSearch();
+        });
+        
+        document.getElementById('difficultyFilter').addEventListener('change', (e) => {
+            this.currentFilters.difficulty = e.target.value;
+            this.currentPage = 1;
+            this.updateFilterTags();
+            this.performSearch();
+        });
+        
+        // Clear filters
+        document.getElementById('clearFilters').addEventListener('click', () => {
+            this.clearAllFilters();
+        });
+        
+        // Sort buttons
+        document.querySelectorAll('[data-sort]').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                document.querySelectorAll('.sort-button').forEach(b => b.classList.remove('active'));
+                e.target.classList.add('active');
+                this.currentSort = e.target.dataset.sort;
+                this.currentPage = 1;
+                this.performSearch();
+            });
+        });
+    }
+    
+    updateFilterTags() {
+        const container = document.getElementById('activeFilters');
+        container.innerHTML = '';
+        
+        Object.entries(this.currentFilters).forEach(([key, value]) => {
+            if (value && key !== 'search') {
+                const tag = document.createElement('div');
+                tag.className = 'filter-tag';
+                tag.innerHTML = `
+                    ${key}: ${value}
+                    <button class="remove-tag" onclick="advancedSearch.removeFilter('${key}')">×</button>
+                `;
+                container.appendChild(tag);
+            }
+        });
+    }
+    
+    removeFilter(filterKey) {
+        this.currentFilters[filterKey] = '';
+        document.getElementById(filterKey + 'Filter').value = '';
+        this.updateFilterTags();
+        this.currentPage = 1;
+        this.performSearch();
+    }
+    
+    clearAllFilters() {
+        this.currentFilters = {
+            search: document.getElementById('searchInput').value,
+            language: '',
+            category: '',
+            difficulty: ''
+        };
+        
+        document.getElementById('languageFilter').value = '';
+        document.getElementById('categoryFilter').value = '';
+        document.getElementById('difficultyFilter').value = '';
+        
+        this.updateFilterTags();
+        this.currentPage = 1;
+        this.performSearch();
+    }
+    
+    async performSearch() {
+        const loadingSpinner = document.getElementById('loadingSpinner');
+        const resultsGrid = document.getElementById('resultsGrid');
+        const noResults = document.getElementById('noResults');
+        const resultsCount = document.getElementById('resultsCount');
+        
+        // Show loading
+        loadingSpinner.style.display = 'flex';
+        resultsGrid.innerHTML = '';
+        noResults.style.display = 'none';
+        
+        // Build query parameters
+        const params = new URLSearchParams();
+        
+        if (this.currentFilters.search) params.append('search', this.currentFilters.search);
+        if (this.currentFilters.language) params.append('language_code', this.currentFilters.language);
+        if (this.currentFilters.category) params.append('category', this.currentFilters.category);
+        if (this.currentSort !== 'relevance') params.append('ordering', this.currentSort);
+        params.append('page', this.currentPage);
+        
+        try {
+            const response = await fetch(`/api/entries/?${params.toString()}`);
+            const data = await response.json();
+            
+            loadingSpinner.style.display = 'none';
+            
+            if (data.results && data.results.length > 0) {
+                this.renderResults(data.results);
+                this.renderPagination(data);
+                resultsCount.textContent = `Found ${data.count} results`;
+            } else {
+                noResults.style.display = 'block';
+                resultsCount.textContent = 'No results found';
+            }
+        } catch (error) {
+            console.error('Search error:', error);
+            loadingSpinner.style.display = 'none';
+            noResults.style.display = 'block';
+            resultsCount.textContent = 'Search error occurred';
+        }
+    }
+    
+    renderResults(results) {
+        const grid = document.getElementById('resultsGrid');
+        grid.innerHTML = '';
+        
+        results.forEach((entry, index) => {
+            const card = document.createElement('div');
+            card.className = 'result-card';
+            card.style.animationDelay = `${index * 0.1}s`;
+            
+            const translation = entry.translations && entry.translations.length > 0 
+                ? entry.translations[0].translation 
+                : 'No translation available';
+                
+            const tags = entry.tags.map(tag => 
+                `<span class="result-tag">${tag.name}</span>`
+            ).join('');
+            
+            card.innerHTML = `
+                <div class="result-term">${entry.term}</div>
+                <div class="result-meta">
+                    <span class="meta-badge language-badge">${entry.language_code.toUpperCase()}</span>
+                    ${entry.category ? `<span class="meta-badge category-badge">${entry.category}</span>` : ''}
+                </div>
+                <div class="result-translation">${translation}</div>
+                <div class="result-tags">${tags}</div>
+                <div class="result-actions">
+                    <button class="favorite-btn ${entry.is_favorited ? 'favorited' : ''}" 
+                            onclick="advancedSearch.toggleFavorite(${entry.id}, this)">
+                        ${entry.is_favorited ? '❤️' : '🤍'}
+                    </button>
+                    <button class="view-btn" onclick="advancedSearch.viewEntry(${entry.id})">
+                        View Details
+                    </button>
+                </div>
+            `;
+            
+            grid.appendChild(card);
+        });
+    }
+    
+    renderPagination(data) {
+        const container = document.getElementById('paginationContainer');
+        const pagination = document.getElementById('pagination');
+        
+        if (!data.previous && !data.next) {
+            container.style.display = 'none';
+            return;
+        }
+        
+        container.style.display = 'flex';
+        pagination.innerHTML = '';
+        
+        // Previous button
+        if (data.previous) {
+            const prevBtn = document.createElement('button');
+            prevBtn.className = 'page-btn';
+            prevBtn.textContent = '← Previous';
+            prevBtn.onclick = () => {
+                this.currentPage--;
+                this.performSearch();
+            };
+            pagination.appendChild(prevBtn);
+        }
+        
+        // Page info
+        const pageInfo = document.createElement('span');
+        pageInfo.style.padding = '10px 16px';
+        pageInfo.style.color = '#64748b';
+        pageInfo.textContent = `Page ${this.currentPage}`;
+        pagination.appendChild(pageInfo);
+        
+        // Next button
+        if (data.next) {
+            const nextBtn = document.createElement('button');
+            nextBtn.className = 'page-btn';
+            nextBtn.textContent = 'Next →';
+            nextBtn.onclick = () => {
+                this.currentPage++;
+                this.performSearch();
+            };
+            pagination.appendChild(nextBtn);
+        }
+    }
+    
+    async toggleFavorite(entryId, button) {
+        try {
+            const response = await fetch('/api/favorites/', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': this.getCsrfToken()
+                },
+                body: JSON.stringify({ entry_id: entryId })
+            });
+            
+            if (response.ok) {
+                button.classList.toggle('favorited');
+                button.textContent = button.classList.contains('favorited') ? '❤️' : '🤍';
+                
+                // Show notification
+                this.showNotification('Favorite updated!', 'success');
+            }
+        } catch (error) {
+            console.error('Favorite error:', error);
+            this.showNotification('Error updating favorite', 'error');
+        }
+    }
+    
+    viewEntry(entryId) {
+        // Track the view
+        fetch('/api/track-view/', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRFToken': this.getCsrfToken()
+            },
+            body: JSON.stringify({ entry_id: entryId })
+        });
+        
+        // Navigate to entry detail
+        window.location.href = `/entries/${entryId}/`;
+    }
+    
+    getCsrfToken() {
+        return document.querySelector('[name=csrfmiddlewaretoken]')?.value || '';
+    }
+    
+    showNotification(message, type) {
+        // Integration with global notification system
+        if (window.lingoNotificationSystem) {
+            window.lingoNotificationSystem.show(message, type);
+        }
+    }
+}
+
+// Initialize when page loads
+document.addEventListener('DOMContentLoaded', () => {
+    window.advancedSearch = new AdvancedSearch();
+});
+</script>
+{% endblock %}

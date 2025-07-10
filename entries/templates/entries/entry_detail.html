@@ -1,0 +1,326 @@
+{% extends "entries/base.html" %}
+{% load lingo_tags %}
+
+{% block title %}
+    {{ entry.term }} - LingoWorld
+{% endblock title %}
+
+{% block content %}
+    <!-- Navigation breadcrumb -->
+    <nav aria-label="breadcrumb" class="mb-4">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item">
+                <a href="{% url 'entry-list' %}" class="text-decoration-none">
+                    <i class="bi bi-house me-1"></i>{% translate 'home' %}
+                </a>
+            </li>
+            {% if request.session.selected_country %}
+                <li class="breadcrumb-item">
+                    <a href="{% url 'country-entries' request.session.selected_country %}" class="text-decoration-none">
+                        {% if request.session.selected_country == 'argentina' %}🇦🇷 Argentina
+                        {% elif request.session.selected_country == 'australia' %}🇦🇺 Australia
+                        {% elif request.session.selected_country == 'germany' %}🇩🇪 Germany
+                        {% elif request.session.selected_country == 'colombia' %}🇨🇴 Colombia
+                        {% elif request.session.selected_country == 'belgium' %}🇧🇪 Belgium
+                        {% endif %}
+                    </a>
+                </li>
+            {% endif %}
+            <li class="breadcrumb-item active" aria-current="page">{{ entry.term }}</li>
+        </ol>
+    </nav>
+
+    <!-- Main entry card -->
+    <div class="card border-0 shadow-lg mb-4" data-entry-id="{{ entry.id }}">
+        <div class="card-header bg-gradient text-white py-4">
+            <div class="row align-items-center">
+                <div class="col">
+                    <h1 class="display-4 mb-3 fw-bold" style="color: #2d3a8c; background: #e0e7ff; border-radius: 8px; padding: 8px 18px; box-shadow: 0 2px 12px rgba(45,58,140,0.08); letter-spacing: 1px;">{{ entry.term }}</h1>
+                    <div class="d-flex flex-wrap gap-2 mb-3">
+                        <span class="badge bg-light text-dark fs-6 px-3 py-2">
+                            <i class="bi bi-flag me-1"></i>{{ entry.language_code|upper }}
+                        </span>
+                        {% if entry.region_code %}
+                            <span class="badge bg-info fs-6 px-3 py-2">
+                                <i class="bi bi-geo-alt me-1"></i>{{ entry.region_code }}
+                            </span>
+                        {% endif %}
+                        {% if entry.category %}
+                            <span class="badge bg-success fs-6 px-3 py-2">
+                                <i class="bi bi-bookmark me-1"></i>{{ entry.get_category_display }}
+                            </span>
+                        {% endif %}
+                        {% if entry.part_of_speech %}
+                            <span class="badge bg-warning text-dark fs-6 px-3 py-2">
+                                <i class="bi bi-chat-text me-1"></i>{{ entry.part_of_speech }}
+                            </span>
+                        {% endif %}
+                    </div>
+                </div>
+                <div class="col-auto">
+                    <div class="d-flex flex-column align-items-end">
+                        <!-- Contributor information -->
+                        {% if entry.author %}
+                            <div class="mb-3 text-end">
+                                <small class="opacity-75">{% translate 'contributed_by' %}</small>
+                                <div class="d-flex align-items-center">
+                                    <i class="bi bi-person-circle me-2 fs-5"></i>
+                                    <span class="fw-semibold">{{ entry.author.username }}</span>
+                                </div>
+                            </div>
+                        {% endif %}
+                        
+                        <!-- Quick actions -->
+                        <div class="d-flex gap-2">
+                            {% if user.is_authenticated %}
+                                <!-- Favorite toggle -->
+                                <button class="btn btn-outline-light btn-sm rounded-pill" 
+                                        onclick="toggleFavorite({{ entry.id }})" 
+                                        id="favorite-btn-{{ entry.id }}"
+                                        title="{% if entry.is_favorited %}{% translate 'remove_from_favorites' %}{% else %}{% translate 'add_to_favorites' %}{% endif %}">
+                                    <i class="bi {% if entry.is_favorited %}bi-heart-fill text-danger{% else %}bi-heart{% endif %} me-1"></i>
+                                    {% translate 'favorite' %}
+                                </button>
+                                
+                                <!-- Edit button for author or staff -->
+                                {% if entry.author == user or user.is_staff %}
+                                    <a href="{% url 'edit-entry' entry.id %}" class="btn btn-outline-light btn-sm rounded-pill">
+                                        <i class="bi bi-pencil me-1"></i>{% translate 'edit_entry' %}
+                                    </a>
+                                {% endif %}
+                            {% endif %}
+                            
+                            <!-- Share button -->
+                            <button class="btn btn-outline-light btn-sm rounded-pill" 
+                                    onclick="shareEntry('{{ entry.term }}', window.location.href)"
+                                    title="{% translate 'share_term' %}">
+                                <i class="bi bi-share me-1"></i>{% translate 'share' %}
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card-body p-4">
+            <!-- Definition Section -->
+            {% if entry.notes %}
+                <div class="mb-4">
+                    <h3 class="h5 fw-bold mb-3 d-flex align-items-center">
+                        <i class="bi bi-book me-2 text-primary"></i>
+                        {% translate 'definition' %}
+                    </h3>
+                    <div class="p-3 bg-light rounded-3 border-start border-4 border-primary">
+                        <p class="mb-0 fs-6 lh-lg">{{ entry.notes|linebreaksbr }}</p>
+                    </div>
+                </div>
+            {% endif %}
+
+            <!-- Translations Section -->
+            {% if entry.translations.all %}
+                <div class="mb-4">
+                    <h3 class="h5 fw-bold mb-3 d-flex align-items-center">
+                        <i class="bi bi-translate me-2 text-success"></i>
+                        {% translate 'translations' %}
+                    </h3>
+                    <div class="row g-3">
+                        {% for translation in entry.translations.all %}
+                            {% if user_language == 'es' or translation.target_language_code != 'es' %}
+                                <div class="col-md-6">
+                                    <div class="card h-100 border-0 bg-light">
+                                        <div class="card-body p-3">
+                                            <div class="d-flex justify-content-between align-items-start mb-2">
+                                                <span class="badge bg-success">{{ translation.target_language_code|upper }}</span>
+                                                <button class="btn btn-sm btn-outline-secondary rounded-pill" 
+                                                        onclick="copyToClipboard('{{ translation.translation }}')"
+                                                        title="{% translate 'copy_translation' %}">
+                                                    <i class="bi bi-clipboard"></i>
+                                                </button>
+                                            </div>
+                                            <p class="fw-semibold mb-1">{{ translation.translation }}</p>
+                                            {% if translation.literal_translation %}
+                                                <small class="text-muted">{{ translation.literal_translation }}</small>
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                </div>
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+                </div>
+            {% endif %}
+
+            <!-- Tags Section -->
+            {% if entry.tags.all %}
+                <div class="mb-4">
+                    <h3 class="h5 fw-bold mb-3 d-flex align-items-center">
+                        <i class="bi bi-tags me-2 text-warning"></i>
+                        {% translate 'categories' %}
+                    </h3>
+                    <div class="d-flex flex-wrap gap-2">
+                        {% for tag in entry.tags.all %}
+                            <span class="badge bg-secondary fs-6 px-3 py-2 rounded-pill">
+                                <i class="bi bi-tag me-1"></i>{{ tag.name }}
+                            </span>
+                        {% endfor %}
+                    </div>
+                </div>
+            {% endif %}
+
+            <!-- Examples Section -->
+            {% if entry.examples.all %}
+                <div class="mb-4">
+                    <h3 class="h5 fw-bold mb-3 d-flex align-items-center">
+                        <i class="bi bi-chat-square-quote me-2 text-info"></i>
+                        {% translate 'usage_examples' %}
+                    </h3>
+                    {% for example in entry.examples.all %}
+                        <div class="mb-3 p-3 bg-light rounded-3 border-start border-4 border-info">
+                            <blockquote class="mb-2">
+                                <i class="bi bi-quote text-info me-1"></i>
+                                <em>{{ example.sentence }}</em>
+                                <i class="bi bi-quote text-info ms-1"></i>
+                            </blockquote>
+                            {% if example.translation %}
+                                <small class="text-muted">
+                                    <i class="bi bi-arrow-right me-1"></i>{{ example.translation }}
+                                </small>
+                            {% endif %}
+                        </div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        </div>
+
+        <!-- Card footer with metadata -->
+        <div class="card-footer bg-light border-0">
+            <div class="row align-items-center">
+                <div class="col">
+                    <small class="text-muted">
+                        <i class="bi bi-calendar-plus me-1"></i>
+                        {% translate 'added' %}: {{ entry.created_at|date:"M d, Y" }}
+                        {% if entry.updated_at != entry.created_at %}
+                            | <i class="bi bi-pencil me-1"></i>
+                            {% translate 'updated' %}: {{ entry.updated_at|date:"M d, Y" }}
+                        {% endif %}
+                    </small>
+                </div>
+                <div class="col-auto">
+                    {% if not user.is_authenticated %}
+                        <div class="text-center">
+                            <small class="text-muted mb-2 d-block">{% translate 'join_community' %}</small>
+                            <a href="{% url 'signup' %}" class="btn btn-primary btn-sm rounded-pill me-2">
+                                <i class="bi bi-person-plus me-1"></i>{% translate 'signup' %}
+                            </a>
+                            <a href="{% url 'login' %}" class="btn btn-outline-primary btn-sm rounded-pill">
+                                <i class="bi bi-box-arrow-in-right me-1"></i>{% translate 'login' %}
+                            </a>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Navigation between entries -->
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        {% if previous_entry %}
+            <a href="{% url 'entry-detail' previous_entry.id %}" class="btn btn-outline-primary">
+                <i class="bi bi-arrow-left me-2"></i>{{ previous_entry.term }}
+            </a>
+        {% else %}
+            <div></div>
+        {% endif %}
+        
+        <a href="{% url 'entry-list' %}" class="btn btn-primary">
+            <i class="bi bi-grid me-2"></i>{% translate 'browse_all' %}
+        </a>
+        
+        {% if next_entry %}
+            <a href="{% url 'entry-detail' next_entry.id %}" class="btn btn-outline-primary">
+                {{ next_entry.term }}<i class="bi bi-arrow-right ms-2"></i>
+            </a>
+        {% else %}
+            <div></div>
+        {% endif %}
+    </div>
+
+    <script>
+    // Favorite toggle functionality
+    async function toggleFavorite(entryId) {
+        try {
+            const response = await fetch(`/api/favorites/toggle/${entryId}/`, {
+                method: 'POST',
+                headers: {
+                    'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value,
+                    'Content-Type': 'application/json',
+                },
+                credentials: 'same-origin'
+            });
+            
+            if (response.ok) {
+                const data = await response.json();
+                const btn = document.getElementById(`favorite-btn-${entryId}`);
+                const icon = btn.querySelector('i');
+                
+                if (data.favorited) {
+                    icon.className = 'bi bi-heart-fill text-danger me-1';
+                    btn.title = "{% translate 'remove_from_favorites' %}";
+                } else {
+                    icon.className = 'bi bi-heart me-1';
+                    btn.title = "{% translate 'add_to_favorites' %}";
+                }
+            }
+        } catch (error) {
+            console.error('Error toggling favorite:', error);
+        }
+    }
+
+    // Share functionality
+    function shareEntry(term, url) {
+        if (navigator.share) {
+            navigator.share({
+                title: `${term} - LingoWorld`,
+                text: `Check out this term: ${term}`,
+                url: url
+            });
+        } else {
+            // Fallback: copy to clipboard
+            navigator.clipboard.writeText(url).then(() => {
+                // Show notification
+                const toast = document.createElement('div');
+                toast.className = 'toast align-items-center text-white bg-success border-0 position-fixed';
+                toast.style.cssText = 'top: 20px; right: 20px; z-index: 1055;';
+                toast.innerHTML = `
+                    <div class="d-flex">
+                        <div class="toast-body">
+                            <i class="bi bi-check-circle me-2"></i>{% translate 'link_copied' %}
+                        </div>
+                    </div>
+                `;
+                document.body.appendChild(toast);
+                setTimeout(() => toast.remove(), 3000);
+            });
+        }
+    }
+
+    // Copy to clipboard functionality
+    function copyToClipboard(text) {
+        navigator.clipboard.writeText(text).then(() => {
+            // Show brief notification
+            const toast = document.createElement('div');
+            toast.className = 'toast align-items-center text-white bg-info border-0 position-fixed';
+            toast.style.cssText = 'top: 20px; right: 20px; z-index: 1055;';
+            toast.innerHTML = `
+                <div class="d-flex">
+                    <div class="toast-body">
+                        <i class="bi bi-clipboard-check me-2"></i>{% translate 'copied_to_clipboard' %}
+                    </div>
+                </div>
+            `;
+            document.body.appendChild(toast);
+            setTimeout(() => toast.remove(), 2000);
+        });
+    }
+    </script>
+{% endblock content %}

@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="{{ language|default:'en' }}">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ subject }}</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f8f9fa;
+        }
+        
+        .email-container {
+            background: white;
+            border-radius: 12px;
+            padding: 40px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+        
+        .header {
+            text-align: center;
+            border-bottom: 2px solid #e9ecef;
+            padding-bottom: 30px;
+            margin-bottom: 30px;
+        }
+        
+        .logo {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #6c63ff;
+            margin-bottom: 10px;
+        }
+        
+        .welcome-title {
+            color: #2c3e50;
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+        }
+        
+        .message {
+            color: #555;
+            margin-bottom: 30px;
+            font-size: 1.1rem;
+        }
+        
+        .verify-button {
+            display: block;
+            width: 200px;
+            margin: 30px auto;
+            padding: 15px 30px;
+            background: linear-gradient(135deg, #6c63ff, #8e44ad);
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            text-align: center;
+            font-weight: 600;
+            font-size: 1.1rem;
+        }
+        
+        .alt-link {
+            background: #f8f9fa;
+            border: 2px dashed #dee2e6;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 30px 0;
+            word-break: break-all;
+            font-family: monospace;
+            font-size: 0.9rem;
+        }
+        
+        .footer {
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 1px solid #e9ecef;
+            color: #6c757d;
+            font-size: 0.9rem;
+        }
+        
+        .expiry-notice {
+            background: #fff3cd;
+            border: 1px solid #ffeaa7;
+            border-radius: 6px;
+            padding: 15px;
+            margin: 20px 0;
+            color: #856404;
+        }
+    </style>
+</head>
+<body>
+    <div class="email-container">
+        <div class="header">
+            <div class="logo">🌍 LingoWorld</div>
+            <h1 class="welcome-title">{{ welcome_msg }}</h1>
+        </div>
+        
+        <div class="message">
+            {% if language == 'es' %}
+                ¡Hola {{ user.username }}!
+                <br><br>
+                Gracias por registrarte en LingoWorld. Para completar tu registro y activar tu cuenta, 
+                por favor verifica tu dirección de email haciendo clic en el botón de abajo.
+            {% else %}
+                Hello {{ user.username }}!
+                <br><br>
+                Thanks for signing up for LingoWorld. To complete your registration and activate your account, 
+                please verify your email address by clicking the button below.
+            {% endif %}
+        </div>
+        
+        <a href="{{ verification_url }}" class="verify-button">
+            {{ verify_button }}
+        </a>
+        
+        <div class="expiry-notice">
+            {% if language == 'es' %}
+                ⏰ Este enlace de verificación expirará en {{ expiry_days }} días.
+            {% else %}
+                ⏰ This verification link will expire in {{ expiry_days }} days.
+            {% endif %}
+        </div>
+        
+        <div style="color: #6c757d; font-size: 0.9rem; margin-top: 20px;">
+            {% if language == 'es' %}
+                Si no puedes hacer clic en el botón, copia y pega este enlace en tu navegador:
+            {% else %}
+                If you can't click the button, copy and paste this link into your browser:
+            {% endif %}
+        </div>
+        
+        <div class="alt-link">
+            {{ verification_url }}
+        </div>
+        
+        <div class="footer">
+            {% if language == 'es' %}
+                <p><strong>¿No te registraste en LingoWorld?</strong></p>
+                <p>Si no creaste una cuenta en LingoWorld, puedes ignorar este email de forma segura. 
+                Tu dirección de email no será utilizada sin tu consentimiento.</p>
+                
+                <p>Saludos,<br>
+                El equipo de LingoWorld</p>
+            {% else %}
+                <p><strong>Didn't sign up for LingoWorld?</strong></p>
+                <p>If you didn't create an account with LingoWorld, you can safely ignore this email. 
+                Your email address will not be used without your consent.</p>
+                
+                <p>Best regards,<br>
+                The LingoWorld Team</p>
+            {% endif %}
+        </div>
+    </div>
+</body>
+</html>

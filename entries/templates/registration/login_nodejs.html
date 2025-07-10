@@ -1,0 +1,287 @@
+{% extends "entries/base.html" %}
+{% load lingo_tags %}
+{% load i18n %}
+
+{% block title %}
+    {% translate 'login' %} - Real Lingo
+{% endblock title %}
+
+{% block content %}
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-6 col-lg-5">
+                <!-- Login Card -->
+                <div class="card border-0 shadow-lg animate__animated animate__fadeInUp">
+                    <div class="card-header bg-gradient text-white text-center py-4">
+                        <div class="mb-3">
+                            <i class="bi bi-translate display-4"></i>
+                        </div>
+                        <h3 class="mb-0">{% translate 'welcome_to_realling' %}</h3>
+                        <p class="mb-0 opacity-75">{% translate 'login_to_continue' %}</p>
+                    </div>
+                    
+                    <div class="card-body p-5">
+                        <!-- Error Messages -->
+                        <div id="error-messages" class="alert alert-danger d-none" role="alert">
+                            <i class="bi bi-exclamation-triangle me-2"></i>
+                            <strong>Login failed!</strong>
+                            <div id="error-message" class="mt-2"></div>
+                        </div>
+
+                        <!-- Success Messages -->
+                        <div id="success-messages" class="alert alert-success d-none" role="alert">
+                            <i class="bi bi-check-circle me-2"></i>
+                            <span id="success-message"></span>
+                        </div>
+
+                        <form id="login-form" class="needs-validation" novalidate>
+                            <!-- Email Field -->
+                            <div class="mb-4">
+                                <label for="email" class="form-label fw-semibold">
+                                    <i class="bi bi-envelope me-1"></i>{% translate 'email' %}
+                                </label>
+                                <input type="email" 
+                                       class="form-control" 
+                                       id="email" 
+                                       name="email" 
+                                       required 
+                                       placeholder="Enter your email address">
+                                <div class="invalid-feedback">
+                                    Please provide a valid email address.
+                                </div>
+                                <div class="form-text">
+                                    <i class="bi bi-info-circle me-1"></i>
+                                    Enter the email address you used to register
+                                </div>
+                            </div>
+
+                            <!-- Submit Button -->
+                            <div class="d-grid mb-4">
+                                <button type="submit" id="login-btn" class="btn btn-primary btn-lg rounded-pill">
+                                    <span class="btn-text">
+                                        <i class="bi bi-box-arrow-in-right me-2"></i>{% translate 'login' %}
+                                    </span>
+                                    <span class="btn-loading d-none">
+                                        <span class="spinner-border spinner-border-sm me-2" role="status"></span>
+                                        Logging in...
+                                    </span>
+                                </button>
+                            </div>
+                        </form>
+
+                        <!-- Additional Actions -->
+                        <div class="text-center mb-4">
+                            <a href="#" id="resend-verification" class="btn btn-outline-info btn-sm rounded-pill d-none">
+                                <i class="bi bi-envelope-arrow-up me-2"></i>Resend Verification Email
+                            </a>
+                        </div>
+
+                        <!-- Signup Link -->
+                        <div class="text-center">
+                            <p class="text-muted mb-2">{% translate 'dont_have_account' %}</p>
+                            <a href="/signup-nodejs/" class="btn btn-outline-secondary rounded-pill">
+                                <i class="bi bi-person-plus me-2"></i>{% translate 'signup_here' %}
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Community Info -->
+                <div class="text-center mt-4">
+                    <div class="card bg-light border-0">
+                        <div class="card-body py-3">
+                            <h6 class="text-primary mb-2">
+                                <i class="bi bi-people me-2"></i>{% translate 'join_community' %}
+                            </h6>
+                            <small class="text-muted">
+                                {% translate 'discover_slang_world' %}
+                            </small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <style>
+        .bg-gradient {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+        
+        .card {
+            transition: all 0.3s ease;
+        }
+        
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 1rem 3rem rgba(0,0,0,.175)!important;
+        }
+        
+        .form-control {
+            border-radius: 0.75rem;
+            padding: 0.75rem 1rem;
+            border: 2px solid #e9ecef;
+            transition: all 0.3s ease;
+        }
+        
+        .form-control:focus {
+            border-color: #667eea;
+            box-shadow: 0 0 0 0.2rem rgba(102, 126, 234, 0.25);
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border: none;
+            padding: 0.75rem 1.5rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 0.5rem 1rem rgba(102, 126, 234, 0.3);
+        }
+        
+        .btn-primary:disabled {
+            opacity: 0.6;
+            transform: none;
+        }
+        
+        .animate__animated {
+            animation-duration: 0.8s;
+        }
+    </style>
+
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const loginForm = document.getElementById('login-form');
+        const loginBtn = document.getElementById('login-btn');
+        const btnText = loginBtn.querySelector('.btn-text');
+        const btnLoading = loginBtn.querySelector('.btn-loading');
+        const errorDiv = document.getElementById('error-messages');
+        const errorMessage = document.getElementById('error-message');
+        const successDiv = document.getElementById('success-messages');
+        const successMessage = document.getElementById('success-message');
+        const resendBtn = document.getElementById('resend-verification');
+
+        function showError(message) {
+            errorMessage.textContent = message;
+            errorDiv.classList.remove('d-none');
+            successDiv.classList.add('d-none');
+            
+            // Show resend verification button if email not verified
+            if (message.includes('verify') || message.includes('verification')) {
+                resendBtn.classList.remove('d-none');
+            } else {
+                resendBtn.classList.add('d-none');
+            }
+        }
+
+        function showSuccess(message) {
+            successMessage.textContent = message;
+            successDiv.classList.remove('d-none');
+            errorDiv.classList.add('d-none');
+            resendBtn.classList.add('d-none');
+        }
+
+        function hideMessages() {
+            errorDiv.classList.add('d-none');
+            successDiv.classList.add('d-none');
+            resendBtn.classList.add('d-none');
+        }
+
+        function setLoading(loading) {
+            loginBtn.disabled = loading;
+            if (loading) {
+                btnText.classList.add('d-none');
+                btnLoading.classList.remove('d-none');
+            } else {
+                btnText.classList.remove('d-none');
+                btnLoading.classList.add('d-none');
+            }
+        }
+
+        loginForm.addEventListener('submit', async function(e) {
+            e.preventDefault();
+            hideMessages();
+            setLoading(true);
+
+            const formData = new FormData(loginForm);
+            const data = {
+                email: formData.get('email')
+            };
+
+            try {
+                const response = await fetch('http://localhost:3001/api/auth/login', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    credentials: 'include',
+                    body: JSON.stringify(data)
+                });
+
+                const result = await response.json();
+
+                if (response.ok && result.success) {
+                    showSuccess('Login successful! Redirecting...');
+                    
+                    // Store token in localStorage as backup
+                    if (result.data.token) {
+                        localStorage.setItem('auth_token', result.data.token);
+                    }
+                    
+                    // Redirect to dashboard or home page
+                    setTimeout(() => {
+                        window.location.href = '/countries/';
+                    }, 1500);
+                } else {
+                    showError(result.message || 'Login failed. Please try again.');
+                }
+            } catch (error) {
+                console.error('Login error:', error);
+                showError('Network error. Please check your connection and try again.');
+            } finally {
+                setLoading(false);
+            }
+        });
+
+        // Resend verification email
+        resendBtn.addEventListener('click', async function(e) {
+            e.preventDefault();
+            const email = document.getElementById('email').value;
+            
+            if (!email) {
+                showError('Please enter your email address first.');
+                return;
+            }
+
+            try {
+                const response = await fetch('http://localhost:3001/api/auth/resend-verification', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ email })
+                });
+
+                const result = await response.json();
+
+                if (response.ok && result.success) {
+                    showSuccess('Verification email sent! Please check your inbox.');
+                } else {
+                    showError(result.message || 'Failed to send verification email.');
+                }
+            } catch (error) {
+                console.error('Resend error:', error);
+                showError('Network error. Please try again.');
+            }
+        });
+
+        // Form validation
+        loginForm.addEventListener('input', function() {
+            hideMessages();
+        });
+    });
+    </script>
+{% endblock content %}

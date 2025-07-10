@@ -1,0 +1,832 @@
+{% load i18n %}
+<!-- CLEAN SLANG QUIZ - NO BLUR EFFECTS - VERSION 2024-06-29-NEXT-BUTTON-FIXED -->
+<!--
+REAL LINGO: The globe icon (bi bi-globe-americas) is shown for all 'unique concepts' questions in the quiz, for every country. The rendering logic ensures this is always visible.
+-->
+<div id="quizOverlay" class="quiz-overlay">
+    <div id="quizContainer" class="quiz-container">
+        <!-- Quiz content will be dynamically inserted here -->
+    </div>
+</div>
+
+<style>
+    /* Quiz Overlay */
+    #quizOverlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.8);
+    display: none;
+    justify-content: center;
+        align-items: center;
+        z-index: 9999;
+        backdrop-filter: blur(5px);
+}
+
+    /* Quiz Container */
+.quiz-container {
+    background: white;
+    border-radius: 20px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+    max-width: 900px;
+    width: 95%;
+    height: auto;
+    max-height: 90vh;
+    min-height: 600px;
+    overflow: visible; /* Allow content to be visible */
+    position: relative;
+    animation: slideInUp 0.5s ease-out;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    }
+
+    @keyframes slideInUp {
+        from {
+            transform: translateY(50px);
+            opacity: 0;
+        }
+        to {
+            transform: translateY(0);
+            opacity: 1;
+        }
+    }
+
+    /* Close Button */
+    .close-quiz {
+        position: absolute;
+        top: 15px;
+        right: 20px;
+        background: #ff4757;
+        color: white;
+        border: none;
+        border-radius: 50%;
+        width: 40px;
+        height: 40px;
+        font-size: 18px;
+        cursor: pointer;
+        z-index: 10;
+        transition: all 0.3s ease;
+    display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .close-quiz:hover {
+        background: #ff3742;
+        transform: scale(1.1);
+}
+
+    /* Quiz Header */
+.quiz-header {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+        padding: 12px 20px 10px;
+        border-radius: 20px 20px 0 0;
+    text-align: center;
+    flex-shrink: 0; /* Prevent header from shrinking */
+}
+
+    .quiz-title h2 {
+        margin: 0 0 6px 0;
+        font-size: 1.5rem;
+        font-weight: 700;
+        text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+    }
+
+    .quiz-subtitle {
+        margin: 0;
+        font-size: 0.9rem;
+        opacity: 0.9;
+        font-weight: 300;
+    }
+
+    /* Quiz Stats */
+    .quiz-stats {
+        display: flex;
+        justify-content: space-around;
+        margin: 12px 0;
+        gap: 15px;
+    }
+
+    .stat-item {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 5px;
+    }
+
+    .stat-label {
+        font-size: 0.9rem;
+        opacity: 0.8;
+        font-weight: 300;
+    }
+
+    .stat-value {
+        font-size: 1.2rem;
+        font-weight: 700;
+        color: #ffd700;
+    }
+
+    /* Progress Bar */
+    .quiz-progress {
+        margin-top: 12px;
+    }
+
+    .progress-bar {
+        background: rgba(255, 255, 255, 0.2);
+        border-radius: 10px;
+        height: 8px;
+        overflow: hidden;
+    }
+
+    .progress-fill {
+        background: linear-gradient(90deg, #ffd700, #ffed4e);
+        height: 100%;
+        border-radius: 10px;
+        transition: width 0.5s ease;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    }
+
+    /* Quiz Body */
+.quiz-body {
+        padding: 15px 20px;
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        min-height: 350px; /* Ensure minimum height for content */
+        overflow: visible;
+    }
+
+    /* Question Container */
+    .question-container {
+        animation: fadeIn 0.5s ease-out;
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+    }
+
+    @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(20px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+
+    .question-header {
+        margin-bottom: 15px;
+        flex-shrink: 0;
+    }
+
+    #quiz-question-text {
+        font-size: 1.1rem;
+        font-weight: 600;
+        color: #2c3e50;
+        margin-bottom: 6px;
+        line-height: 1.3;
+    }
+
+    .question-hint {
+        color: #7f8c8d;
+        font-size: 0.9rem;
+        margin: 0;
+        font-style: italic;
+    }
+
+    /* Quiz Options */
+    .quiz-options {
+        display: grid;
+        gap: 12px;
+        margin-bottom: 25px;
+        flex: 0 0 auto; /* Don't grow or shrink */
+}
+
+.quiz-option {
+        display: flex;
+        align-items: center;
+        padding: 10px 14px;
+        background: #f8f9fa;
+    border: 2px solid #e9ecef;
+        border-radius: 10px;
+    cursor: pointer;
+        transition: all 0.3s ease;
+        font-size: 0.9rem;
+    text-align: left;
+        position: relative;
+        overflow: hidden;
+        min-height: 45px;
+}
+
+.quiz-option:hover {
+        background: #e9ecef;
+    border-color: #667eea;
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(102, 126, 234, 0.2);
+}
+
+    .quiz-option:focus {
+        outline: none;
+    border-color: #667eea;
+        box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.2);
+    }
+
+    .option-letter {
+    background: #667eea;
+    color: white;
+        width: 30px;
+        height: 30px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: 700;
+        margin-right: 15px;
+        flex-shrink: 0;
+    }
+
+    .option-text {
+        flex: 1;
+        font-weight: 500;
+}
+
+    /* Correct/Incorrect States */
+.quiz-option.correct {
+        background: #d4edda;
+    border-color: #28a745;
+        animation: correctPulse 0.6s ease-out;
+}
+
+.quiz-option.incorrect {
+        background: #f8d7da;
+    border-color: #dc3545;
+        animation: incorrectShake 0.6s ease-out;
+}
+
+    @keyframes correctPulse {
+        0% { transform: scale(1); }
+        50% { transform: scale(1.05); }
+        100% { transform: scale(1); }
+    }
+
+    @keyframes incorrectShake {
+        0%, 100% { transform: translateX(0); }
+        25% { transform: translateX(-5px); }
+        75% { transform: translateX(5px); }
+    }
+
+    /* Explanation Container */
+    .explanation-container {
+        border-radius: 10px;
+        padding: 12px;
+        margin-top: 12px;
+        animation: slideInDown 0.5s ease-out;
+        flex-shrink: 0;
+}
+
+    @keyframes slideInDown {
+        from {
+            opacity: 0;
+            transform: translateY(-20px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    /* Next Button */
+    .next-button {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white !important;
+        border: none;
+        padding: 12px 30px;
+        border-radius: 25px;
+        font-size: 1.1rem;
+        font-weight: 700;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        flex-shrink: 0;
+        box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
+        position: relative;
+        z-index: 1000;
+        min-height: 45px;
+        text-align: center;
+    }
+
+    .next-button:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
+    }
+
+    .next-button:active {
+        transform: translateY(0);
+    }
+
+    /* Quiz Controls */
+    .quiz-controls {
+        margin-top: 25px;
+        padding: 20px 0;
+        text-align: center;
+        flex-shrink: 0;
+        min-height: 80px;
+        position: relative;
+        z-index: 100;
+        background: transparent;
+        border-top: 1px solid #eee;
+    }
+
+    /* Responsive Design */
+@media (max-width: 768px) {
+        .quiz-container {
+            width: 95%;
+            margin: 10px;
+            max-height: 95vh;
+            min-height: 500px;
+        }
+
+        .quiz-header {
+            padding: 15px 15px 10px;
+        }
+
+        .quiz-title h2 {
+            font-size: 1.4rem;
+            margin: 0 0 8px 0;
+        }
+
+        .quiz-subtitle {
+            font-size: 0.9rem;
+        }
+
+        .quiz-body {
+            padding: 15px;
+            min-height: 350px;
+        }
+
+        #quiz-question-text {
+            font-size: 1.1rem;
+        }
+
+        .quiz-option {
+            padding: 12px 15px;
+        }
+
+        .quiz-controls {
+            padding: 15px 0;
+            min-height: 70px;
+        }
+    }
+
+    /* Loading Animation */
+    .loading-container {
+        text-align: center;
+        padding: 40px;
+    }
+
+    .spinner-border {
+        width: 3rem;
+        height: 3rem;
+        border-width: 0.25em;
+    }
+
+    /* Error State */
+    .alert-danger {
+        background: #f8d7da;
+        border: 1px solid #f5c6cb;
+        color: #721c24;
+        padding: 15px;
+        border-radius: 8px;
+        margin: 20px;
+}
+</style>
+
+<script>
+// SlangQuiz Version 2024-06-19-v2 - Refactored for dynamic backend fetch
+class SlangQuiz {
+    constructor() {
+        this.currentCountry = null;
+        this.currentQuestion = 0;
+        this.score = 0;
+        this.selectedAnswer = null;
+        this.questions = [];
+        this.language = this.detectLanguage();
+    }
+
+    detectLanguage() {
+        // Try to get from session/localStorage, fallback to 'en'
+        return localStorage.getItem('lingoworld_language') || 'en';
+    }
+
+    show(country) {
+        this.currentCountry = country;
+        this.currentQuestion = 0;
+        this.score = 0;
+        this.selectedAnswer = null;
+        this.questions = [];
+        this.language = this.detectLanguage();
+
+        const translations = {
+            en: {
+                loading: 'Loading quiz...',
+                failed: 'Failed to load quiz questions. Please try again.'
+            },
+            es: {
+                loading: 'Cargando quiz...',
+                failed: 'Error al cargar las preguntas del quiz. Por favor intenta de nuevo.'
+            }
+        };
+        
+        const t = translations[this.language] || translations.en;
+        
+        const overlay = document.getElementById('quizOverlay');
+        const container = document.getElementById('quizContainer');
+        overlay.style.display = 'flex';
+        container.innerHTML = `<div class="text-center p-5"><div class="spinner-border text-primary" role="status"></div><div class="mt-3">${t.loading}</div></div>`;
+        // document.body.style.overflow = 'hidden'; // Allow main page scroll
+
+        this.fetchQuestions().then(() => {
+        container.innerHTML = this.createQuizHTML();
+        this.loadQuestion();
+        }).catch(() => {
+            container.innerHTML = `<div class="alert alert-danger">${t.failed}</div>`;
+        });
+    }
+
+    fetchQuestions() {
+        // Map country to language_code for API
+        const countryToLang = {
+            argentina: 'es-AR',
+            australia: 'en-AU',
+            germany: 'de-DE',
+            colombia: 'es-CO',
+            belgium: 'nl-BE', // or 'fr-BE', could be improved
+        };
+        const language_code = countryToLang[this.currentCountry] || 'en';
+        const url = `/api/quiz/questions/?count=5&language=${encodeURIComponent(language_code)}&user_language=${encodeURIComponent(this.language)}`;
+        return fetch(url)
+            .then(res => res.json())
+            .then(data => {
+                if (data.questions) {
+                    // Convert backend format to frontend format
+                    this.questions = data.questions.map(q => ({
+                        question: q.question,
+                        options: q.choices,
+                        correct: q.correct_index !== undefined ? q.correct_index : q.choices.indexOf(q.correct_answer),
+                        explanation: q.explanation || '',
+                        category: q.category || '',
+                    }));
+                } else {
+                    throw new Error('No questions');
+                }
+            });
+    }
+
+    createQuizHTML() {
+        const translations = {
+            en: {
+                nextQuestion: 'Next Question',
+                question: 'Question',
+                of: 'of',
+                loading: 'Loading quiz...',
+                failed: 'Failed to load quiz questions. Please try again.',
+                quizTitle: 'Slang Quiz',
+                score: 'Score',
+                progress: 'Progress'
+            },
+            es: {
+                nextQuestion: 'Siguiente Pregunta',
+                question: 'Pregunta',
+                of: 'de',
+                loading: 'Cargando quiz...',
+                failed: 'Error al cargar las preguntas del quiz. Por favor intenta de nuevo.',
+                quizTitle: 'Quiz de Jerga',
+                score: 'Puntuación',
+                progress: 'Progreso'
+            }
+        };
+        
+        const t = translations[this.language] || translations.en;
+            
+        return `
+            <div class="quiz-container">
+                <button class="close-quiz" onclick="window.slangQuiz.close()">
+                    <i class="bi bi-x-lg"></i>
+                </button>
+                
+            <div class="quiz-header">
+                    <div class="quiz-title">
+                        <h2>🌍 ${this.currentCountry.charAt(0).toUpperCase() + this.currentCountry.slice(1)} ${t.quizTitle}</h2>
+                        <p class="quiz-subtitle">Test your local slang knowledge! 🎯</p>
+                    </div>
+                    
+                    <div class="quiz-stats">
+                        <div class="stat-item">
+                            <span class="stat-label">${t.question}</span>
+                            <span class="stat-value" id="questionNumber">1</span>
+                            <span class="stat-label">${t.of} 5</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-label">${t.score}</span>
+                            <span class="stat-value" id="currentScore">0</span>
+                        </div>
+                    </div>
+                    
+                <div class="quiz-progress">
+                        <div class="progress-bar">
+                            <div class="progress-fill" id="progressBar" style="width: 0%"></div>
+                        </div>
+                    </div>
+                </div>
+                
+            <div class="quiz-body" id="quizBody">
+                <!-- Question content will be loaded here -->
+                </div>
+            </div>
+        `;
+    }
+
+    loadQuestion() {
+        if (!this.questions[this.currentQuestion]) {
+            this.showResults();
+            return;
+        }
+        const question = this.questions[this.currentQuestion];
+        const quizBody = document.getElementById('quizBody');
+        const questionNumber = document.getElementById('questionNumber');
+        const progressBar = document.getElementById('progressBar');
+        const currentScore = document.getElementById('currentScore');
+        
+        const translations = {
+            en: {
+                nextQuestion: 'Next Question',
+                selectAnswer: 'Select your answer below:',
+                correct: 'Correct! 🎉',
+                incorrect: 'Incorrect! 😅',
+                explanation: 'Explanation:'
+            },
+            es: {
+                nextQuestion: 'Siguiente Pregunta',
+                selectAnswer: 'Selecciona tu respuesta:',
+                correct: '¡Correcto! 🎉',
+                incorrect: '¡Incorrecto! 😅',
+                explanation: 'Explicación:'
+            }
+        };
+        
+        const t = translations[this.language] || translations.en;
+        
+        questionNumber.textContent = this.currentQuestion + 1;
+        currentScore.textContent = this.score;
+        progressBar.style.width = `${((this.currentQuestion) / 5) * 100}%`;
+        
+        quizBody.innerHTML = `
+            <div class="question-container">
+                <div class="question-header">
+                    <h3 id="quiz-question-text">
+                        <i class="bi bi-question-circle-fill text-primary me-2"></i>
+                        ${question.category === 'unique_concepts' ? "<i class='bi bi-globe-americas text-primary me-2'></i>" : ''}
+                        ${question.question}
+                    </h3>
+                    <p class="question-hint">${t.selectAnswer}</p>
+                </div>
+                
+                <div class="quiz-options" id="quiz-options-container" role="listbox" aria-labelledby="quiz-question-text">
+                ${question.options.map((option, index) => `
+                        <button class="quiz-option" role="option" aria-selected="false" tabindex="0" id="quiz-option-${index}" onclick="console.log('🖱️ Option ${index} clicked!'); window.slangQuiz.selectAnswer(${index});">
+                            <span class="option-letter">${String.fromCharCode(65 + index)}</span>
+                            <span class="option-text">${option}</span>
+                        </button>
+                `).join('')}
+            </div>
+                
+                <div id="quiz-explanation" class="explanation-container" style="display: none; margin-top: 15px; padding: 12px; border-radius: 8px; background: #f8f9fa; border-left: 4px solid #007bff;">
+                    <div class="explanation-content"></div>
+                </div>
+                
+                <div class="quiz-controls" style="margin-top: 25px; padding: 20px 0; text-align: center; min-height: 80px; border-top: 1px solid #eee;">
+                    <button id="nextButton" onclick="window.slangQuiz.nextQuestion()" class="next-button" style="display: none; opacity: 0; visibility: hidden;">
+                        <i class="bi bi-arrow-right me-2"></i>Next Question
+                    </button>
+                </div>
+            </div>
+        `;
+        this.selectedAnswer = null;
+        this.setupKeyboardNavigation();
+    }
+
+    selectAnswer(answerIndex) {
+        console.log('🎯 selectAnswer called with index:', answerIndex);
+        if (this.selectedAnswer !== null) {
+            console.log('⚠️ Answer already selected, returning');
+            return;
+        }
+        
+        this.selectedAnswer = answerIndex;
+        const question = this.questions[this.currentQuestion];
+        const options = document.querySelectorAll('.quiz-option');
+        
+        console.log('🔧 Answer selected, creating next button inside quiz modal...');
+        
+        // Add Next button seamlessly to the explanation area
+        setTimeout(() => {
+            const explanation = document.getElementById('quiz-explanation');
+            if (explanation) {
+                // Remove any existing next buttons
+                const existingBtns = explanation.querySelectorAll('.next-btn-inside');
+                existingBtns.forEach(btn => btn.remove());
+                
+                const explanationNextBtn = document.createElement('div');
+                explanationNextBtn.className = 'next-btn-inside';
+                explanationNextBtn.style.cssText = 'text-align: center; margin-top: 15px;';
+                explanationNextBtn.innerHTML = `
+                    <button onclick="window.slangQuiz.nextQuestion()" 
+                            style="background: #28a745 !important;
+                                   color: white !important;
+                                   border: none !important;
+                                   padding: 10px 25px !important;
+                                   border-radius: 6px !important;
+                                   font-size: 0.95rem !important;
+                                   font-weight: 600 !important;
+                                   cursor: pointer !important;
+                                   transition: all 0.3s ease !important;
+                                   box-shadow: 0 2px 4px rgba(0,0,0,0.1) !important;">
+                        Next Question →
+                    </button>
+                `;
+                explanation.appendChild(explanationNextBtn);
+                console.log('✅ Next button seamlessly integrated');
+            } else {
+                console.error('❌ Explanation area not found');
+            }
+        }, 100);
+        
+        const translations = {
+            en: {
+                correct: 'Correct! 🎉',
+                incorrect: 'Incorrect! 😅',
+                explanation: 'Explanation:'
+            },
+            es: {
+                correct: '¡Correcto! 🎉',
+                incorrect: '¡Incorrecto! 😅',
+                explanation: 'Explicación:'
+            }
+        };
+        
+        const t = translations[this.language] || translations.en;
+        
+        setTimeout(() => {
+            const isCorrect = answerIndex === question.correct;
+            
+            // Update score
+            if (isCorrect) {
+                this.score++;
+                const currentScore = document.getElementById('currentScore');
+                if (currentScore) currentScore.textContent = this.score;
+            }
+            
+            // Style the options
+            options.forEach((option, index) => {
+                if (index === question.correct) {
+                    option.classList.add('correct');
+                    option.innerHTML = `<span class="option-letter">${String.fromCharCode(65 + index)}</span><span class="option-text">${question.options[index]}</span><i class="bi bi-check-circle-fill ms-2"></i>`;
+                } else if (index === answerIndex && !isCorrect) {
+                    option.classList.add('incorrect');
+                    option.innerHTML = `<span class="option-letter">${String.fromCharCode(65 + index)}</span><span class="option-text">${question.options[index]}</span><i class="bi bi-x-circle-fill ms-2"></i>`;
+                }
+            });
+            
+            // Show explanation
+            const explanation = document.getElementById('quiz-explanation');
+            if (explanation) {
+                const explanationContent = explanation.querySelector('.explanation-content');
+                explanation.style.display = 'block';
+                if (isCorrect) {
+                    explanation.style.background = '#d4edda';
+                    explanation.style.borderLeftColor = '#28a745';
+                    explanationContent.innerHTML = `
+                        <div class="d-flex align-items-center">
+                            <i class="bi bi-emoji-smile-fill text-success me-2"></i>
+                            <strong>${t.correct}</strong>
+                        </div>
+                    `;
+                } else {
+                    explanation.style.background = '#f8d7da';
+                    explanation.style.borderLeftColor = '#dc3545';
+                    explanationContent.innerHTML = `
+                        <div class="d-flex align-items-center">
+                            <i class="bi bi-emoji-frown-fill text-danger me-2"></i>
+                            <strong>${t.incorrect}</strong>
+                        </div>
+                        <div class="mt-2">
+                            <strong>${t.explanation}</strong> The correct answer was: <strong>${question.options[question.correct]}</strong>
+                        </div>
+                    `;
+                }
+            }
+        }, 300);
+    }
+
+    setupKeyboardNavigation() {
+        const options = document.querySelectorAll('.quiz-option');
+        if (!options.length) return;
+        let focused = 0;
+        options[focused].focus();
+        options.forEach((btn, idx) => {
+            btn.addEventListener('keydown', (e) => {
+                if (e.key === 'ArrowDown' || e.key === 'ArrowRight') {
+                    e.preventDefault();
+                    focused = (focused + 1) % options.length;
+                    options[focused].focus();
+                } else if (e.key === 'ArrowUp' || e.key === 'ArrowLeft') {
+                    e.preventDefault();
+                    focused = (focused - 1 + options.length) % options.length;
+                    options[focused].focus();
+                } else if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    options[focused].click();
+                }
+            });
+        });
+    }
+
+    showFloatingText(text) {
+        const floating = document.createElement('div');
+        floating.className = 'floating-text';
+        floating.textContent = text;
+        document.body.appendChild(floating);
+        
+        setTimeout(() => floating.style.opacity = '1', 100);
+        setTimeout(() => {
+            floating.style.opacity = '0';
+            setTimeout(() => document.body.removeChild(floating), 300);
+        }, 1500);
+    }
+
+    nextQuestion() {
+        this.currentQuestion++;
+        if (this.currentQuestion < 5) {
+            this.loadQuestion();
+        } else {
+            this.showResults();
+        }
+    }
+
+    showResults() {
+        const quizBody = document.getElementById('quizBody');
+        const progressBar = document.getElementById('progressBar');
+        const percentage = Math.round((this.score / 5) * 100);
+        
+        progressBar.style.width = '100%';
+        
+        let achievement = '';
+        if (percentage >= 80) achievement = '🏆 Slang Master!';
+        else if (percentage >= 60) achievement = '🎯 Good Knowledge!';
+        else if (percentage >= 40) achievement = '📚 Keep Learning!';
+        else achievement = '🌱 Just Getting Started!';
+        
+        quizBody.innerHTML = `
+            <div style="text-align: center; padding: 30px;">
+                <h2>Quiz Complete!</h2>
+                <div style="font-size: 48px; margin: 20px 0;">${achievement}</div>
+                <p style="font-size: 24px;">You scored ${this.score} out of 5 (${percentage}%)</p>
+                <div style="margin-top: 30px;">
+                    <button onclick="window.slangQuiz.show('${this.currentCountry}')" style="padding: 10px 20px; background: #667eea; color: white; border: none; border-radius: 5px; cursor: pointer; margin: 5px;">Try Again</button>
+                    <button onclick="window.slangQuiz.close()" style="padding: 10px 20px; background: #6c757d; color: white; border: none; border-radius: 5px; cursor: pointer; margin: 5px;">Close</button>
+                </div>
+            </div>
+        `;
+    }
+
+    close() {
+        // document.body.style.overflow = ''; // No need to restore
+        const overlay = document.getElementById('quizOverlay');
+        overlay.style.display = 'none';
+    }
+}
+document.addEventListener('DOMContentLoaded', function() {
+    console.log('🚀 DOM loaded, initializing quiz...');
+    
+    const quizOverlay = document.getElementById('quizOverlay');
+    if (!quizOverlay) {
+        console.error('❌ Quiz overlay with ID "quizOverlay" not found in DOM');
+        return;
+    }
+    
+    try {
+        const quizInstance = new SlangQuiz();
+        window.slangQuiz = quizInstance;
+        console.log('✅ Quiz instance created and assigned to window.slangQuiz');
+    } catch (error) {
+        console.error('❌ Error creating quiz instance:', error);
+        window.slangQuiz = null;
+    }
+    
+    // Remove any existing floating quiz trigger buttons
+    const existingTrigger = document.querySelector('.quiz-trigger');
+    if (existingTrigger) {
+        existingTrigger.remove();
+        console.log('✅ Removed old floating quiz trigger button');
+    }
+});
+</script>
